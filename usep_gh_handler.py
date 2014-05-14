@@ -2,20 +2,13 @@
 
 import datetime, json, os, pprint
 import flask, redis, rq
-# from usep_gh_handler_app.config import settings
 from usep_gh_handler_app.utils import logger_setup
-# from flask.ext.basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
 
 
 ## setup
 app = flask.Flask(__name__)
 log = logger_setup.setup_logger()
 log.debug( u'in usep_gh_handler; log initialized' )
-#
-# app.config['BASIC_AUTH_USERNAME'] = settings.BASIC_AUTH_USERNAME
-# app.config['BASIC_AUTH_PASSWORD'] = settings.BASIC_AUTH_PASSWORD
-# basic_auth = BasicAuth(app)
-
 LEGIT_IPS = json.loads( unicode(os.environ.get(u'usep_gh__LEGIT_IPS')) )
 
 
@@ -57,7 +50,9 @@ def handle_github_push():
             return_dict = {
                 u'request_type': u'manually triggered (not github)',
                 u'datetime': unicode( datetime.datetime.now() ),
-                u'job': pprint.pformat(job_dict) }
+                # u'job': pprint.pformat(job_dict)
+                u'job': sorted( job_dict.keys() )
+                }
             log.debug( u'in usep_gh_handler.handle_github_push(); return_dict is fine' )
         except Exception as e:
             log.error( u'in usep_gh_handler.handle_github_push(); exception creating return_dict, `%s`' % unicode(repr(e)) )
