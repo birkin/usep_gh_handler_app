@@ -12,55 +12,35 @@ log.debug( u'in usep_gh_handler; log initialized' )
 LEGIT_IPS = json.loads( unicode(os.environ.get(u'usep_gh__LEGIT_IPS')) )
 
 
-
 @app.route( u'/', methods=[u'GET', u'POST'] )
 # @basic_auth.required
 def handle_github_push():
     """ Triggers github pull.
         Called from github push webhook.
         TODO: remove GET, now used for testing. """
-    log.debug( u'in usep_gh_handler.handle_github_push(); starting' )
-    ## validate ip
-    client_ip = flask.request.remote_addr
-    if not client_ip in LEGIT_IPS.keys():
-        log.info( u'in usep_gh_handler.handle_github_push(); client_ip `%s` not in LEGIT_IPS; returning forbidden' % client_ip )
+    if not _validate_ip( flask.request.remote_addr ) == u'valid':
         return flask.abort( 403 )
-    log.debug( u'in usep_gh_handler.handle_github_push(); client_ip must have been good' )
-    ## kickoff job
-    try:
-        q = rq.Queue( u'usep', connection=redis.Redis() )
-        log.debug( u'in usep_gh_handler.handle_github_push(); queue instantiation fine' )
-    except Exception as e:
-        log.error( u'in usep_gh_handler.handle_github_push(); exception on queue instantiation, `%s`' % unicode(repr(e)) )
-    try:
-        job = q.enqueue_call (
-            func=u'usep_gh_handler_app.utils.run_call_github_pull',
-            kwargs = {}
-            )
-        log.debug( u'in usep_gh_handler.handle_github_push(); job enqueued fine' )
-    except Exception as e:
-        log.error( u'in usep_gh_handler.handle_github_push(); exception on job-enqueue, `%s`' % unicode(repr(e)) )
+    q = rq.Queue( u'usep', connection=redis.Redis() )
+    q.enqueue_call (
+        func=u'usep_gh_handler_app.utils.run_call_github_pull',
+        kwargs = {} )
+    log.debug( u'in usep_gh_handler.handle_github_push(); job enqueued fine' )
+    return_dict = {
+        u'datetime': datetime.datetime.now(),
+        u'response': u'git pull initiated' }
+    return flask.jsonify( return_dict )
 
-    job_dict = job.__dict__
-    log.debug( u'in usep_gh_handler.handle_github_push(); job.__dict__, `%s`' % pprint.pformat(job_dict) )
-    ## respond (development-GET)
-    if flask.request.method == u'GET':
-        log.debug( u'in usep_gh_handler.handle_github_push(); request.method is GET' )
-        try:
-            return_dict = {
-                u'request_type': u'manually triggered (not github)',
-                u'datetime': unicode( datetime.datetime.now() ),
-                # u'job': pprint.pformat(job_dict)
-                u'job': sorted( job_dict.keys() )
-                }
-            log.debug( u'in usep_gh_handler.handle_github_push(); return_dict is fine' )
-        except Exception as e:
-            log.error( u'in usep_gh_handler.handle_github_push(); exception creating return_dict, `%s`' % unicode(repr(e)) )
-        try:
-            return flask.jsonify( return_dict )
-        except Exception as e:
-            log.error( u'in usep_gh_handler.handle_github_push(); exception on return, `%s`' % unicode(repr(e)) )
-
+def _validate_ip( client_ip ):
+    """ Logs and validates ip.
+        Returns 'valid' or 'invalid'.
+        Called by handle_github_push(). """
+    log.info( u'in usep_gh_handler._validate_ip(); client_ip, `%s`' % client_ip )
+    if client_ip in LEGIT_IPS.keys():
+        validity = u'valid'
+    else:
+        log.info( u'in usep_gh_handler.handle_github_push(); client_ip not in LEGIT_IPS; will return forbidden' )
+        validity = u'invalid'
+    return validity
 
 
 
