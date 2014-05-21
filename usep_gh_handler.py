@@ -3,44 +3,44 @@
 import datetime, json, os, pprint
 import flask, redis, rq
 from usep_gh_handler_app.utils import logger_setup
+from flask.ext.basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
 
 
 ## setup
 app = flask.Flask(__name__)
 log = logger_setup.setup_logger()
 log.debug( u'in usep_gh_handler; log initialized' )
-LEGIT_IPS = json.loads( unicode(os.environ.get(u'usep_gh__LEGIT_IPS')) )
+app.config['BASIC_AUTH_USERNAME'] = unicode( os.environ.get(u'usep_gh__BASIC_AUTH_USERNAME') )
+app.config['BASIC_AUTH_PASSWORD'] = unicode( os.environ.get(u'usep_gh__BASIC_AUTH_PASSWORD') )
+basic_auth = BasicAuth(app)
 
 
 @app.route( u'/', methods=[u'GET', u'POST'] )
-# @basic_auth.required
+@basic_auth.required
 def handle_github_push():
-    """ Triggers github pull.
+    """ Triggers queue jobs: github pull, file copy, and index updates.
         Called from github push webhook.
         TODO: remove GET, now used for testing. """
-    if not _validate_ip( flask.request.remote_addr ) == u'valid':
-        return flask.abort( 403 )
-    q = rq.Queue( u'usep', connection=redis.Redis() )
-    q.enqueue_call (
-        func=u'usep_gh_handler_app.utils.run_call_github_pull',
-        kwargs = {} )
-    log.debug( u'in usep_gh_handler.handle_github_push(); job enqueued fine' )
+    # q = rq.Queue( u'usep', connection=redis.Redis() )
+    # q.enqueue_call (
+    #     func=u'usep_gh_handler_app.utils.processor.run_call_git_pull',
+    #     kwargs = {} )
+    # log.debug( u'in usep_gh_handler.handle_github_push(); job enqueued fine' )
+    return_dict = {}
     return_dict = {
         u'datetime': datetime.datetime.now(),
-        u'response': u'git pull initiated' }
+        u'args': flask.request.args,
+        u'cookies': flask.request.cookies,
+        u'data': flask.request.data,
+        u'form': flask.request.form,
+        u'headers': unicode(repr(flask.request.headers)),
+        u'method': flask.request.method,
+        u'path': flask.request.path,
+        u'remote_addr': flask.request.remote_addr,
+        u'values': flask.request.values,
+        }
+    log.debug( u'in usep_gh_handler.handle_github_push(); return_dict, `%s`' % pprint.pformat(return_dict) )
     return flask.jsonify( return_dict )
-
-def _validate_ip( client_ip ):
-    """ Logs and validates ip.
-        Returns 'valid' or 'invalid'.
-        Called by handle_github_push(). """
-    log.info( u'in usep_gh_handler._validate_ip(); client_ip, `%s`' % client_ip )
-    if client_ip in LEGIT_IPS.keys():
-        validity = u'valid'
-    else:
-        log.info( u'in usep_gh_handler.handle_github_push(); client_ip not in LEGIT_IPS; will return forbidden' )
-        validity = u'invalid'
-    return validity
 
 
 
