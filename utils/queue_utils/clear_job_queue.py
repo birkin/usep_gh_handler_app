@@ -14,6 +14,7 @@ for job in q.jobs:
         u'args': job._args,
         u'kwargs': job._kwargs,
         u'function': job._func_name,
+        u'description': job.description,
         u'dt_created': job.created_at,
         u'dt_enqueued': job.enqueued_at,
         u'dt_ended': job.ended_at,
