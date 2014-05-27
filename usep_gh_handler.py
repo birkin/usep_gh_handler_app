@@ -10,8 +10,8 @@ from flask.ext.basicauth import BasicAuth  # http://flask-basicauth.readthedocs.
 app = flask.Flask(__name__)
 log = logger_setup.setup_logger()
 log.debug( u'in usep_gh_handler; log initialized' )
-app.config['BASIC_AUTH_USERNAME'] = unicode( os.environ.get(u'usep_gh__BASIC_AUTH_USERNAME') )
-app.config['BASIC_AUTH_PASSWORD'] = unicode( os.environ.get(u'usep_gh__BASIC_AUTH_PASSWORD') )
+app.config[u'BASIC_AUTH_USERNAME'] = unicode( os.environ.get(u'usep_gh__BASIC_AUTH_USERNAME') )
+app.config[u'BASIC_AUTH_PASSWORD'] = unicode( os.environ.get(u'usep_gh__BASIC_AUTH_PASSWORD') )
 basic_auth = BasicAuth(app)
 
 
@@ -45,8 +45,8 @@ def handle_github_push():
 
 
 
-if __name__ == '__main__':
-    if os.getenv('DEVBOX') == 'true':
-        app.run( host='0.0.0.0', debug=True )
+if __name__ == u'__main__':
+    if os.getenv(u'DEVBOX') == u'true':
+        app.run( host=u'0.0.0.0', debug=True )
     else:
         app.run()

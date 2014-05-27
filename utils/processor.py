@@ -2,13 +2,14 @@
 
 import logging, os, pprint
 import envoy, redis, rq
+from usep_gh_handler_app.utils import logger_setup
 
 
-log = logging.getLogger(__name__)
+log = logger_setup.setup_logger()
 
 
 class ProcessorUtils( object ):
-    """ Handles the git-pull command, parses results, and returns list of filenames. """
+    """ Handles the git-pull command. """
 
     def __init__( self, log ):
         """ Settings. """
@@ -37,7 +38,7 @@ class ProcessorUtils( object ):
             u'command': envoy_response.command,  # list
             u'history': envoy_response.history  # list
             }
-        self.log.info( u'in utils.Processor._examine_command_output(); envoy_output, `%s`' % return_dict )
+        self.log.info( u'in utils.Processor._log_command_output(); envoy_output, `%s`' % return_dict )
         return return_dict
 
     ## end class ProcessorUtils()
