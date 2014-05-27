@@ -40,7 +40,7 @@ class ProcessorUtils( object ):
         self.log.info( u'in utils.Processor._log_command_output(); envoy_output, `%s`' % return_dict )
         return return_dict
 
-    ## misc ##
+    ## handler-app helpers ##
 
     def log_github_post( self, flask_request ):
         """ Logs data posted from github.
@@ -60,6 +60,17 @@ class ProcessorUtils( object ):
             }
         self.log.debug( u'in utils.processor.log_github_post(); github_data_dict, `%s`' % pprint.pformat(github_data_dict) )
         return
+
+    def prep_data_dict( self, flask_request_data ):
+        """ Prepares the data-dict to be sent to run_call_git_pull().
+            Called by usep_gh_handler.handle_github_push() """
+        commit_info = json.loads( flask_request_data )
+        data = {
+            u'added': commit_info[u'commits'][u'added'],
+            u'modified': commit_info[u'commits'][u'modified'],
+            u'removed': commit_info[u'commits'][u'removed'],
+            u'timestamp': unicode( datetime.datetime.now() ) }
+        return data
 
     ## end class ProcessorUtils()
 
