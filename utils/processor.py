@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import logging, os, pprint
+import datetime, logging, os, pprint, time
 import envoy, redis, rq
 from usep_gh_handler_app.utils import logger_setup
-
-
-log = logger_setup.setup_logger()
 
 
 class ProcessorUtils( object ):
@@ -15,6 +12,8 @@ class ProcessorUtils( object ):
         """ Settings. """
         self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
         self.log = log
+
+    ## git pull ##
 
     def call_git_pull( self ):
         """ Runs git_pull.
@@ -41,6 +40,27 @@ class ProcessorUtils( object ):
         self.log.info( u'in utils.Processor._log_command_output(); envoy_output, `%s`' % return_dict )
         return return_dict
 
+    ## misc ##
+
+    def log_github_post( self, flask_request ):
+        """ Logs data posted from github.
+            Called by usep_gh_handler.handle_github_push() """
+        return_dict = {}
+        return_dict = {
+            u'datetime': datetime.datetime.now(),
+            u'args': flask_request.args,
+            u'cookies': flask_request.cookies,
+            u'data': flask_request.data,
+            u'form': flask_request.form,
+            u'headers': unicode(repr(flask_request.headers)),
+            u'method': flask_request.method,
+            u'path': flask_request.path,
+            u'remote_addr': flask_request.remote_addr,
+            u'values': flask_request.values,
+            }
+        self.log.debug( u'in utils.processor.log_github_post(); return_dict, `%s`' % pprint.pformat(return_dict) )
+        return
+
     ## end class ProcessorUtils()
 
 
@@ -52,23 +72,40 @@ class ProcessorUtils( object ):
 
 q = rq.Queue( u'usep', connection=redis.Redis() )
 
-def run_call_git_pull():
+def run_call_git_pull( data ):
     """ Initiates a git pull update.
             Spawns a call to Processor.process_file() for each result found.
         Called by usep_gh_handler.handle_github_push(). """
+    assert sorted( data.keys() ) == [ u'added', u'deleted', u'removed', u'timestamp' ]
+    time.sleep( 5 )  # let any existing jobs in process finish
+    log = logger_setup.setup_logger()
+    log.debug( u'in processor.run_call_git_pull(); data, `%s`' % pprint.pformat(data) )
     processor_utils = ProcessorUtils( log )
-    processor_utils.call_git_pull()
-    job = q.enqueue_call(
-        func=u'usep_gh_handler_app.utils.xyz',
-        kwargs = {} )
+    # processor_utils.call_git_pull()
+    # job = q.enqueue_call(
+    #     func=u'usep_gh_handler_app.utils.xyz',
+    #     kwargs = {} )
     return
 
-def run_process_inscription( kwargs ):
-    """ Stub; TODO, build out.
-        Moves inscription to correct place, and indexes it.
-        Called by queue-job created by processor.py run_call_git_pull(). """
-    filename = kwargs[u'filename']
-    processor = Processor()
-    processor.move_file( filename )
-    processor.index_file( filename )
-    return
+# def run_call_git_pull( data ):
+#     """ Initiates a git pull update.
+#             Spawns a call to Processor.process_file() for each result found.
+#         Called by usep_gh_handler.handle_github_push(). """
+#     assert sorted( data.keys() ) == [ u'added', u'deleted', u'modified', u'timestamp' ]
+#     time.sleep( 5 )  # let any existing jobs in process finish
+#     processor_utils = ProcessorUtils( log )
+#     processor_utils.call_git_pull()
+#     job = q.enqueue_call(
+#         func=u'usep_gh_handler_app.utils.xyz',
+#         kwargs = {} )
+#     return
+
+# def run_process_inscription( kwargs ):
+#     """ Stub; TODO, build out.
+#         Moves inscription to correct place, and indexes it.
+#         Called by queue-job created by processor.py run_call_git_pull(). """
+#     filename = kwargs[u'filename']
+#     processor = Processor()
+#     processor.move_file( filename )
+#     processor.index_file( filename )
+#     return
