@@ -45,8 +45,8 @@ class ProcessorUtils( object ):
     def log_github_post( self, flask_request ):
         """ Logs data posted from github.
             Called by usep_gh_handler.handle_github_push() """
-        return_dict = {}
-        return_dict = {
+        github_data_dict = {}
+        github_data_dict = {
             u'datetime': datetime.datetime.now(),
             u'args': flask_request.args,
             u'cookies': flask_request.cookies,
@@ -58,7 +58,7 @@ class ProcessorUtils( object ):
             u'remote_addr': flask_request.remote_addr,
             u'values': flask_request.values,
             }
-        self.log.debug( u'in utils.processor.log_github_post(); return_dict, `%s`' % pprint.pformat(return_dict) )
+        self.log.debug( u'in utils.processor.log_github_post(); github_data_dict, `%s`' % pprint.pformat(github_data_dict) )
         return
 
     ## end class ProcessorUtils()
