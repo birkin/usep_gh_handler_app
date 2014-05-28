@@ -28,10 +28,10 @@ def handle_github_push():
     if not flask.request.data:
         message = u'no files to process'
     else:
-        data = processor_utils.prep_data_dict( flask.request.data )
+        files_changed = processor_utils.prep_data_dict( flask.request.data )  # dict of lists; added, modified, and removed files
         q.enqueue_call (
             func=u'usep_gh_handler_app.utils.processor.run_call_git_pull',
-            kwargs = {u'github_file_info': data} )
+            kwargs = {u'github_file_info': files_changed} )
         message = u'git pull initiated'
     log.debug( u'in usep_gh_handler.handle_github_push(); message, `%s`' % message )
     return u'received', 200
