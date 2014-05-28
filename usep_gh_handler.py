@@ -19,13 +19,14 @@ q = rq.Queue( u'usep', connection=redis.Redis() )
 
 
 @app.route( u'/', methods=[u'GET', u'POST'] )
+@app.route( u'/force/', methods=[u'GET', u'POST'] )
 @basic_auth.required
 def handle_github_push():
     """ Triggers queue jobs: github pull, file copy, and index updates.
         Called from github push webhook.
         TODO: remove GET, now used for testing. """
     processor_utils.log_github_post( flask.request )
-    if not flask.request.data:
+    if not flask.request.data and u'force' not in flask.request.path:
         message = u'no files to process'
     else:
         files_changed = processor_utils.prep_data_dict( flask.request.data )  # dict of lists; added, modified, and removed files
@@ -39,8 +40,11 @@ def handle_github_push():
 
 
 
-if __name__ == u'__main__':
-    if os.getenv(u'DEVBOX') == u'true':
-        app.run( host=u'0.0.0.0', debug=True )
-    else:
-        app.run()
+# if __name__ == u'__main__':
+#     if os.getenv(u'DEVBOX') == u'true':
+#         app.run( host=u'0.0.0.0', debug=True )
+#     else:
+#         try:
+#             app.run()
+#         except Exception as e:
+#             print u'EXCEPTION, `%s`' % unicode(repr(e))
