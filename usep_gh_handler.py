@@ -19,7 +19,7 @@ q = rq.Queue( u'usep', connection=redis.Redis() )
 
 
 @app.route( u'/', methods=[u'GET', u'POST'] )
-@app.route( u'/force/', methods=[u'GET', u'POST'] )
+@app.route( u'/force/', methods=[u'GET', u'POST'] )  # for testing
 @basic_auth.required
 def handle_github_push():
     """ Triggers queue jobs: github pull, file copy, and index updates.
@@ -29,22 +29,10 @@ def handle_github_push():
     if not flask.request.data and u'force' not in flask.request.path:
         message = u'no files to process'
     else:
-        files_changed = processor_utils.prep_data_dict( flask.request.data )  # dict of lists; added, modified, and removed files
+        files_to_process = processor_utils.prep_data_dict( flask.request.data )  # dict of lists; to_copy, to_remove
         q.enqueue_call (
             func=u'usep_gh_handler_app.utils.processor.run_call_git_pull',
-            kwargs = {u'github_file_info': files_changed} )
+            kwargs = {u'files_to_process': files_to_process} )
         message = u'git pull initiated'
     log.debug( u'in usep_gh_handler.handle_github_push(); message, `%s`' % message )
     return u'received', 200
-
-
-
-
-# if __name__ == u'__main__':
-#     if os.getenv(u'DEVBOX') == u'true':
-#         app.run( host=u'0.0.0.0', debug=True )
-#     else:
-#         try:
-#             app.run()
-#         except Exception as e:
-#             print u'EXCEPTION, `%s`' % unicode(repr(e))

@@ -6,7 +6,7 @@ from usep_gh_handler_app.utils import logger_setup
 
 
 class ProcessorUtils( object ):
-    """ Handles the git-pull command. """
+    """ Supports processing. """
 
     def __init__( self, log ):
         """ Settings. """
@@ -18,7 +18,7 @@ class ProcessorUtils( object ):
     def call_git_pull( self ):
         """ Runs git_pull.
                 Returns list of filenames.
-            Called by (eventually) a github-trigger, and an admin-trigger. """
+            Called by run_call_git_pull(). """
         original_directory = os.getcwd()
         os.chdir( self.GIT_CLONED_DIR_PATH )
         command = u'git pull'
@@ -40,7 +40,7 @@ class ProcessorUtils( object ):
         self.log.info( u'in utils.Processor._log_command_output(); envoy_output, `%s`' % return_dict )
         return return_dict
 
-    ## handler-app helpers ##
+    ## handler web-app helpers ##
 
     def log_github_post( self, flask_request ):
         """ Logs data posted from github.
@@ -65,13 +65,25 @@ class ProcessorUtils( object ):
         """ Prepares the data-dict to be sent to run_call_git_pull().
             Called by usep_gh_handler.handle_github_push() """
         self.log.debug( u'in processor.prep_data_dict(); flask_request_data, `%s`' % flask_request_data )
-        data = { u'added': [], u'modified': [], u'removed': [], u'timestamp': unicode(datetime.datetime.now()) }
+        files_to_process = { u'to_copy': [], u'to_remove': [], u'timestamp': unicode(datetime.datetime.now()) }
         if flask_request_data:
             commit_info = json.loads( flask_request_data )
-            data[u'added'] = commit_info[u'commits'][u'added']
-            data[u'modified'] = commit_info[u'commits'][u'modified']
-            data[u'removed'] = commit_info[u'commits'][u'removed']
-        return data
+            files_to_process[u'to_copy'] = commit_info[u'commits'][u'added']
+            files_to_process[u'to_copy'].extend( commit_info[u'commits'][u'modified'] )
+            files_to_process[u'to_remove'] = commit_info[u'commits'][u'removed']
+        return files_to_process
+
+    # def prep_data_dict( self, flask_request_data ):
+    #     """ Prepares the data-dict to be sent to run_call_git_pull().
+    #         Called by usep_gh_handler.handle_github_push() """
+    #     self.log.debug( u'in processor.prep_data_dict(); flask_request_data, `%s`' % flask_request_data )
+    #     data = { u'added': [], u'modified': [], u'removed': [], u'timestamp': unicode(datetime.datetime.now()) }
+    #     if flask_request_data:
+    #         commit_info = json.loads( flask_request_data )
+    #         data[u'added'] = commit_info[u'commits'][u'added']
+    #         data[u'modified'] = commit_info[u'commits'][u'modified']
+    #         data[u'removed'] = commit_info[u'commits'][u'removed']
+    #     return data
 
     ## end class ProcessorUtils()
 
@@ -84,34 +96,21 @@ class ProcessorUtils( object ):
 
 q = rq.Queue( u'usep', connection=redis.Redis() )
 
-def run_call_git_pull( github_file_info ):
+def run_call_git_pull( files_to_process ):
     """ Initiates a git pull update.
             Spawns a call to Processor.process_file() for each result found.
         Called by usep_gh_handler.handle_github_push(). """
     print u'- HERE01'
-    assert sorted( github_file_info.keys() ) == [ u'added', u'modified', u'removed', u'timestamp' ], sorted( github_file_info.keys() )
-    time.sleep( 1 )  # let any existing jobs in process finish
+    assert sorted( files_to_process.keys() ) == [ u'timestamp', u'to_copy', u'to_remove' ], sorted( github_file_info.keys() )
+    time.sleep( 2 )  # let any existing jobs in process finish
     log = logger_setup.setup_logger()
-    log.debug( u'in processor.run_call_git_pull(); github_file_info, `%s`' % pprint.pformat(github_file_info) )
+    log.debug( u'in processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
     processor_utils = ProcessorUtils( log )
     processor_utils.call_git_pull()
     # job = q.enqueue_call(
     #     func=u'usep_gh_handler_app.utils.xyz',
     #     kwargs = {} )
     return
-
-# def run_call_git_pull( data ):
-#     """ Initiates a git pull update.
-#             Spawns a call to Processor.process_file() for each result found.
-#         Called by usep_gh_handler.handle_github_push(). """
-#     assert sorted( data.keys() ) == [ u'added', u'deleted', u'modified', u'timestamp' ]
-#     time.sleep( 5 )  # let any existing jobs in process finish
-#     processor_utils = ProcessorUtils( log )
-#     processor_utils.call_git_pull()
-#     job = q.enqueue_call(
-#         func=u'usep_gh_handler_app.utils.xyz',
-#         kwargs = {} )
-#     return
 
 # def run_process_inscription( kwargs ):
 #     """ Stub; TODO, build out.
