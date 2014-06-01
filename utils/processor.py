@@ -25,6 +25,8 @@ class Puller( object ):
         os.chdir( original_directory )
         return
 
+    ## end class Puller()
+
 
 class Copier( object ):
     """ Contains functions for copying xml-data files. """
@@ -97,44 +99,7 @@ class Copier( object ):
         r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
         return
 
-    ## end class ProcessorUtils()
-
-
-# class Processor( object ):
-#     """ Contains functions to process an individual file. """
-
-#     def __init__( self, log ):
-#         """ Settings. """
-#         self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
-#         self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
-#         self.log = log
-
-    # def copy_file( self, filepath ):
-    #     """ Handles inscription and resource copying appropriately.
-    #         Returns inscription_id if appropriate. """
-    #     inscription_sub_directories = [ u'bib_only', u'metadata_only', u'transcription' ]
-    #     copy_type = u'resource'
-    #     for dir_name in inscription_sub_directories:
-    #         if dir_name in filepath:
-    #             copy_type = u'inscription'
-    #             break
-    #     return_dict = {}
-    #     if copy_type == u'inscription':
-    #         file_name = filepath.split(u'/')[-1]
-    #         source_path = u'%s/%s' % ( self.GIT_CLONED_DIR_PATH, filepath )  # filepath doesn't include path _to_ usep_data dir
-    #         destination_path = u'%s/xml_inscriptions/%s' % ( self.WEBSERVED_DATA_DIR_PATH, file_name )
-    #         shutil.copy2( source_path, destination_path )
-    #         inscription_id = file_name.split( u'.xml' )[0]
-    #         return_dict = { u'inscription_id': inscription_id }
-    #     else:
-    #         processor_utils = ProcessorUtils( log )
-    #         source_path = u'%s/%s' % ( self.GIT_CLONED_DIR_PATH, u'resources' )
-    #         destination_path = u'%s/%s' % ( self.self.WEBSERVED_DATA_DIR_PATH, u'resources' )
-    #         # rsync -avz --delete /Users/birkin/Desktop/folder_a/ /Users/birkin/Desktop/folder_b/
-    #         command = u'rsync -avz --delete %s %s' % ( source_path, destination_path )
-    #         r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
-    #         processor_utils.log_envoy_output( r )
-    #     return return_dict
+    ## end class Copier()
 
 
 ## queue runners ##
@@ -146,7 +111,7 @@ def run_call_git_pull( files_to_process ):
             Spawns a call to Processor.process_file() for each result found.
         Triggered by usep_gh_handler.handle_github_push(). """
     log = log_helper.setup_logger()
-    assert sorted( files_to_process.keys() ) == [ u'timestamp', u'to_copy', u'to_remove' ]; log.debug( u'in processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
+    assert sorted( files_to_process.keys() ) == [ u'timestamp', u'files_updated', u'files_removed' ]; log.debug( u'in processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
     time.sleep( 2 )  # let any existing jobs in process finish
     ( puller, copier ) = ( Puller(log), Copier(log) )
     puller.call_git_pull()
@@ -157,44 +122,17 @@ def run_call_git_pull( files_to_process ):
             kwargs={u'files_to_copy': files_to_copy, u'files_to_remove': files_to_remove} )
     return
 
-# def run_call_git_pull( files_to_process ):
-#     """ Initiates a git pull update.
-#             Spawns a call to Processor.process_file() for each result found.
-#         Triggered by usep_gh_handler.handle_github_push(). """
-#     log = log_helper.setup_logger()
-#     assert sorted( files_to_process.keys() ) == [ u'timestamp', u'to_copy', u'to_remove' ]; log.debug( u'in processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
-#     time.sleep( 2 )  # let any existing jobs in process finish
-#     processor_utils = ProcessorUtils( log )
-#     processor_utils.call_git_pull()
-#     ( files_to_copy, files_to_remove ) = ( processor_utils.get_files_to_copy(files_to_process), processor_utils.get_files_to_remove(files_to_process) )
-#     for filepath in files_to_copy:
-#         job = q.enqueue_call( func=u'usep_gh_handler_app.utils.processor.run_copy_file', kwargs = {u'filepath': filepath} )
-#     for filepath in files_to_remove:
-#         job = q.enqueue_call( func=u'usep_gh_handler_app.utils.processor.run_remove_file', kwargs = {u'filepath': filepath} )
-#     return
-
-def run_copy_files( files_to_copy, files_to_remove ):
-    """ Runs a copy and then triggers an index job if necessary.
+def run_copy_files( files_updated, files_removed ):
+    """ Runs a copy and then triggers an index job.
+        Incoming data not for copying, but to pass to indexer.
         Triggered by utils.processor.run_call_git_pull(). """
     log = log_helper.setup_logger()
-    assert type( files_to_copy ) == list; assert type( files_to_remove ) == list
+    assert type( files_updated ) == list; assert type( files_removed ) == list
     log.debug( u'in utils.processor.run_copy_files(); files_to_copy, `%s`' % pprint.pformat(files_to_copy) )
     log.debug( u'in utils.processor.run_copy_files(); files_to_remove, `%s`' % pprint.pformat(files_to_remove) )
     copier = Copier( log )
     copier.copy_files()
     q.enqueue_call(
-        func=u'usep_gh_handler_app.utils.processor.run_update_index',
-        kwargs={u'files_to_copy': files_to_copy, u'files_to_remove': files_to_remove} )
+        func=u'usep_gh_handler_app.utils.indexer.run_update_index',
+        kwargs={u'files_updated': files_updated, u'files_removed': files_removed} )
     return
-
-# def run_copy_file( filepath ):
-#     """ Runs a copy and then triggers an index job if necessary.
-#         Triggered by utils.processor.run_call_git_pull(). """
-#     log = log_helper.setup_logger()
-#     assert type( filepath ) == unicode
-#     log.debug( u'in processor.run_copy_file(); filepath, `%s`' % filepath )
-#     processor = Processor( log )
-#     copy_result = processor.copy_file( filepath )
-#     if copy_result[u'next'] == u'index':
-#         job = q.enqueue_call( func=u'usep_gh_handler_app.utils.processor.run_update_index', kwargs = {u'inscription_id': copy_result[u'inscription_id']} )
-#     return

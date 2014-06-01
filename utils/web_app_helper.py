@@ -39,7 +39,7 @@ class WebAppHelper( object ):
         files_to_process = { u'to_copy': [], u'to_remove': [], u'timestamp': unicode(datetime.datetime.now()) }
         if flask_request_data:
             commit_info = json.loads( flask_request_data )
-            files_to_process[u'to_copy'] = commit_info[u'commits'][u'added']
-            files_to_process[u'to_copy'].extend( commit_info[u'commits'][u'modified'] )
-            files_to_process[u'to_remove'] = commit_info[u'commits'][u'removed']
+            files_to_process[u'files_updated'] = commit_info[u'commits'][u'added']
+            files_to_process[u'files_updated'].extend( commit_info[u'commits'][u'modified'] )
+            files_to_process[u'files_removed'] = commit_info[u'commits'][u'removed']
         return files_to_process

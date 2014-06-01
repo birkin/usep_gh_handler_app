@@ -29,7 +29,7 @@ def handle_github_push():
     if not flask.request.data and u'force' not in flask.request.path:
         message = u'no files to process'
     else:
-        files_to_process = app_helper.prep_data_dict( flask.request.data )  # dict of lists; to_copy, to_remove
+        files_to_process = app_helper.prep_data_dict( flask.request.data )  # dict of lists; files_updated, files_removed
         q.enqueue_call (
             func=u'usep_gh_handler_app.utils.processor.run_call_git_pull',
             kwargs = {u'files_to_process': files_to_process} )
