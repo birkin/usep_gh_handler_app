@@ -2,53 +2,16 @@
 
 import datetime, json, logging, os, pprint, shutil, time
 import envoy, redis, rq
-from usep_gh_handler_app.utils import logger_setup
+from usep_gh_handler_app.utils import log_helper
 
 
-class ProcessorUtils( object ):
-    """ Contains functions related to getting lists of files to process. """
+class Puller( object ):
+    """ Contains funcions for executing git-pull. """
 
     def __init__( self, log ):
         """ Settings. """
         self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
-        self.TEMP_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__TEMP_DATA_DIR_PATH') )
-        self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
         self.log = log
-
-    ## handler web-app helpers ##
-
-    def log_github_post( self, flask_request ):
-        """ Logs data posted from github.
-            Called by usep_gh_handler.handle_github_push() """
-        github_data_dict = {}
-        github_data_dict = {
-            u'datetime': datetime.datetime.now(),
-            u'args': flask_request.args,
-            u'cookies': flask_request.cookies,
-            u'data': flask_request.data,
-            u'form': flask_request.form,
-            u'headers': unicode(repr(flask_request.headers)),
-            u'method': flask_request.method,
-            u'path': flask_request.path,
-            u'remote_addr': flask_request.remote_addr,
-            u'values': flask_request.values,
-            }
-        self.log.debug( u'in utils.processor.log_github_post(); github_data_dict, `%s`' % pprint.pformat(github_data_dict) )
-        return
-
-    def prep_data_dict( self, flask_request_data ):
-        """ Prepares the data-dict to be sent to run_call_git_pull().
-            Called by usep_gh_handler.handle_github_push() """
-        self.log.debug( u'in processor.prep_data_dict(); flask_request_data, `%s`' % flask_request_data )
-        files_to_process = { u'to_copy': [], u'to_remove': [], u'timestamp': unicode(datetime.datetime.now()) }
-        if flask_request_data:
-            commit_info = json.loads( flask_request_data )
-            files_to_process[u'to_copy'] = commit_info[u'commits'][u'added']
-            files_to_process[u'to_copy'].extend( commit_info[u'commits'][u'modified'] )
-            files_to_process[u'to_remove'] = commit_info[u'commits'][u'removed']
-        return files_to_process
-
-    ## git pull ##
 
     def call_git_pull( self ):
         """ Runs git_pull.
@@ -58,24 +21,20 @@ class ProcessorUtils( object ):
         os.chdir( self.GIT_CLONED_DIR_PATH )
         command = u'git pull'
         r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
-        self._log_command_output( r )
+        log_helper.log_envoy_output( self.log, r )
         os.chdir( original_directory )
         return
 
-    def _log_command_output( self, envoy_response ):
-        """ Creates and returns dict of envoy_response attributes.
-            Called by call_git_pull(). """
-        return_dict = {
-            u'status_code': envoy_response.status_code,  # int
-            u'std_out': envoy_response.std_out.decode(u'utf-8'),
-            u'std_err': envoy_response.std_err.decode(u'utf-8'),
-            u'command': envoy_response.command,  # list
-            u'history': envoy_response.history  # list
-            }
-        self.log.info( u'in utils.Processor._log_command_output(); envoy_output, `%s`' % return_dict )
-        return return_dict
 
-    ## files_to_process
+class Copier( object ):
+    """ Contains functions for copying xml-data files. """
+
+    def __init__( self, log ):
+        """ Settings. """
+        self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
+        self.TEMP_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__TEMP_DATA_DIR_PATH') )
+        self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
+        self.log = log
 
     def get_files_to_copy( self, files_to_process ):
         """ Creates and returns list of filepaths to copy.
@@ -102,23 +61,41 @@ class ProcessorUtils( object ):
     ## copy files
 
     def copy_files( self ):
-        """ Runs rsync. """
+        """ Runs rsync.
+            Called by run_call_git_pull(). """
         self._copy_resources()
+        self._build_unified_inscriptions()
         self._copy_inscriptions()
 
     def _copy_resources( self ):
         """ Updates resources directory. """
         resources_source_path = u'%s/%s' % ( self.GIT_CLONED_DIR_PATH, u'resources' )
         resources_destination_path = u'%s/%s' % ( self.WEBSERVED_DATA_DIR_PATH, u'resources' )
-        command = u'rsync -avz --delete %s %s' % ( source_path, destination_path )
+        command = u'rsync -avz --delete %s %s' % ( resources_source_path, resources_destination_path )
         r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
+        return
+
+    def _build_unified_inscriptions( self ):
+        """ Updates staging unified inscrptions file. """
+        for entry in os.listdir( self.TEMP_DATA_DIR_PATH ):  # deletes old temp unified inscriptions
+            file_path = os.path.join( self.TEMP_DATA_DIR_PATH, entry )
+            os.unlink( file_path )
+        source_dir_paths = [  # runs 3 non-deletion rsyncs
+            u'%s/xml_inscriptions/bib_only' % self.GIT_CLONED_DIR_PATH,
+            u'%s/xml_inscriptions/metadata_only' % self.GIT_CLONED_DIR_PATH,
+            u'%s/xml_inscriptions/transcription' % self.GIT_CLONED_DIR_PATH ]
+        for source_dir_path in source_dir_paths:
+            command = u'rsync -avz %s %s' % ( source_dir_path, resources_destination_path, self.TEMP_DATA_DIR_PATH )
+            r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
         return
 
     def _copy_inscriptions( self ):
         """ Updates inscriptions directory. """
-        # delete temp unified inscriptions
-        # run 3 rsyncs
-        # rsync unified to production inscriptions
+        inscriptions_source_path = self.TEMP_DATA_DIR_PATH
+        inscriptions_destination_path = u'%s/%s' % ( self.WEBSERVED_DATA_DIR_PATH, u'inscriptions' )
+        command = u'rsync -avz --delete %s %s' % ( inscriptions_source_path, inscriptions_destination_path )
+        r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
+        return
 
     ## end class ProcessorUtils()
 
@@ -156,7 +133,7 @@ class ProcessorUtils( object ):
     #         # rsync -avz --delete /Users/birkin/Desktop/folder_a/ /Users/birkin/Desktop/folder_b/
     #         command = u'rsync -avz --delete %s %s' % ( source_path, destination_path )
     #         r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
-    #         processor_utils._log_command_output( r )
+    #         processor_utils.log_envoy_output( r )
     #     return return_dict
 
 
@@ -168,12 +145,12 @@ def run_call_git_pull( files_to_process ):
     """ Initiates a git pull update.
             Spawns a call to Processor.process_file() for each result found.
         Triggered by usep_gh_handler.handle_github_push(). """
-    log = logger_setup.setup_logger()
+    log = log_helper.setup_logger()
     assert sorted( files_to_process.keys() ) == [ u'timestamp', u'to_copy', u'to_remove' ]; log.debug( u'in processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
     time.sleep( 2 )  # let any existing jobs in process finish
-    processor_utils = ProcessorUtils( log )
-    processor_utils.call_git_pull()
-    ( files_to_copy, files_to_remove ) = ( processor_utils.get_files_to_copy(files_to_process), processor_utils.get_files_to_remove(files_to_process) )
+    ( puller, copier ) = ( Puller(log), Copier(log) )
+    puller.call_git_pull()
+    ( files_to_copy, files_to_remove ) = ( copier.get_files_to_copy(files_to_process), copier.get_files_to_remove(files_to_process) )
     if files_to_copy or files_to_remove:
         q.enqueue_call(
             func=u'usep_gh_handler_app.utils.processor.run_copy_files',
@@ -184,7 +161,7 @@ def run_call_git_pull( files_to_process ):
 #     """ Initiates a git pull update.
 #             Spawns a call to Processor.process_file() for each result found.
 #         Triggered by usep_gh_handler.handle_github_push(). """
-#     log = logger_setup.setup_logger()
+#     log = log_helper.setup_logger()
 #     assert sorted( files_to_process.keys() ) == [ u'timestamp', u'to_copy', u'to_remove' ]; log.debug( u'in processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
 #     time.sleep( 2 )  # let any existing jobs in process finish
 #     processor_utils = ProcessorUtils( log )
@@ -199,12 +176,12 @@ def run_call_git_pull( files_to_process ):
 def run_copy_files( files_to_copy, files_to_remove ):
     """ Runs a copy and then triggers an index job if necessary.
         Triggered by utils.processor.run_call_git_pull(). """
-    log = logger_setup.setup_logger()
+    log = log_helper.setup_logger()
     assert type( files_to_copy ) == list; assert type( files_to_remove ) == list
-    log.debug( u'in processor.run_copy_files(); files_to_copy, `%s`' % pprint.pformat(files_to_copy) )
-    log.debug( u'in processor.run_copy_files(); files_to_remove, `%s`' % pprint.pformat(files_to_remove) )
-    processor_utils = ProcessorUtils( log )
-    processor_utils.copy_files()
+    log.debug( u'in utils.processor.run_copy_files(); files_to_copy, `%s`' % pprint.pformat(files_to_copy) )
+    log.debug( u'in utils.processor.run_copy_files(); files_to_remove, `%s`' % pprint.pformat(files_to_remove) )
+    copier = Copier( log )
+    copier.copy_files()
     q.enqueue_call(
         func=u'usep_gh_handler_app.utils.processor.run_update_index',
         kwargs={u'files_to_copy': files_to_copy, u'files_to_remove': files_to_remove} )
@@ -213,7 +190,7 @@ def run_copy_files( files_to_copy, files_to_remove ):
 # def run_copy_file( filepath ):
 #     """ Runs a copy and then triggers an index job if necessary.
 #         Triggered by utils.processor.run_call_git_pull(). """
-#     log = logger_setup.setup_logger()
+#     log = log_helper.setup_logger()
 #     assert type( filepath ) == unicode
 #     log.debug( u'in processor.run_copy_file(); filepath, `%s`' % filepath )
 #     processor = Processor( log )

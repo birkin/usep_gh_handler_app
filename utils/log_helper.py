@@ -3,11 +3,11 @@
 """ Handles log setup. """
 
 import logging, os
-# import logging.handlers
 
 
 def setup_logger():
-    """ Returns a logger to write to a file. """
+    """ Returns a logger to write to a file.
+        Called by usep_gh_handler.py and processor.py functions. """
     LOG_DIR = unicode( os.environ.get(u'usep_gh__LOG_DIR') )
     LOG_LEVEL = unicode( os.environ.get(u'usep_gh__LOG_LEVEL') )
     filename = u'%s/usep_gh_handler.log' % LOG_DIR
@@ -20,3 +20,17 @@ def setup_logger():
     file_handler.setFormatter( formatter )
     logger.addHandler( file_handler )
     return logger
+
+
+def log_envoy_output( log, envoy_response ):
+    """ Creates and returns dict of envoy_response attributes.
+        Called by utils.processor.Puller.call_git_pull(). """
+    return_dict = {
+        u'status_code': envoy_response.status_code,  # int
+        u'std_out': envoy_response.std_out.decode(u'utf-8'),
+        u'std_err': envoy_response.std_err.decode(u'utf-8'),
+        u'command': envoy_response.command,  # list
+        u'history': envoy_response.history  # list
+        }
+    log.info( u'in utils.log_helper.log_envoy_output(); envoy_output, `%s`' % return_dict )
+    return return_dict
