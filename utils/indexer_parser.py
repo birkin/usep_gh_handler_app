@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from usep_gh_handler_app.utils import log_helper
+import lxml
+from lxml import etree
 
 
 class Parser( object ):
   """ Contains functions for preparing solr-data.
       TODO: replace pq extracts with straight lxml or beautifulsoup extracts. """
 
-  def __init__( self, logger, xml_path, bib_xml_path=None ):
+  def __init__( self, inscription_xml_path, bib_xml_path, log ):
     '''
     - makes lxml-doc from xml_path
     - if bib_xml_path:
@@ -15,6 +16,7 @@ class Parser( object ):
       - makes lxml-docs of matching bib_xml elements for future author/title/etc parsing
     - sets some attributes
     '''
+    self.log = log
     ## attributes
     self.bib_authors = None  # from parseBibAuthors()
     self.bib_doc = None  # from init(); lxml-object from bib-xml
@@ -46,13 +48,13 @@ class Parser( object ):
     self.writing = None
     self.xml = None  # from init()
     self.xml_doc = None  # from init()
-    self.xml_path = xml_path  # passed in; required
+    self.xml_path = inscription_xml_path  # passed in; required
     ## standard work
     self.loadAndDocifyInscriptionXml()
     self.parseId()
     self.loadAndDocifyBiblXml()  # requires self.bib_xml_path
     self.makeBibDocs()  # requires self.bib_doc, set by self.loadAndDocifyBiblXml()
-    # logger.debug( u'end of Parser.__init__()' )
+    # self.log.debug( u'end of Parser.__init__()' )
 
   def loadAndDocifyInscriptionXml(self):
     """Makes an lxml object from the inscription file."""
@@ -62,7 +64,7 @@ class Parser( object ):
     try:
       self.xml_doc = etree.fromstring( self.xml.encode(u'utf-8') )  # str required because xml contains an encoding declaration
     except lxml.etree.XMLSyntaxError, e:
-      logger.error( u'in Parser.loadAndDocifyInscriptionXml(); error instantiating xml_doc; xml_path is: %s; e is: %s' % (self.xml_path, repr(e).decode(u'utf-8', u'replace')) )
+      log.error( u'in Parser.loadAndDocifyInscriptionXml(); error instantiating xml_doc; xml_path is: %s; e is: %s' % (self.xml_path, repr(e).decode(u'utf-8', u'replace')) )
       self.parse_errors = u'in Parser.loadAndDocifyInscriptionXml(); unable to load xml string into an xml doc'
 
   def loadAndDocifyBiblXml(self):
@@ -76,7 +78,7 @@ class Parser( object ):
         assert unicode(type(self.bib_doc)) == u"<type 'lxml.etree._Element'>", Exception( u'type(self.bib_doc) should be lxml.etree._Element; it is: %s' % unicode(type(self.bib_doc)) )
         return self.bib_doc
     except Exception as e:
-      logger.error( u'in Parser.loadAndDocifyBiblXml(); exception e is: %s' % repr(e).decode(u'utf-8', u'replace') )
+      log.error( u'in Parser.loadAndDocifyBiblXml(); exception e is: %s' % repr(e).decode(u'utf-8', u'replace') )
       self.parse_errors = u'in Parser.loadAndDocifyBiblXml(); unable to load expected bib doc'
 
   def makeBibDocs(self):
@@ -85,7 +87,7 @@ class Parser( object ):
     try:
       if not self.bib_doc == None:
         if self.bib_ids == None:
-          # logger.debug( u'in makeBibDocs(); about to call parseBibIds()' )
+          # self.log.debug( u'in makeBibDocs(); about to call parseBibIds()' )
           self.parseBibIds()
         if len( self.bib_ids ) == 0:
           self.bib_docs = []
@@ -95,26 +97,26 @@ class Parser( object ):
         else:
           self.bib_docs = []
           for bib_id in self.bib_ids:
-            logger.debug( u'in makeBibDocs(); about to make bib-doc for bib_id: %s' % bib_id )
+            self.log.debug( u'in makeBibDocs(); about to make bib-doc for bib_id: %s' % bib_id )
             ## find bib-match (in bib xml)
             found_el = None
             for el in self.bib_doc.iter( u'{http://www.tei-c.org/ns/1.0}bibl' ):
               if el.attrib[ u'{http://www.w3.org/XML/1998/namespace}id' ] == bib_id:
                 found_el = el
-                logger.debug( u'in makeBibDocs(); bib-doc found: %s' % etree.tostring(found_el) )
+                self.log.debug( u'in makeBibDocs(); bib-doc found: %s' % etree.tostring(found_el) )
                 self.bib_docs.append( found_el )
                 break
             if found_el == None:
-              logger.debug( u'in makeBibDocs(); NO bib-doc found' )
+              self.log.debug( u'in makeBibDocs(); NO bib-doc found' )
               self.bib_docs.append( None )
-        logger.debug( u'in makeBibDocs(); self.bib_docs: %s' % self.bib_docs )
+        self.log.debug( u'in makeBibDocs(); self.bib_docs: %s' % self.bib_docs )
         return self.bib_docs
       else:
         return
     except Exception as e:
       # self.parse_errors = u'exception in makeBibDocs() is: %s' % repr(e).decode(u'utf-8', u'replace')
       message = u'makeBibDocs() exception is: %s' % repr(e).decode(u'utf-8', u'replace')
-      logger.error( message )
+      self.log.error( message )
       self.parse_errors = u'in Parser.makeBibDocs(); problem making bib-docs; error logged'
 
   # def makeBibDocs(self):
@@ -123,7 +125,7 @@ class Parser( object ):
   #   try:
   #     if not self.bib_doc == None:
   #       if self.bib_ids == None:
-  #         # logger.debug( u'in makeBibDocs(); about to call parseBibIds()' )
+  #         # self.log.debug( u'in makeBibDocs(); about to call parseBibIds()' )
   #         self.parseBibIds()
   #       if len( self.bib_ids ) == 0:
   #         self.bib_docs = []
@@ -144,7 +146,7 @@ class Parser( object ):
   #   except Exception as e:
   #     # self.parse_errors = u'exception in makeBibDocs() is: %s' % repr(e).decode(u'utf-8', u'replace')
   #     message = u'makeBibDocs() exception is: %s' % repr(e).decode(u'utf-8', u'replace')
-  #     logger.error( message )
+  #     log.error( message )
   #     self.parse_errors = u'in Parser.makeBibDocs(); problem making bib-docs; error logged'
 
   def parseBibAuthors(self):
@@ -165,7 +167,7 @@ class Parser( object ):
       return self.bib_authors
     except Exception as e:
       message = u'parseBibAuthors() exception is: %s' % repr(e).decode(u'utf-8', u'replace')
-      logger.error( message )
+      log.error( message )
       self.parse_errors = u'in Parser.parseBibAuthors(); problem parsing bib-authors'
 
   # def parseBibAuthors(self):
@@ -184,7 +186,7 @@ class Parser( object ):
   #     return self.bib_authors
   #   except Exception as e:
   #     message = u'parseBibAuthors() exception is: %s' % repr(e).decode(u'utf-8', u'replace')
-  #     logger.error( message )
+  #     log.error( message )
   #     self.parse_errors = u'in Parser.parseBibAuthors(); problem parsing bib-authors'
 
   def _parse_bib_authors_from_monograph( self, bib_match_element, bib_authors ):
@@ -231,17 +233,17 @@ class Parser( object ):
         try:
           bib_text = bib.attrib[u'target'].split(u'#')[1]
         except IndexError, e:
-          logger.debug( u'in Parser.parseBibIds(); error on file: %s; error (possibly missing hash): %s' % (self.xml_path, repr(e).decode(u'utf-8', u'replace')) )
+          self.log.debug( u'in Parser.parseBibIds(); error on file: %s; error (possibly missing hash): %s' % (self.xml_path, repr(e).decode(u'utf-8', u'replace')) )
           pass
         if bib_text:
           assert type(bib_text) == unicode, Exception( u'in parseBibIds(); type(bib_text) should be unicode; it is: %s' % type(bib_text) )
           self.bib_ids.append( bib_text )
     self.bib_ids = sorted( self.bib_ids )
-    # logger.debug( u'in parseBibIds(); self.bib_ids is: %s' % self.bib_ids )
+    # self.log.debug( u'in parseBibIds(); self.bib_ids is: %s' % self.bib_ids )
     if self.bib_ids == []:
       self.parse_errors = u'in Parser.parseBibIds(); expected bib_ids; none found'
-      logger.debug( u'in parseBibIds(); setting self.parse_errors because self.bib_ids is empty.' )
-    logger.debug( u'in parseBibIds(); self.bib_ids is: %s' % self.bib_ids )
+      self.log.debug( u'in parseBibIds(); setting self.parse_errors because self.bib_ids is empty.' )
+    self.log.debug( u'in parseBibIds(); self.bib_ids is: %s' % self.bib_ids )
     return self.bib_ids
 
   def parseBibIdsFiltered(self):
@@ -415,7 +417,7 @@ class Parser( object ):
       self._clean_bib_titles()
       return { u'bib_titles': self.bib_titles, u'bib_titles_all':self.bib_titles_all }
     except Exception as e:
-      logger.debug( u'in Parser.parseBibTitles(); exception is: %s' % repr(e).decode(u'utf-8', u'replace') )
+      self.log.debug( u'in Parser.parseBibTitles(); exception is: %s' % repr(e).decode(u'utf-8', u'replace') )
       self.parse_errors = u'in Parser.parseBibTitles(); unable to parse expected bib-titles'
 
   def _setup_bib_titles_work( self ):
@@ -531,7 +533,7 @@ class Parser( object ):
       i_id = element.attrib[u'{http://www.w3.org/XML/1998/namespace}id']
       self.i_id = i_id.decode( u'utf-8' )
       assert type(self.i_id) == unicode
-      # logger.debug( u'in Parser.parseId(); created i_id is: %s' % self.i_id )
+      # self.log.debug( u'in Parser.parseId(); created i_id is: %s' % self.i_id )
       return self.i_id
     except Exception as e:
       log.error( u'in Parser.parseId(); exception is: %s' % repr(e).decode(u'utf-8', u'replace') )
@@ -651,43 +653,53 @@ class Parser( object ):
 
 
 
-  def parse_text_genre( self, pyquery_object ):
+  def parse_text_genre( self ):
     """ Parses class from msItem element.
         Example: grabs 'verse' from <msItem class="#verse">
         Called by utils.indexer.Indexer._build_solr_dict() """
-    text_genre = []  # multi-valued
-    tg_segments = pyquery_object('msitem').attr('class')
-    if tg_segments:
-      tg_segments = tg_segments.split()
-      for tg_entry in tg_segments:
-        tg_entry = tg_entry.strip()
-        if tg_entry[0] == '#':
-          tg_entry = tg_entry[1:]
-        text_genre.append( tg_entry )
-    if len( text_genre ) > 0:
-      return_val = text_genre
-    else:
-      return_val = None
-    return return_val
+    return u'foo'
 
-
-  def parse_object_type( self, pyquery_object ):
+  def parse_object_type( self ):
     """ Parses object_type.
         Called by utils.indexer.Indexer._build_solr_dict() """
-    object_type = []
-    ot_segments = pq('objectdesc').attr('ana')
-    if ot_segments:
-      ot_segments = ot_segments.split()
-      for ot_entry in ot_segments:
-        ot_entry = ot_entry.strip()
-        if ot_entry[0] == '#':
-          ot_entry = ot_entry[1:]
-        object_type.append( ot_entry )
-    if len( object_type ) > 0:
-      return_val = object_type
-    else:
-      return_val = None
-    return return_val
+    return u'bar'
+
+  # def parse_text_genre( self, pyquery_object ):
+  #   """ Parses class from msItem element.
+  #       Example: grabs 'verse' from <msItem class="#verse">
+  #       Called by utils.indexer.Indexer._build_solr_dict() """
+  #   text_genre = []  # multi-valued
+  #   tg_segments = pyquery_object('msitem').attr('class')
+  #   if tg_segments:
+  #     tg_segments = tg_segments.split()
+  #     for tg_entry in tg_segments:
+  #       tg_entry = tg_entry.strip()
+  #       if tg_entry[0] == '#':
+  #         tg_entry = tg_entry[1:]
+  #       text_genre.append( tg_entry )
+  #   if len( text_genre ) > 0:
+  #     return_val = text_genre
+  #   else:
+  #     return_val = None
+  #   return return_val
+
+  # def parse_object_type( self, pyquery_object ):
+  #   """ Parses object_type.
+  #       Called by utils.indexer.Indexer._build_solr_dict() """
+  #   object_type = []
+  #   ot_segments = pq('objectdesc').attr('ana')
+  #   if ot_segments:
+  #     ot_segments = ot_segments.split()
+  #     for ot_entry in ot_segments:
+  #       ot_entry = ot_entry.strip()
+  #       if ot_entry[0] == '#':
+  #         ot_entry = ot_entry[1:]
+  #       object_type.append( ot_entry )
+  #   if len( object_type ) > 0:
+  #     return_val = object_type
+  #   else:
+  #     return_val = None
+  #   return return_val
 
 
 

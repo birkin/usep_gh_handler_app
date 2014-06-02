@@ -10,15 +10,11 @@ class WebAppHelper( object ):
 
     def __init__( self, log ):
         """ Settings. """
-        # self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
-        # self.TEMP_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__TEMP_DATA_DIR_PATH') )
-        # self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
         self.log = log
 
     def log_github_post( self, flask_request ):
         """ Logs data posted from github.
             Called by usep_gh_handler.handle_github_push() """
-        github_data_dict = {}
         github_data_dict = {
             u'datetime': datetime.datetime.now(),
             u'args': flask_request.args,
@@ -41,7 +37,23 @@ class WebAppHelper( object ):
         files_to_process = { u'to_copy': [], u'to_remove': [], u'timestamp': unicode(datetime.datetime.now()) }
         if flask_request_data:
             commit_info = json.loads( flask_request_data )
-            files_to_process[u'files_updated'] = commit_info[u'commits'][u'added']
-            files_to_process[u'files_updated'].extend( commit_info[u'commits'][u'modified'] )
-            files_to_process[u'files_removed'] = commit_info[u'commits'][u'removed']
+            ( added, modified, removed ) = self._examine_commits( commit_info )
+            files_to_process[u'files_updated'] = added
+            files_to_process[u'files_updated'].extend( modified )  # solrization same for added or modified
+            files_to_process[u'files_removed'] = removed
+        self.log.debug( u'in processor.prep_data_dict(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
         return files_to_process
+
+    def _examine_commits( self, commit_info ):
+        """ Extracts and returns file-paths for the different kinds of commits.
+            Called by prep_data_dict(). """
+        added = []
+        modified = []
+        removed = []
+        for commit in commit_info[u'commits']:
+            added.extend( commit[u'added'] )
+            modified.extend( commit[u'modified'] )
+            removed.extend( commit[u'removed'] )
+        return ( added, modified, removed )
+
+    ## end class WebAppHelper()

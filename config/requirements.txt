@@ -1,5 +1,6 @@
 envoy==0.0.2
 Flask-BasicAuth==0.2.0
 Flask==0.10.1
+lxml==3.3.5
 redis==2.9.1
 rq==0.4.5

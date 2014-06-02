@@ -86,7 +86,7 @@ class Copier( object ):
             u'%s/xml_inscriptions/metadata_only/' % self.GIT_CLONED_DIR_PATH, self.TEMP_DATA_DIR_PATH )
         transcription_command = u'rsync -avz %s %s' % (
             u'%s/xml_inscriptions/metadata_only/' % self.GIT_CLONED_DIR_PATH, self.TEMP_DATA_DIR_PATH )
-        for command in [ bib_command, metadata_command, transcription_command ]
+        for command in [ bib_command, metadata_command, transcription_command ]:
             r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
             time.sleep( 1 )
         return
