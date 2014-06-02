@@ -79,18 +79,16 @@ class Copier( object ):
         return
 
     def _build_unified_inscriptions( self ):
-        """ Updates staging unified inscrptions file. """
-        for entry in os.listdir( self.TEMP_DATA_DIR_PATH ):  # deletes old temp unified inscriptions
-            file_path = os.path.join( self.TEMP_DATA_DIR_PATH, entry )
-            self.log.debug( u'in utils.processor._build_unified_inscriptions(); file_path about to be deleted, `%s`' % file_path )
-            os.unlink( file_path )
-        source_dir_paths = [  # runs 3 non-deletion rsyncs
-            u'%s/xml_inscriptions/bib_only/' % self.GIT_CLONED_DIR_PATH,
-            u'%s/xml_inscriptions/metadata_only/' % self.GIT_CLONED_DIR_PATH,
-            u'%s/xml_inscriptions/transcription/' % self.GIT_CLONED_DIR_PATH ]
-        for source_dir_path in source_dir_paths:
-            command = u'rsync -avz %s %s' % ( source_dir_path, self.TEMP_DATA_DIR_PATH )
+        """ Updates staging unified inscriptions file. """
+        bib_command = u'rsync -avz --delete %s %s' % (  # note: uses delete flag to clear out previous data
+            u'%s/xml_inscriptions/bib_only/' % self.GIT_CLONED_DIR_PATH, self.TEMP_DATA_DIR_PATH )
+        metadata_command = u'rsync -avz %s %s' % (
+            u'%s/xml_inscriptions/metadata_only/' % self.GIT_CLONED_DIR_PATH, self.TEMP_DATA_DIR_PATH )
+        transcription_command = u'rsync -avz %s %s' % (
+            u'%s/xml_inscriptions/metadata_only/' % self.GIT_CLONED_DIR_PATH, self.TEMP_DATA_DIR_PATH )
+        for command in [ bib_command, metadata_command, transcription_command ]
             r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
+            time.sleep( 1 )
         return
 
     def _copy_inscriptions( self ):
