@@ -671,7 +671,7 @@ class Parser( object ):
     return return_val
 
 
-  def parse_object_type( self pyquery_object ):
+  def parse_object_type( self, pyquery_object ):
     """ Parses object_type.
         Called by utils.indexer.Indexer._build_solr_dict() """
     object_type = []

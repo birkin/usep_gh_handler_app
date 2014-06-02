@@ -36,6 +36,7 @@ class Copier( object ):
         self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
         self.TEMP_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__TEMP_DATA_DIR_PATH') )
         self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
+        # self.resources_destination_path = None  # set by _copy_resources(); accessed by _build_unified_inscriptions()
         self.log = log
 
     def get_files_to_copy( self, files_to_process ):
@@ -81,13 +82,14 @@ class Copier( object ):
         """ Updates staging unified inscrptions file. """
         for entry in os.listdir( self.TEMP_DATA_DIR_PATH ):  # deletes old temp unified inscriptions
             file_path = os.path.join( self.TEMP_DATA_DIR_PATH, entry )
+            self.log.debug( u'in utils.processor._build_unified_inscriptions(); file_path about to be deleted, `%s`' % file_path )
             os.unlink( file_path )
         source_dir_paths = [  # runs 3 non-deletion rsyncs
-            u'%s/xml_inscriptions/bib_only' % self.GIT_CLONED_DIR_PATH,
-            u'%s/xml_inscriptions/metadata_only' % self.GIT_CLONED_DIR_PATH,
-            u'%s/xml_inscriptions/transcription' % self.GIT_CLONED_DIR_PATH ]
+            u'%s/xml_inscriptions/bib_only/' % self.GIT_CLONED_DIR_PATH,
+            u'%s/xml_inscriptions/metadata_only/' % self.GIT_CLONED_DIR_PATH,
+            u'%s/xml_inscriptions/transcription/' % self.GIT_CLONED_DIR_PATH ]
         for source_dir_path in source_dir_paths:
-            command = u'rsync -avz %s %s' % ( source_dir_path, resources_destination_path, self.TEMP_DATA_DIR_PATH )
+            command = u'rsync -avz %s %s' % ( source_dir_path, self.TEMP_DATA_DIR_PATH )
             r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
         return
 
@@ -111,28 +113,49 @@ def run_call_git_pull( files_to_process ):
             Spawns a call to Processor.process_file() for each result found.
         Triggered by usep_gh_handler.handle_github_push(). """
     log = log_helper.setup_logger()
-    assert sorted( files_to_process.keys() ) == [ u'timestamp', u'files_updated', u'files_removed' ]; log.debug( u'in processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
+    assert sorted( files_to_process.keys() ) == [u'timestamp', u'to_copy', u'to_remove']
+    log.debug( u'in processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
     time.sleep( 2 )  # let any existing jobs in process finish
     ( puller, copier ) = ( Puller(log), Copier(log) )
     puller.call_git_pull()
     ( files_to_copy, files_to_remove ) = ( copier.get_files_to_copy(files_to_process), copier.get_files_to_remove(files_to_process) )
-    if files_to_copy or files_to_remove:
-        q.enqueue_call(
-            func=u'usep_gh_handler_app.utils.processor.run_copy_files',
-            kwargs={u'files_to_copy': files_to_copy, u'files_to_remove': files_to_remove} )
+    log.debug( u'in processor.run_call_git_pull(); enqueuing next job' )
+    q.enqueue_call(
+        func=u'usep_gh_handler_app.utils.processor.run_copy_files',
+        kwargs={u'files_to_copy': files_to_copy, u'files_to_remove': files_to_remove} )
     return
 
-def run_copy_files( files_updated, files_removed ):
+# def run_call_git_pull( files_to_process ):
+#     """ Initiates a git pull update.
+#             Spawns a call to Processor.process_file() for each result found.
+#         Triggered by usep_gh_handler.handle_github_push(). """
+#     log = log_helper.setup_logger()
+#     assert sorted( files_to_process.keys() ) == [u'timestamp', u'to_copy', u'to_remove']
+#     log.debug( u'in processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
+#     time.sleep( 2 )  # let any existing jobs in process finish
+#     ( puller, copier ) = ( Puller(log), Copier(log) )
+#     puller.call_git_pull()
+#     ( files_to_copy, files_to_remove ) = ( copier.get_files_to_copy(files_to_process), copier.get_files_to_remove(files_to_process) )
+#     if files_to_copy or files_to_remove:
+#         log.debug( u'in processor.run_call_git_pull(); enqueuing next job' )
+#         q.enqueue_call(
+#             func=u'usep_gh_handler_app.utils.processor.run_copy_files',
+#             kwargs={u'files_to_copy': files_to_copy, u'files_to_remove': files_to_remove} )
+#     log.debug( u'in processor.run_call_git_pull(); no next job to enqueue' )
+#     return
+
+def run_copy_files( files_to_copy, files_to_remove ):
     """ Runs a copy and then triggers an index job.
         Incoming data not for copying, but to pass to indexer.
         Triggered by utils.processor.run_call_git_pull(). """
     log = log_helper.setup_logger()
-    assert type( files_updated ) == list; assert type( files_removed ) == list
+    log.debug( u'in utils.processor.run_copy_files(); startign' )
+    assert type( files_to_copy ) == list; assert type( files_to_remove ) == list
     log.debug( u'in utils.processor.run_copy_files(); files_to_copy, `%s`' % pprint.pformat(files_to_copy) )
     log.debug( u'in utils.processor.run_copy_files(); files_to_remove, `%s`' % pprint.pformat(files_to_remove) )
     copier = Copier( log )
     copier.copy_files()
     q.enqueue_call(
         func=u'usep_gh_handler_app.utils.indexer.run_update_index',
-        kwargs={u'files_updated': files_updated, u'files_removed': files_removed} )
+        kwargs={u'files_updated': files_to_copy, u'files_removed': files_to_remove} )
     return

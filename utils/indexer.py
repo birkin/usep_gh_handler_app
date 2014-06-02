@@ -77,6 +77,7 @@ class Indexer( object ):
 def run_update_index( files_updated, files_removed ):
     """ Creates index jobs (doesn't actually call Indexer() directly.
         Triggered by utils.processor.run_copy_files(). """
+    1/0
     log = log_helper.setup_logger()
     for updated_file_path in files_updated:
         q.enqueue_call(
