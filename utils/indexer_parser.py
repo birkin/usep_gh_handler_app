@@ -4,7 +4,8 @@ from usep_gh_handler_app.utils import log_helper
 
 
 class Parser( object ):
-  """ Contains functions for preparing solr-data. """
+  """ Contains functions for preparing solr-data.
+      TODO: replace pq extracts with straight lxml or beautifulsoup extracts. """
 
   def __init__( self, logger, xml_path, bib_xml_path=None ):
     '''
@@ -645,6 +646,52 @@ class Parser( object ):
     else:
       self.status = u'metadata'
     return self.status
+
+
+
+
+
+  def parse_text_genre( self, pyquery_object ):
+    """ Parses class from msItem element.
+        Example: grabs 'verse' from <msItem class="#verse">
+        Called by utils.indexer.Indexer._build_solr_dict() """
+    text_genre = []  # multi-valued
+    tg_segments = pyquery_object('msitem').attr('class')
+    if tg_segments:
+      tg_segments = tg_segments.split()
+      for tg_entry in tg_segments:
+        tg_entry = tg_entry.strip()
+        if tg_entry[0] == '#':
+          tg_entry = tg_entry[1:]
+        text_genre.append( tg_entry )
+    if len( text_genre ) > 0:
+      return_val = text_genre
+    else:
+      return_val = None
+    return return_val
+
+
+  def parse_object_type( self pyquery_object ):
+    """ Parses object_type.
+        Called by utils.indexer.Indexer._build_solr_dict() """
+    object_type = []
+    ot_segments = pq('objectdesc').attr('ana')
+    if ot_segments:
+      ot_segments = ot_segments.split()
+      for ot_entry in ot_segments:
+        ot_entry = ot_entry.strip()
+        if ot_entry[0] == '#':
+          ot_entry = ot_entry[1:]
+        object_type.append( ot_entry )
+    if len( object_type ) > 0:
+      return_val = object_type
+    else:
+      return_val = None
+    return return_val
+
+
+
+
 
   def parseTitle(self):
     if self.parse_errors: return
