@@ -12,7 +12,7 @@ class ParserTest( unittest.TestCase ):
             To use:
             - activate the virtual environment
             - cd to tests directory
-            - run python ./test_parser.py """
+            - run `python ./test_parser.py` or `python ./test_parser.py ParserTest.test_parseTitle` """
 
     def test_init(self):
         p = Parser(
@@ -413,6 +413,25 @@ class ParserTest( unittest.TestCase ):
             bib_xml_path=u'./test_files/usepi_bib.xml',
             log=log )
         assert p.parseTitle() == u'CA.Berk.UC.HMA.G.8/4213', p.parseTitle()
+
+
+
+
+    def test_parse_text_genre(self):
+        p = Parser(
+            inscription_xml_path=u'./test_files/CA.Berk.UC.HMA.G.8-4213.xml',
+            bib_xml_path=u'./test_files/usepi_bib.xml',
+            log=log )
+        self.assertEqual( [u'text_other'], p.parse_text_genre() )
+        self.assertEqual( unicode, type(p.parse_text_genre()[0]) )
+
+    def test_parse_object_type(self):
+        p = Parser(
+            inscription_xml_path=u'./test_files/CA.Berk.UC.HMA.G.8-4213.xml',
+            bib_xml_path=u'./test_files/usepi_bib.xml',
+            log=log )
+        self.assertEqual( [u'cippus'], p.parse_object_type() )
+        self.assertEqual( unicode, type(p.parse_object_type()[0]) )
 
     # end class ParserTest()
 

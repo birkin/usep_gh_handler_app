@@ -119,36 +119,6 @@ class Parser( object ):
       self.log.error( message )
       self.parse_errors = u'in Parser.makeBibDocs(); problem making bib-docs; error logged'
 
-  # def makeBibDocs(self):
-  #   """If there's a bib-doc, this examines it & populates self.bib_docs for various bib-parsing defs"""
-  #   if self.parse_errors: return
-  #   try:
-  #     if not self.bib_doc == None:
-  #       if self.bib_ids == None:
-  #         # self.log.debug( u'in makeBibDocs(); about to call parseBibIds()' )
-  #         self.parseBibIds()
-  #       if len( self.bib_ids ) == 0:
-  #         self.bib_docs = []
-  #         self.bib_titles = []
-  #         self.bib_authors = []
-  #         # return self.bib_docs
-  #       else:
-  #         self.bib_docs = []
-  #         for bib_id in self.bib_ids:
-  #           ## find bib-match (in bib xml)
-  #           for el in self.bib_doc.iter( u'{http://www.tei-c.org/ns/1.0}bibl' ):
-  #             if el.attrib[ u'{http://www.w3.org/XML/1998/namespace}id' ] == bib_id:
-  #               self.bib_docs.append( el )
-  #               break
-  #       return self.bib_docs
-  #     else:
-  #       return
-  #   except Exception as e:
-  #     # self.parse_errors = u'exception in makeBibDocs() is: %s' % repr(e).decode(u'utf-8', u'replace')
-  #     message = u'makeBibDocs() exception is: %s' % repr(e).decode(u'utf-8', u'replace')
-  #     log.error( message )
-  #     self.parse_errors = u'in Parser.makeBibDocs(); problem making bib-docs; error logged'
-
   def parseBibAuthors(self):
     try:
       if self.parse_errors: return
@@ -169,25 +139,6 @@ class Parser( object ):
       message = u'parseBibAuthors() exception is: %s' % repr(e).decode(u'utf-8', u'replace')
       log.error( message )
       self.parse_errors = u'in Parser.parseBibAuthors(); problem parsing bib-authors'
-
-  # def parseBibAuthors(self):
-  #   try:
-  #     if self.parse_errors: return
-  #     assert type(self.bib_docs) == list
-  #     bib_authors = []
-  #     for bib_match_element in self.bib_docs:
-  #       # print etree.tostring( bib_match_element )
-  #       if unicode( bib_match_element.attrib[u'type'] ) == u'm':  # monograph
-  #         bib_authors = self._parse_bib_authors_from_monograph( bib_match_element, bib_authors )
-  #       elif unicode( bib_match_element.attrib[u'type'] ) == u'v':  # volume -- for now, handle same as monograph, though this may change
-  #         bib_authors = self._parse_bib_authors_from_volume( bib_match_element, bib_authors )
-  #     cleaned_authors = self._clean_list_entries( bib_authors )
-  #     self.bib_authors = cleaned_authors
-  #     return self.bib_authors
-  #   except Exception as e:
-  #     message = u'parseBibAuthors() exception is: %s' % repr(e).decode(u'utf-8', u'replace')
-  #     log.error( message )
-  #     self.parse_errors = u'in Parser.parseBibAuthors(); problem parsing bib-authors'
 
   def _parse_bib_authors_from_monograph( self, bib_match_element, bib_authors ):
     """ Returns list of bib_authors.
@@ -285,42 +236,6 @@ class Parser( object ):
     self.bib_ids_filtered = ancestor_ids_filtered
     return self.bib_ids_filtered
 
-  # def parseBibIdsFiltered(self):
-  #   if self.parse_errors: return
-  #   ancestor_ids_filtered = []
-  #   if self.bib_docs == None:
-  #     self.makeBibDocs()
-  #   assert type(self.bib_docs) == list, Exception( u'in parseBibIdsFiltered(); type(self.bib_docs) should be list; it is: %s' % type(self.bib_docs) )
-  #   for bib_doc in self.bib_docs:  ## access the xml element
-  #     assert type(self.bib_doc) == lxml.etree._Element, Exception( u'in parseBibIdsFiltered(); type(self.bib_doc) should be lxml.etree._Element; it is: %s' %  type(self.bib_doc) )
-  #     ## get id
-  #     doc_id = bib_doc.attrib[u'{http://www.w3.org/XML/1998/namespace}id']
-  #     has_parent = True
-  #     ## see if we're already at the top level
-  #     if bib_doc.attrib[u'type'] in [u'c', u'j']:
-  #       filtered_id = bib_doc.attrib[u'{http://www.w3.org/XML/1998/namespace}id'].decode(u'utf-8')
-  #       if not filtered_id in ancestor_ids_filtered:
-  #         ancestor_ids_filtered.append( filtered_id )
-  #     else: ## else... travel up to the top bibl ancestor
-  #       ancestors = []
-  #       for ancestor in bib_doc.iterancestors():
-  #         if ancestor.tag == u"{http://www.tei-c.org/ns/1.0}bibl":
-  #           ancestors.append( ancestor )
-  #         else:  # we're at the top bibl
-  #           break
-  #       ## examine top bibl ancestor
-  #       ancestor = ( ancestors[-1:][0] if len(ancestors) > 0 else None )
-  #       if not ancestor == None:
-  #         ancestor_id = ancestor.attrib[u'{http://www.w3.org/XML/1998/namespace}id']
-  #         ## add it to the ultimate list
-  #         if ancestor.attrib[u'type'] in [u'c', u'j']:
-  #           filtered_id = ancestor.attrib[u'{http://www.w3.org/XML/1998/namespace}id'].decode(u'utf-8')
-  #           if not filtered_id in ancestor_ids_filtered:
-  #             ancestor_ids_filtered.append( filtered_id )
-  #   ## update attribute & return
-  #   self.bib_ids_filtered = ancestor_ids_filtered
-  #   return self.bib_ids_filtered
-
   def parseBibIdsTypes(self):
     if self.parse_errors: return
     bib_ids_types = []
@@ -362,45 +277,6 @@ class Parser( object ):
     ## update attribute & return
     self.bib_ids_types = bib_ids_types
     return self.bib_ids_types
-
-  # def parseBibIdsTypes(self):
-  #   if self.parse_errors: return
-  #   bib_ids_types = []
-  #   if self.bib_docs == None:
-  #     self.makeBibDocs()
-  #   assert type(self.bib_docs) == list, type(self.bib_docs)
-  #   for bib_doc in self.bib_docs:  ## access the xml element
-  #     assert type(self.bib_doc) == lxml.etree._Element, type(self.bib_doc)
-  #     ## get id
-  #     doc_id = bib_doc.attrib[u'{http://www.w3.org/XML/1998/namespace}id']
-  #     # has_parent = True  # i think i can get rid of this
-  #     ## see if we're already at the top level
-  #     if bib_doc.attrib[u'type'] in [u'c', u'j', u'm']:
-  #       if bib_doc.attrib[u'type'] == u'c':
-  #         bib_ids_types.append( u'corpora' )
-  #       elif bib_doc.attrib[u'type'] == u'j':
-  #         bib_ids_types.append( u'journal' )
-  #       elif bib_doc.attrib[u'type'] == u'm':
-  #         bib_ids_types.append( u'monograph' )
-  #     else: ## else... travel up to the top bibl ancestor
-  #       ancestors = []
-  #       for ancestor in bib_doc.iterancestors():
-  #         if ancestor.tag == u"{http://www.tei-c.org/ns/1.0}bibl":
-  #           ancestors.append( ancestor )
-  #         else:  # we're at the top bibl
-  #           break
-  #       ## examine top bibl ancestor
-  #       ancestor = ( ancestors[-1:][0] if len(ancestors) > 0 else None )
-  #       if not ancestor == None:
-  #         ancestor_id = ancestor.attrib[u'{http://www.w3.org/XML/1998/namespace}id']
-  #         ## add it to the ultimate list
-  #         if ancestor.attrib[u'type'] == u'c':
-  #           bib_ids_types.append( u'corpora' )
-  #         elif ancestor.attrib[u'type'] == u'j':
-  #           bib_ids_types.append( u'journal' )
-  #   ## update attribute & return
-  #   self.bib_ids_types = bib_ids_types
-  #   return self.bib_ids_types
 
   def parseBibTitles(self):
     """ Parses bib titles from self.bib_docs """
@@ -653,21 +529,16 @@ class Parser( object ):
 
 
 
-  def parse_text_genre( self ):
-    """ Parses class from msItem element.
-        Example: grabs 'verse' from <msItem class="#verse">
-        Called by utils.indexer.Indexer._build_solr_dict() """
-    return u'foo'
 
-  def parse_object_type( self ):
-    """ Parses object_type.
-        Called by utils.indexer.Indexer._build_solr_dict() """
-    return u'bar'
-
-  # def parse_text_genre( self, pyquery_object ):
+  # def parse_text_genre( self ):
   #   """ Parses class from msItem element.
   #       Example: grabs 'verse' from <msItem class="#verse">
-  #       Called by utils.indexer.Indexer._build_solr_dict() """
+  #       Called by utils.indexer.Indexer._build_solr_dict()
+  #       TODO: refactor to remove pyquery dependency. """
+  #   from pyquery import PyQuery
+  #   xml = open( self.xml_path ).read()
+  #   d_xml = xml.replace( 'xmlns:', 'xmlnamespace:' )  # de-namespacing for easy element addressing
+  #   pyquery_object = PyQuery( d_xml )  # pq is now addressable w/jquery syntax
   #   text_genre = []  # multi-valued
   #   tg_segments = pyquery_object('msitem').attr('class')
   #   if tg_segments:
@@ -683,23 +554,53 @@ class Parser( object ):
   #     return_val = None
   #   return return_val
 
-  # def parse_object_type( self, pyquery_object ):
-  #   """ Parses object_type.
-  #       Called by utils.indexer.Indexer._build_solr_dict() """
-  #   object_type = []
-  #   ot_segments = pq('objectdesc').attr('ana')
-  #   if ot_segments:
-  #     ot_segments = ot_segments.split()
-  #     for ot_entry in ot_segments:
-  #       ot_entry = ot_entry.strip()
-  #       if ot_entry[0] == '#':
-  #         ot_entry = ot_entry[1:]
-  #       object_type.append( ot_entry )
-  #   if len( object_type ) > 0:
-  #     return_val = object_type
-  #   else:
-  #     return_val = None
-  #   return return_val
+  def parse_text_genre( self ):
+    """ Parses class from msItem element.
+        Example: grabs 'verse' from <msItem class="#verse">
+        Called by utils.indexer.Indexer._build_solr_dict()
+        TODO: refactor to remove pyquery dependency. """
+    from pyquery import PyQuery
+    xml = open( self.xml_path ).read().decode(u'utf-8')
+    d_xml = xml.replace( u'xmlns:', u'xmlnamespace:' )  # de-namespacing for easy element addressing
+    pyquery_object = PyQuery( d_xml.encode(u'utf-8') )  # PyQuery requires bytes; is now addressable w/jquery syntax
+    text_genre = []  # multi-valued
+    tg_segments = pyquery_object(u'msitem').attr(u'class')
+    if tg_segments:
+      tg_segments = tg_segments.split()
+      for tg_entry in tg_segments:
+        # tg_entry = tg_entry.strip()
+        tg_entry = tg_entry.decode(u'utf-8').strip()
+        if tg_entry[0] == u'#':
+          tg_entry = tg_entry[1:]
+        text_genre.append( tg_entry )
+    if len( text_genre ) > 0:
+      return_val = text_genre
+    else:
+      return_val = None
+    return return_val
+
+  def parse_object_type( self ):
+    """ Parses object_type.
+        Called by utils.indexer.Indexer._build_solr_dict()
+        TODO: refactor to remove pyquery dependency. """
+    from pyquery import PyQuery
+    xml = open( self.xml_path ).read()
+    d_xml = xml.replace( 'xmlns:', 'xmlnamespace:' )  # de-namespacing for easy element addressing
+    pyquery_object = PyQuery( d_xml )  # pq is now addressable w/jquery syntax
+    object_type = []
+    ot_segments = pyquery_object('objectdesc').attr('ana')
+    if ot_segments:
+      ot_segments = ot_segments.split()
+      for ot_entry in ot_segments:
+        ot_entry = ot_entry.strip()
+        if ot_entry[0] == '#':
+          ot_entry = ot_entry[1:]
+        object_type.append( ot_entry )
+    if len( object_type ) > 0:
+      return_val = object_type
+    else:
+      return_val = None
+    return return_val
 
 
 
