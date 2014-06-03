@@ -43,12 +43,12 @@ class Copier( object ):
         """ Creates and returns list of filepaths to copy.
             Used for updating solr.
             Called by run_call_git_pull(). """
-        if files_to_process[u'to_update'] == [ u'all' ]:
-            filepaths_to_copy = self.make_complete_files_to_update_list()  # TODO
+        if files_to_process[u'files_updated'] == [ u'all' ]:
+            filepaths_to_update = self.make_complete_files_to_update_list()  # TODO
         else:
-            filepaths_to_copy = files_to_process[u'to_copy']
-        self.log.debug( u'in utils.Processor.get_files_to_update(); filepaths_to_copy, `%s`' % filepaths_to_copy )
-        return filepaths_to_copy
+            filepaths_to_update = files_to_process[u'files_updated']
+        self.log.debug( u'in utils.Processor.get_files_to_update(); filepaths_to_update, `%s`' % filepaths_to_update )
+        return filepaths_to_update
 
     def get_files_to_remove( self, files_to_process ):
         """ Creates and returns list of filepaths to remove.
@@ -111,7 +111,7 @@ def run_call_git_pull( files_to_process ):
             Spawns a call to Processor.process_file() for each result found.
         Triggered by usep_gh_handler.handle_github_push(). """
     log = log_helper.setup_logger()
-    assert sorted( files_to_process.keys() ) == [u'timestamp', u'to_copy', u'to_remove']
+    assert sorted( files_to_process.keys() ) == [ u'files_updated', u'files_removed', u'timestamp']
     log.debug( u'in processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
     time.sleep( 2 )  # let any existing jobs in process finish
     ( puller, copier ) = ( Puller(log), Copier(log) )
