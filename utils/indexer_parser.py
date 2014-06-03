@@ -584,16 +584,17 @@ class Parser( object ):
         Called by utils.indexer.Indexer._build_solr_dict()
         TODO: refactor to remove pyquery dependency. """
     from pyquery import PyQuery
-    xml = open( self.xml_path ).read()
-    d_xml = xml.replace( 'xmlns:', 'xmlnamespace:' )  # de-namespacing for easy element addressing
-    pyquery_object = PyQuery( d_xml )  # pq is now addressable w/jquery syntax
+    xml = open( self.xml_path ).read().decode(u'utf-8')
+    d_xml = xml.replace( u'xmlns:', u'xmlnamespace:' )  # de-namespacing for easy element addressing
+    pyquery_object = PyQuery( d_xml.encode(u'utf-8') )  # PyQuery requires bytes; is now addressable w/jquery syntax
     object_type = []
     ot_segments = pyquery_object('objectdesc').attr('ana')
     if ot_segments:
       ot_segments = ot_segments.split()
       for ot_entry in ot_segments:
-        ot_entry = ot_entry.strip()
-        if ot_entry[0] == '#':
+        # ot_entry = ot_entry.strip()
+        ot_entry = ot_entry.decode(u'utf-8').strip()
+        if ot_entry[0] == u'#':
           ot_entry = ot_entry[1:]
         object_type.append( ot_entry )
     if len( object_type ) > 0:

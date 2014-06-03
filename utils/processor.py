@@ -54,10 +54,10 @@ class Copier( object ):
         """ Creates and returns list of filepaths to remove.
             Used for updating solr.
             Called by run_call_git_pull(). """
-        if files_to_process[u'to_remove'] == [ u'check' ]:
+        if files_to_process[u'files_removed'] == [ u'check' ]:
             filepaths_to_remove = self.make_complete_files_to_remove_list()  # TODO
         else:
-            filepaths_to_remove = files_to_process[u'to_remove']
+            filepaths_to_remove = files_to_process[u'files_removed']
         self.log.debug( u'in utils.Processor.get_files_to_remove(); filepaths_to_remove, `%s`' % filepaths_to_remove )
         return filepaths_to_remove
 
@@ -111,7 +111,7 @@ def run_call_git_pull( files_to_process ):
             Spawns a call to Processor.process_file() for each result found.
         Triggered by usep_gh_handler.handle_github_push(). """
     log = log_helper.setup_logger()
-    assert sorted( files_to_process.keys() ) == [ u'files_updated', u'files_removed', u'timestamp']
+    assert sorted( files_to_process.keys() ) == [ u'files_removed', u'files_updated', u'timestamp']
     log.debug( u'in processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
     time.sleep( 2 )  # let any existing jobs in process finish
     ( puller, copier ) = ( Puller(log), Copier(log) )

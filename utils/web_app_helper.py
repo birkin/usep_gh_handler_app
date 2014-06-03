@@ -34,7 +34,7 @@ class WebAppHelper( object ):
         """ Prepares the data-dict to be sent to run_call_git_pull().
             Called by usep_gh_handler.handle_github_push() """
         self.log.debug( u'in processor.prep_data_dict(); flask_request_data, `%s`' % flask_request_data )
-        files_to_process = { u'timestamp': unicode(datetime.datetime.now()) }
+        files_to_process = { u'files_updated': [], u'files_removed': [], u'timestamp': unicode(datetime.datetime.now()) }
         if flask_request_data:
             commit_info = json.loads( flask_request_data )
             ( added, modified, removed ) = self._examine_commits( commit_info )
