@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import datetime, json, os, pprint
+import datetime, json, os, pprint, urlparse
 import flask, redis, rq
 from flask.ext.basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
 from usep_gh_handler_app.utils import log_helper
@@ -27,6 +27,8 @@ def handle_github_push():
         TODO: remove GET, now used for testing. """
     try:
         app_helper.log_github_post( flask.request )
+        log.debug( u'in usep_gh_handler.handle_github_push(); hostname, `%s`' % flask.request.host )
+        log.debug( u'in usep_gh_handler.handle_github_push(); url_root, `%s`' % flask.request.url_root )
         if not flask.request.data and u'force' not in flask.request.path:
             message = u'no files to process'
         else:
