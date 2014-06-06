@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
 
 import datetime, json, os, pprint, urlparse
-import flask, redis, rq
+import flask, redis, requests, rq
 from flask.ext.basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
 from usep_gh_handler_app.utils import log_helper
 from usep_gh_handler_app.utils.web_app_helper import WebAppHelper
 
 
 ## setup
+B_AUTH_PASSWORD = unicode( os.environ[u'usep_gh__BASIC_AUTH_PASSWORD'] )
+B_AUTH_USERNAME = unicode( os.environ[u'usep_gh__BASIC_AUTH_USERNAME'] )
+DEV_URL = unicode( os.environ[u'usep_gh__DEV_URL'] )
+PRODUCTION_HOSTNAME = unicode( os.environ[u'usep_gh__PRODUCTION_HOSTNAME'] )
 app = flask.Flask(__name__)
 log = log_helper.setup_logger()
 log.debug( u'in usep_gh_handler; log initialized' )
-app.config[u'BASIC_AUTH_USERNAME'] = unicode( os.environ.get(u'usep_gh__BASIC_AUTH_USERNAME') )
-app.config[u'BASIC_AUTH_PASSWORD'] = unicode( os.environ.get(u'usep_gh__BASIC_AUTH_PASSWORD') )
+app.config[u'BASIC_AUTH_USERNAME'] = B_AUTH_USERNAME
+app.config[u'BASIC_AUTH_PASSWORD'] = B_AUTH_PASSWORD
 basic_auth = BasicAuth(app)
 app_helper = WebAppHelper( log )
 q = rq.Queue( u'usep', connection=redis.Redis() )
@@ -28,7 +32,10 @@ def handle_github_push():
     try:
         app_helper.log_github_post( flask.request )
         log.debug( u'in usep_gh_handler.handle_github_push(); hostname, `%s`' % flask.request.host )
-        log.debug( u'in usep_gh_handler.handle_github_push(); url_root, `%s`' % flask.request.url_root )
+        if flask.request.host == PRODUCTION_HOSTNAME:
+            log.debug( u'in usep_gh_handler.handle_github_push(); gonna hit dev, too' )
+            params = { u'data': flask.request.data }
+            r = requests.post( DEV_URL, data=params, auth=(B_AUTH_USERNAME, B_AUTH_PASSWORD) )
         if not flask.request.data and u'force' not in flask.request.path:
             message = u'no files to process'
         else:
@@ -40,4 +47,4 @@ def handle_github_push():
         log.debug( u'in usep_gh_handler.handle_github_push(); message, `%s`' % message )
         return u'received', 200
     except Exception as e:
-        log.error( u'%s' % unicode(repr(e)) )
+        log.error( u'in usep_gh_handler.handle_github_push(); error, `%s`' % unicode(repr(e)) )
