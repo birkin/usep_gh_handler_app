@@ -10,8 +10,6 @@ from usep_gh_handler_app.utils.web_app_helper import WebAppHelper
 ## setup
 B_AUTH_PASSWORD = unicode( os.environ[u'usep_gh__BASIC_AUTH_PASSWORD'] )
 B_AUTH_USERNAME = unicode( os.environ[u'usep_gh__BASIC_AUTH_USERNAME'] )
-DEV_URL = unicode( os.environ[u'usep_gh__DEV_URL'] )
-PRODUCTION_HOSTNAME = unicode( os.environ[u'usep_gh__PRODUCTION_HOSTNAME'] )
 app = flask.Flask(__name__)
 log = log_helper.setup_logger()
 log.debug( u'in usep_gh_handler; log initialized' )
@@ -31,20 +29,12 @@ def handle_github_push():
         TODO: remove GET, now used for testing. """
     try:
         app_helper.log_github_post( flask.request )
-        log.debug( u'in usep_gh_handler.handle_github_push(); hostname, `%s`' % flask.request.host )
-        if flask.request.host == PRODUCTION_HOSTNAME:
-            log.debug( u'in usep_gh_handler.handle_github_push(); gonna hit dev, too' )
-            params = { u'data': flask.request.data }
-            r = requests.post( DEV_URL, data=params, auth=(B_AUTH_USERNAME, B_AUTH_PASSWORD) )
-        if not flask.request.data and u'force' not in flask.request.path:
-            message = u'no files to process'
-        else:
+        app_helper.trigger_dev_if_production( flask.request.host )  # github can only hit production; we want dev updated, too
+        if flask.request.data or u'force' in flask.request.path:
             files_to_process = app_helper.prep_data_dict( flask.request.data )  # dict of lists; files_updated, files_removed
             q.enqueue_call (
                 func=u'usep_gh_handler_app.utils.processor.run_call_git_pull',
                 kwargs = {u'files_to_process': files_to_process} )
-            message = u'git pull initiated'
-        log.debug( u'in usep_gh_handler.handle_github_push(); message, `%s`' % message )
         return u'received', 200
     except Exception as e:
         log.error( u'in usep_gh_handler.handle_github_push(); error, `%s`' % unicode(repr(e)) )

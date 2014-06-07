@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import datetime, pprint
-import flask
-# from usep_gh_handler_app.utils import log_helper
+import datetime, os, pprint
+import flask, requests
 
 
 class WebAppHelper( object ):
@@ -15,19 +14,33 @@ class WebAppHelper( object ):
     def log_github_post( self, flask_request ):
         """ Logs data posted from github.
             Called by usep_gh_handler.handle_github_push() """
-        github_data_dict = {
+        post_data_dict = {
             u'datetime': datetime.datetime.now(),
             u'args': flask_request.args,
             u'cookies': flask_request.cookies,
             u'data': flask_request.data,
             u'form': flask_request.form,
             u'headers': unicode(repr(flask_request.headers)),
+            u'host': flask_request.host,
             u'method': flask_request.method,
             u'path': flask_request.path,
             u'remote_addr': flask_request.remote_addr,
             u'values': flask_request.values,
             }
-        self.log.debug( u'in utils.processor.log_github_post(); github_data_dict, `%s`' % pprint.pformat(github_data_dict) )
+        self.log.debug( u'in utils.processor.log_github_post(); post_data_dict, `%s`' % pprint.pformat(post_data_dict) )
+        return
+
+    def trigger_dev_if_production( self, flask_request_host ):
+        """ Sends github `data` to dev-server if this is the production-server.
+            Called by usep_gh_handler.handle_github_push() """
+        B_AUTH_PASSWORD = unicode( os.environ[u'usep_gh__BASIC_AUTH_PASSWORD'] )
+        B_AUTH_USERNAME = unicode( os.environ[u'usep_gh__BASIC_AUTH_USERNAME'] )
+        DEV_URL = unicode( os.environ[u'usep_gh__DEV_URL'] )
+        PRODUCTION_HOSTNAME = unicode( os.environ[u'usep_gh__PRODUCTION_HOSTNAME'] )
+        if flask_request_host == PRODUCTION_HOSTNAME:
+            self.log.debug( u'in usep_gh_handler.handle_github_push(); gonna hit dev, too' )
+            params = { u'data': flask.request.data }
+            r = requests.post( DEV_URL, data=params, auth=(B_AUTH_USERNAME, B_AUTH_PASSWORD) )
         return
 
     def prep_data_dict( self, flask_request_data ):
