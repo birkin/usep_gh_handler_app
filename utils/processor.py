@@ -71,8 +71,8 @@ class Copier( object ):
 
     def _copy_resources( self ):
         """ Updates resources directory. """
-        resources_source_path = u'%s/%s' % ( self.GIT_CLONED_DIR_PATH, u'resources' )
-        resources_destination_path = u'%s/%s' % ( self.WEBSERVED_DATA_DIR_PATH, u'resources' )
+        resources_source_path = u'%s/resources/' % self.GIT_CLONED_DIR_PATH
+        resources_destination_path = u'%s/resources/' % self.WEBSERVED_DATA_DIR_PATH
         command = u'rsync -avz --delete %s %s' % ( resources_source_path, resources_destination_path )
         r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
         log_helper.log_envoy_output( self.log, r )
@@ -94,8 +94,8 @@ class Copier( object ):
 
     def _copy_inscriptions( self ):
         """ Updates inscriptions directory. """
-        inscriptions_source_path = self.TEMP_DATA_DIR_PATH
-        inscriptions_destination_path = u'%s/%s' % ( self.WEBSERVED_DATA_DIR_PATH, u'inscriptions' )
+        inscriptions_source_path = u'%s/' % self.TEMP_DATA_DIR_PATH  # trailing slash important on source directory for rsync
+        inscriptions_destination_path = u'%s/inscriptions' % self.WEBSERVED_DATA_DIR_PATH
         command = u'rsync -avz --delete %s %s' % ( inscriptions_source_path, inscriptions_destination_path )
         r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
         log_helper.log_envoy_output( self.log, r )
