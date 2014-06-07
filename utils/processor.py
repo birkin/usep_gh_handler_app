@@ -36,7 +36,6 @@ class Copier( object ):
         self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
         self.TEMP_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__TEMP_DATA_DIR_PATH') )
         self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
-        # self.resources_destination_path = None  # set by _copy_resources(); accessed by _build_unified_inscriptions()
         self.log = log
 
     def get_files_to_update( self, files_to_process ):
@@ -76,6 +75,7 @@ class Copier( object ):
         resources_destination_path = u'%s/%s' % ( self.WEBSERVED_DATA_DIR_PATH, u'resources' )
         command = u'rsync -avz --delete %s %s' % ( resources_source_path, resources_destination_path )
         r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
+        log_helper.log_envoy_output( self.log, r )
         return
 
     def _build_unified_inscriptions( self ):
@@ -88,6 +88,7 @@ class Copier( object ):
             u'%s/xml_inscriptions/transcribed/' % self.GIT_CLONED_DIR_PATH, self.TEMP_DATA_DIR_PATH )
         for command in [ bib_command, metadata_command, transcription_command ]:
             r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
+            log_helper.log_envoy_output( self.log, r )
             time.sleep( 1 )
         return
 
@@ -97,6 +98,7 @@ class Copier( object ):
         inscriptions_destination_path = u'%s/%s' % ( self.WEBSERVED_DATA_DIR_PATH, u'inscriptions' )
         command = u'rsync -avz --delete %s %s' % ( inscriptions_source_path, inscriptions_destination_path )
         r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
+        log_helper.log_envoy_output( self.log, r )
         return
 
     ## end class Copier()
