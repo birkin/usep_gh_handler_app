@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import datetime, os, pprint
+import datetime, json, os, pprint
 import flask, requests
 
 
@@ -39,8 +39,9 @@ class WebAppHelper( object ):
         PRODUCTION_HOSTNAME = unicode( os.environ[u'usep_gh__PRODUCTION_HOSTNAME'] )
         if flask_request_host == PRODUCTION_HOSTNAME:
             self.log.debug( u'in usep_gh_handler.handle_github_push(); gonna hit dev, too' )
-            params = { u'data': flask.request.data }
-            r = requests.post( DEV_URL, data=params, auth=(B_AUTH_USERNAME, B_AUTH_PASSWORD) )
+            self.log.debug( u'in usep_gh_handler.handle_github_push(); type(flask.request.data), `%s`' % type(flask.request.data) )
+            payload = flask.request.data
+            r = requests.post( DEV_URL, data=payload, auth=(B_AUTH_USERNAME, B_AUTH_PASSWORD) )
         return
 
     def prep_data_dict( self, flask_request_data ):
