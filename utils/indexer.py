@@ -102,6 +102,8 @@ class Indexer( object ):
 
 ## queue runners ##
 
+q = rq.Queue( u'usep', connection=redis.Redis() )
+
 def run_update_index( files_updated, files_removed ):
     """ Creates index jobs (doesn't actually call Indexer() directly.
         Triggered by utils.processor.run_copy_files(). """
