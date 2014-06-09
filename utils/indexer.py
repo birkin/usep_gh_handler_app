@@ -77,7 +77,7 @@ class Indexer( object ):
 
     ## enqueue checking functions
 
-    def check_updated_file_path( updated_file_path, worthwhile_dirs ):
+    def check_updated_file_path( self, updated_file_path, worthwhile_dirs ):
         """ Checks whether file updated requires an index job.
             Called by run_update_index(). """
         response = False
@@ -88,7 +88,7 @@ class Indexer( object ):
                     break
         return response
 
-    def check_removed_file_path( removed_file_path, worthwhile_dirs ):
+    def check_removed_file_path( self, removed_file_path, worthwhile_dirs ):
         """ Checks whether file removed requires an index job.
             Called by run_update_index(). """
         response = False
