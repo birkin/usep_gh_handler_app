@@ -109,6 +109,7 @@ def run_update_index( files_updated, files_removed ):
         Triggered by utils.processor.run_copy_files(). """
     log = log_helper.setup_logger()
     indexer = Indexer( log )
+    worthwhile_dirs = [ u'bib_only', u'metadata_only', u'transcribed' ]
     for updated_file_path in files_updated:
         if indexer.check_updated_file_path( updated_file_path, worthwhile_dirs ):
             q.enqueue_call(
