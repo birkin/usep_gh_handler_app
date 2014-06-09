@@ -81,22 +81,20 @@ class Indexer( object ):
         """ Checks whether file updated requires an index job.
             Called by run_update_index(). """
         response = False
-        for updated_file_path in files_updated:
-            for dir in worthwhile_dirs:
-                if dir in updated_file_path:
-                    response = True
-                    break
+        for dir in worthwhile_dirs:
+            if dir in updated_file_path:
+                response = True
+                break
         return response
 
     def check_removed_file_path( self, removed_file_path, worthwhile_dirs ):
         """ Checks whether file removed requires an index job.
             Called by run_update_index(). """
         response = False
-        for removed_file_path in files_removed:
-            for dir in worthwhile_dirs:
-                if dir in removed_file_path:
-                    response = True
-                    break
+        for dir in worthwhile_dirs:
+            if dir in removed_file_path:
+                response = True
+                break
         return response
 
     ## end class Indexer()
