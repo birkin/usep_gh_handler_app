@@ -13,18 +13,20 @@ class Indexer( object ):
         """ Settings. """
         self.log = log
         self.solr_dict = {}
+        self.worthwhile_dirs = [ u'bib_only', u'metadata_only', u'transcribed' ]  # only need to update index for these dirs
         self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
         self.SOLR_URL = unicode( os.environ.get(u'usep_gh__SOLR_URL') )
+        self.BIB_XML_PATH = unicode( os.environ.get(u'usep_gh__BIB_XML_PATH') )
 
     ## update index entry ##
 
-    def update_index_entry( self, updated_file_path ):
+    def update_index_entry( self, filename ):
         """ Updates solr index for a new or changed file.
             Called by run_update_index().
             TODO: replace pq extracts with straight lxml or beautifulsoup extracts. """
-        self.log.debug( u'in utils.indexer.update_index_entry(); updated_file_path, `%s`' % updated_file_path )
-        full_file_path = u'%s/%s' % ( self.WEBSERVED_DATA_DIR_PATH, updated_file_path )
-        self._build_solr_dict( full_file_path )
+        self.log.debug( u'in utils.indexer.update_index_entry(); filename, `%s`' % filename )
+        full_file_path = u'%s/inscriptions/%s' % ( self.WEBSERVED_DATA_DIR_PATH, filename )
+        self._build_solr_dict( full_file_path, self.BIB_XML_PATH )
         self._post_solr_update()
         return
 
@@ -71,27 +73,28 @@ class Indexer( object ):
 
     ## remove index entry ##
 
-    def remove_index_entry( self ):
+    def remove_index_entry( self, filename ):
         """ Updates solr index for a removed file. """
+        self.log.debug( u'in utils.indexer.Indexer.remove_index_entry(); code to remove `%s` from the index will go here' % filename )
         pass
 
     ## enqueue checking functions
 
-    def check_updated_file_path( self, updated_file_path, worthwhile_dirs ):
+    def check_updated_file_path( self, updated_file_path ):
         """ Checks whether file updated requires an index job.
             Called by run_update_index(). """
         response = False
-        for dir in worthwhile_dirs:
+        for dir in self.worthwhile_dirs:
             if dir in updated_file_path:
                 response = True
                 break
         return response
 
-    def check_removed_file_path( self, removed_file_path, worthwhile_dirs ):
+    def check_removed_file_path( self, removed_file_path ):
         """ Checks whether file removed requires an index job.
             Called by run_update_index(). """
         response = False
-        for dir in worthwhile_dirs:
+        for dir in self.worthwhile_dirs:
             if dir in removed_file_path:
                 response = True
                 break
@@ -109,15 +112,14 @@ def run_update_index( files_updated, files_removed ):
         Triggered by utils.processor.run_copy_files(). """
     log = log_helper.setup_logger()
     indexer = Indexer( log )
-    worthwhile_dirs = [ u'bib_only', u'metadata_only', u'transcribed' ]
     for updated_file_path in files_updated:
-        if indexer.check_updated_file_path( updated_file_path, worthwhile_dirs ):
+        if indexer.check_updated_file_path( updated_file_path ):
             q.enqueue_call(
                 func=u'usep_gh_handler_app.utils.indexer.run_update_entry', kwargs={u'updated_file_path': updated_file_path} )
-    for removed_file_path in files_updated:
-        if indexer.check_removed_file_path( removed_file_path, worthwhile_dirs ):
+    for removed_file_path in files_removed:
+        if indexer.check_removed_file_path( removed_file_path ):
             q.enqueue_call(
-                func=u'usep_gh_handler_app.utils.indexer.run_update_entry', kwargs={u'updated_file_path': updated_file_path} )
+                func=u'usep_gh_handler_app.utils.indexer.run_remove_entry', kwargs={u'removed_file_path': removed_file_path} )
     return
 
 def run_update_entry( updated_file_path ):
@@ -125,7 +127,8 @@ def run_update_entry( updated_file_path ):
         Triggered by run_update_index(). """
     log = log_helper.setup_logger()
     indexer = Indexer( log )
-    indexer.update_index_entry( updated_file_path )
+    filename = updated_file_path.split( u'/' )[-1]
+    indexer.update_index_entry( filename )
     return
 
 
@@ -134,5 +137,6 @@ def run_remove_entry( removed_file_path ):
         Triggered by run_update_index(). """
     log = log_helper.setup_logger()
     indexer = Indexer( log )
-    indexer.remove_index_entry( removed_file_path )
+    filename = removed_file_path.split( u'/' )[-1]
+    indexer.remove_index_entry( filename )
     return
