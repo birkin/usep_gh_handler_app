@@ -75,8 +75,14 @@ class Indexer( object ):
 
     def remove_index_entry( self, filename ):
         """ Updates solr index for a removed file. """
-        self.log.debug( u'in utils.indexer.Indexer.remove_index_entry(); code to remove `%s` from the index will go here' % filename )
-        pass
+        inscription_id = filename.strip().split(u'.xml')[0]
+        self.log.debug( u'in utils.indexer.Indexer.remove_index_entry(); filename, `%s`; inscription_id, `%s`: `%s`' % (filename, inscription_id) )
+        s = solr.Solr( self.SOLR_URL )
+        response = s.delete( id=inscription_id )
+        s.commit()
+        s.close()
+        self.log.debug( u'in utils.indexer.Indexer.remove_index_entry(); post complete; response is: %s' % response )
+        return
 
     ## enqueue checking functions
 
