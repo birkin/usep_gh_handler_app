@@ -2,7 +2,7 @@
 
 """ Handles log setup. """
 
-import logging, os
+import datetime, logging, os
 
 
 def setup_logger():
@@ -19,6 +19,7 @@ def setup_logger():
     file_handler = logging.FileHandler( filename )
     file_handler.setFormatter( formatter )
     logger.addHandler( file_handler )
+    logger.debug( u'in utils.log_helper.setup_logger(); log initialized at %s' % unicode(datetime.datetime.now()) )
     return logger
 
 

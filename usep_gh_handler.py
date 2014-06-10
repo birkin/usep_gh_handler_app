@@ -12,7 +12,6 @@ B_AUTH_PASSWORD = unicode( os.environ[u'usep_gh__BASIC_AUTH_PASSWORD'] )
 B_AUTH_USERNAME = unicode( os.environ[u'usep_gh__BASIC_AUTH_USERNAME'] )
 app = flask.Flask(__name__)
 log = log_helper.setup_logger()
-log.debug( u'in usep_gh_handler; log initialized' )
 app.config[u'BASIC_AUTH_USERNAME'] = B_AUTH_USERNAME
 app.config[u'BASIC_AUTH_PASSWORD'] = B_AUTH_PASSWORD
 basic_auth = BasicAuth(app)
@@ -28,6 +27,7 @@ def handle_github_push():
         Called from github push webhook.
         TODO: remove GET, now used for testing. """
     try:
+        log.debug( u'in usep_gh_handler; starting (basic-auth successful)' )
         app_helper.log_github_post( flask.request )
         app_helper.trigger_dev_if_production( flask.request.host )  # github can only hit production; we want dev updated, too
         if flask.request.data or u'force' in flask.request.path:
