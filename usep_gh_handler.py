@@ -3,7 +3,7 @@
 import datetime, json, os, pprint, urlparse
 import flask, redis, requests, rq
 from flask.ext.basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
-from usep_gh_handler_app.utils import log_helper
+from usep_gh_handler_app.utils import log_helper, reindex_all_support
 from usep_gh_handler_app.utils.web_app_helper import WebAppHelper
 
 
@@ -26,7 +26,7 @@ def reindex_all():
     try:
         log.debug( u'in usep_gh_handler.reindex_all(); starting' )
         q.enqueue_call (
-            func=u'usep_gh_handler_app.utils.processor.run_call_simple_git_pull',
+            func=u'usep_gh_handler_app.utils.reindex_all_support.run_call_simple_git_pull',
             kwargs = {} )
         return u'pull and reindex initiated.', 200
     except Exception as e:

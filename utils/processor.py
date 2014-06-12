@@ -106,36 +106,6 @@ class Copier( object ):
 
 ## runners ##
 
-q = rq.Queue( u'usep', connection=redis.Redis() )
-
-## reindex-all triggered runners ##
-
-def run_call_simple_git_pull():
-    """ Initiates a simple git pull update.
-        Triggered by usep_gh_handler.reindex_all() """
-    log = log_helper.setup_logger()
-    puller = Puller( log )
-    puller.call_git_pull()
-    q.enqueue_call(
-        func=u'usep_gh_handler_app.utils.processor.run_simple_copy_files',
-        kwargs={} )
-    return
-
-def run_simple_copy_files( files_to_update, files_to_remove ):
-    """ Runs a copy and then triggers an full_re-index job.
-        Triggered by utils.processor.run_call_simple_git_pull(). """
-    log = log_helper.setup_logger()
-    log.debug( u'in utils.processor.run_simple_copy_files(); starting' )
-    assert type( files_to_update ) == list; assert type( files_to_remove ) == list
-    copier = Copier( log )
-    copier.copy_files()
-    q.enqueue_call(
-        func=u'usep_gh_handler_app.utils.indexer.run_start_reindex_all',
-        kwargs={} )
-    return
-
-## github triggered runners ##
-
 def run_call_git_pull( files_to_process ):
     """ Initiates a git pull update.
             Spawns a call to Processor.process_file() for each result found.
