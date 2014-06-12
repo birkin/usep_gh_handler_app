@@ -62,6 +62,8 @@ class SolrIdChecker( object ):
             filename = file_path.split( u'/' )[-1]
             inscription_id = filename.strip().split(u'.xml')[0]
             file_system_ids.append( inscription_id )
+        self.log.debug( u'in utils.reindex_all_support._make_file_system_ids(); len(file_system_ids), `%s`' % len(file_system_ids) )
+        self.log.debug( u'in utils.reindex_all_support._make_file_system_ids(); file_system_ids[0:2], `%s`' % pprint.pformat(file_system_ids[0:2]) )
         return file_system_ids
 
     def _make_ids_to_remove( self, all_solr_ids, file_system_ids ):
@@ -69,6 +71,8 @@ class SolrIdChecker( object ):
             Called by build_orphaned_ids(). """
         ids_to_remove_set = set(all_solr_ids) - set(file_system_ids)
         ids_to_remove_list = list( ids_to_remove_set )
+        self.log.debug( u'in utils.reindex_all_support._make_ids_to_remove(); len(ids_to_remove_list), `%s`' % len(ids_to_remove_list) )
+        self.log.debug( u'in utils.reindex_all_support._make_ids_to_remove(); ids_to_remove_list[0:2], `%s`' % pprint.pformat(ids_to_remove_list[0:2]) )
         return ids_to_remove_list
 
     ## end class SolrIdChecker()
@@ -133,11 +137,11 @@ def run_build_solr_remove_list( inscriptions ):
     return
 
 def run_enqueue_all_index_updates( inscriptions_to_index, ids_to_remove ):
-    for file_path in inscriptions_to_index:
+    for file_path in inscriptions_to_index[0:1]:
         q.enqueue_call(
             func=u'usep_gh_handler_app.utils.indexer.run_update_entry',
             kwargs={u'updated_file_path': file_path} )  # updated_file_path just a label; TODO: make name less awkward
-    for id_to_remove in ids_to_remove:
+    for id_to_remove in ids_to_remove[0:1]:
         q.enqueue_call(
             func=u'usep_gh_handler_app.utils.reindex_all_support.run_remove_entry_via_id',
             kwargs={u'id_to_remove': id_to_remove} )
