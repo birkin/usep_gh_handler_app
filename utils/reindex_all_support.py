@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import os, pprint
+import glob, os, pprint
 import redis, requests, rq
 from usep_gh_handler_app.utils import log_helper
 from usep_gh_handler_app.utils.processor import Copier, Puller
@@ -40,7 +40,7 @@ class SolrIdChecker( object ):
         all_solr_ids = self._grab_solr_ids()
         file_system_ids = self._make_file_system_ids( inscriptions )
         ids_to_remove = self._make_ids_to_remove( all_solr_ids, file_system_ids )
-        return ( inscriptions_to_index, ids_to_remove )
+        return ( inscriptions, ids_to_remove )
 
     def _grab_solr_ids( self ):
         """ Returns list of solr ids.
@@ -93,12 +93,11 @@ def run_call_simple_git_pull():
         kwargs={} )
     return
 
-def run_simple_copy_files( files_to_update, files_to_remove ):
+def run_simple_copy_files():
     """ Runs a copy and then triggers an full_re-index job.
         Triggered by utils.processor.run_call_simple_git_pull(). """
     log = log_helper.setup_logger()
-    log.debug( u'in utils.processor.run_simple_copy_files(); starting' )
-    assert type( files_to_update ) == list; assert type( files_to_remove ) == list
+    log.debug( u'in utils.reindex_all_support.run_simple_copy_files(); starting' )
     copier = Copier( log )
     copier.copy_files()
     q.enqueue_call(
@@ -137,12 +136,12 @@ def run_build_solr_remove_list( inscriptions ):
     return
 
 def run_enqueue_all_index_updates( inscriptions_to_index, ids_to_remove ):
-    for file_path in inscriptions_to_index[0:1]:
+    for file_path in inscriptions_to_index:
         q.enqueue_call(
             func=u'usep_gh_handler_app.utils.indexer.run_update_entry',
             kwargs={u'updated_file_path': file_path} )  # updated_file_path just a label; TODO: make name less awkward
-    for id_to_remove in ids_to_remove[0:1]:
+    for id_to_remove in ids_to_remove:
         q.enqueue_call(
-            func=u'usep_gh_handler_app.utils.reindex_all_support.run_remove_entry_via_id',
+            func=u'usep_gh_handler_app.utils.indexer.run_remove_entry_via_id',
             kwargs={u'id_to_remove': id_to_remove} )
     return  # done!

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import glob, os, pprint
+import os, pprint
 import redis, rq, solr
 from usep_gh_handler_app.utils import log_helper
 from usep_gh_handler_app.utils.indexer_parser import Parser
@@ -79,7 +79,7 @@ class Indexer( object ):
         """ Updates solr index for a removed file. """
         if filename:
             inscription_id = filename.strip().split(u'.xml')[0]
-        self.log.debug( u'in utils.indexer.Indexer.remove_index_entry(); filename, `%s`; inscription_id, `%s`: `%s`' % (filename, inscription_id) )
+        self.log.debug( u'in utils.indexer.Indexer.remove_index_entry(); filename, `%s`; inscription_id, `%s`' % (filename, inscription_id) )
         s = solr.Solr( self.SOLR_URL )
         response = s.delete( id=inscription_id )
         s.commit()
@@ -160,10 +160,10 @@ def run_remove_entry( removed_file_path ):
     indexer.remove_index_entry( filename=filename )
     return
 
-def run_remove_entry_via_id( inscription_id ):
+def run_remove_entry_via_id( id_to_remove ):
     """ Removes id from solr.
         Triggered by utils.reindex_all_support.run_enqueue_all_index_updates(). """
     log = log_helper.setup_logger()
     indexer = Indexer( log )
-    indexer.remove_index_entry( inscription_id=inscription_id )
+    indexer.remove_index_entry( inscription_id=id_to_remove )
     return
