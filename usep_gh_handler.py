@@ -19,6 +19,20 @@ app_helper = WebAppHelper( log )
 q = rq.Queue( u'usep', connection=redis.Redis() )
 
 
+@app.route( u'/reindex_all/', methods=[u'GET'] )
+def reindex_all():
+    """ Triggers a git-pull and a re-index of everything.
+        Called via admin. """
+    try:
+        log.debug( u'in usep_gh_handler.reindex_all(); starting' )
+        q.enqueue_call (
+            func=u'usep_gh_handler_app.utils.processor.run_call_simple_git_pull',
+            kwargs = {} )
+        return u'pull and reindex initiated.', 200
+    except Exception as e:
+        log.error( u'in usep_gh_handler.reindex_all(); error, `%s`' % unicode(repr(e)) )
+
+
 @app.route( u'/', methods=[u'GET', u'POST'] )
 @app.route( u'/force/', methods=[u'GET', u'POST'] )  # for testing
 @basic_auth.required
@@ -27,7 +41,7 @@ def handle_github_push():
         Called from github push webhook.
         TODO: remove GET, now used for testing. """
     try:
-        log.debug( u'in usep_gh_handler; starting (basic-auth successful)' )
+        log.debug( u'in usep_gh_handler.handle_github_push(); starting (basic-auth successful)' )
         app_helper.log_github_post( flask.request )
         app_helper.trigger_dev_if_production( flask.request.host )  # github can only hit production; we want dev updated, too
         if flask.request.data or u'force' in flask.request.path:
