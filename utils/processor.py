@@ -106,6 +106,8 @@ class Copier( object ):
 
 ## runners ##
 
+q = rq.Queue( u'usep', connection=redis.Redis() )
+
 def run_call_git_pull( files_to_process ):
     """ Initiates a git pull update.
             Spawns a call to Processor.process_file() for each result found.
