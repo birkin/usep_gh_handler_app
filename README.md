@@ -1,6 +1,16 @@
 ### Purpose
 
-Experimental code to test initiating a git_pull from a github push.
+Listener for a github usep-data push. Flow...
+
+- github hits flask listener on usep-data update
+- listener hits dev-server if needed
+- listener determines files-to-process (update & remove)
+- listener initiates job `utils.processor.run_call_git_pull`
+- which initiates job `utils.processor.run_copy_files`
+- which initiates job `utils.indexer.run_update_index`
+- which initiates 2 jobs:
+    - `utils.indexer.run_update_entry` (if needed) (and which does nothing further)
+    - `utils.indexer.run_remove_entry` (if needed) (and which does nothing further)
 
 
 ### Notes
