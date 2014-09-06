@@ -87,7 +87,7 @@ class Parser( object ):
     try:
       if not self.bib_doc == None:
         if self.bib_ids == None:
-          # self.log.debug( u'in makeBibDocs(); about to call parseBibIds()' )
+          # self.log.debug( u'in utils.indexer_parser.Parser.makeBibDocs(); about to call parseBibIds()' )
           self.parseBibIds()
         if len( self.bib_ids ) == 0:
           self.bib_docs = []
@@ -97,24 +97,24 @@ class Parser( object ):
         else:
           self.bib_docs = []
           for bib_id in self.bib_ids:
-            self.log.debug( u'in makeBibDocs(); about to make bib-doc for bib_id: %s' % bib_id )
+            self.log.debug( u'in utils.indexer_parser.Parser.makeBibDocs(); about to make bib-doc for bib_id: %s' % bib_id )
             ## find bib-match (in bib xml)
             found_el = None
             for el in self.bib_doc.iter( u'{http://www.tei-c.org/ns/1.0}bibl' ):
               if el.attrib[ u'{http://www.w3.org/XML/1998/namespace}id' ] == bib_id:
                 found_el = el
-                self.log.debug( u'in makeBibDocs(); bib-doc found: %s' % etree.tostring(found_el) )
+                self.log.debug( u'in utils.indexer_parser.Parser.makeBibDocs(); bib-doc found: %s' % etree.tostring(found_el) )
                 self.bib_docs.append( found_el )
                 break
             if found_el == None:
-              self.log.debug( u'in makeBibDocs(); NO bib-doc found' )
+              self.log.debug( u'in utils.indexer_parser.Parser.makeBibDocs(); NO bib-doc found' )
               self.bib_docs.append( None )
-        self.log.debug( u'in makeBibDocs(); self.bib_docs: %s' % self.bib_docs )
+        self.log.debug( u'in utils.indexer_parser.Parser.makeBibDocs(); self.bib_docs: %s' % self.bib_docs )
         return self.bib_docs
       else:
         return
     except Exception as e:
-      # self.parse_errors = u'exception in makeBibDocs() is: %s' % repr(e).decode(u'utf-8', u'replace')
+      # self.parse_errors = u'exception in utils.indexer_parser.Parser.makeBibDocs() is: %s' % repr(e).decode(u'utf-8', u'replace')
       message = u'makeBibDocs() exception is: %s' % repr(e).decode(u'utf-8', u'replace')
       self.log.error( message )
       self.parse_errors = u'in Parser.makeBibDocs(); problem making bib-docs; error logged'
