@@ -28,6 +28,77 @@ class Puller( object ):
     ## end class Puller()
 
 
+
+
+class XIncludeUpdater( object ):
+    """ Contains functions for updating inscription <xi:include references.
+        Reason is that the folder structure as exists for editors and on github is slightly different than in web-app."""
+
+    def __init__( self, log ):
+        """ Settings. """
+        self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
+
+    def update_xinclude_references( files_to_update ):
+        """ Updates xi:include href entries.
+            `files_to_update` is a list like: [ u'xml_inscriptions/metadata_only/CA.Berk.UC.HMA.L.8-4286.xml', u'etc' ] """
+        self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); starting.'
+        for inscription_path_segment in files_to_update:
+            full_file_path = u'%s/%s' % ( self.GIT_CLONED_DIR_PATH, inscription_path_segment )
+            self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); updating file, `%s`' % full_file_path )
+            initial_xml = self._load_xml( full_file_path )
+            updated_xml = self._update_xml( initial_xml )
+            with open( full_file_path, u'w' ) as f:
+                f.write( xml )
+        return
+
+    def _load_xml( self, full_file_path ):
+        """ Loads and returns xml unicode string.
+            Called by update_xinclude_references(). """
+        with open( full_file_path ) as f:
+            xml = f.read()
+        if type( xml ) == u'str':
+            xml = xml.decode( u'utf-8' )
+        return xml
+
+    def _update_xml( self, initial_xml ):
+        """ Updates and returns xml. """
+        mapper = {
+            u'http://library.brown.edu/usep_data/resources/include_publicationStmt.xml': u'../resources/include_publicationStmt.xml',
+            u'http://library.brown.edu/usep_data/resources/include_taxonomies.xml': u'../resources/include_taxonomies.xml',
+            u'http://library.brown.edu/usep_data/resources/titles.xml': u'../resources/titles.xml',
+        }
+        for (key, value) in mapper.items():
+            modified_xml = initial_xml.replace( key, value )
+        return modified_xml
+
+    # def update_xinclude_references( files_to_update ):
+    #     """ Updates xi:include href entries.
+    #         `files_to_update` is a list like: [ u'xml_inscriptions/metadata_only/CA.Berk.UC.HMA.L.8-4286.xml', u'etc' ] """
+    #     self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); starting.'
+    #     for inscription_path_segment in files_to_update:
+    #         full_file_path = u'%s/%s' % ( self.GIT_CLONED_DIR_PATH, inscription_path_segment )
+    #         self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); updating file, `%s`' % full_file_path )
+    #         with open( full_file_path ) as f:
+    #             xml = f.read()
+    #         if type( xml ) == u'str':
+    #             xml = xml.decode( u'utf-8' )
+    #         mapper = {
+    #             u'http://library.brown.edu/usep_data/resources/include_publicationStmt.xml': u'../resources/include_publicationStmt.xml',
+    #             u'http://library.brown.edu/usep_data/resources/include_taxonomies.xml': u'../resources/include_taxonomies.xml',
+    #             u'http://library.brown.edu/usep_data/resources/titles.xml': u'../resources/titles.xml',
+    #         }
+    #         for (key, value) in mapper.items():
+    #             xml = xml.replace( key, value )
+    #         with open( full_file_path, u'w' ) as f:
+    #             f.write( xml )
+    #     return
+
+    # end class XIncludeUpdater()
+
+
+
+
+
 class Copier( object ):
     """ Contains functions for copying xml-data files. """
 
@@ -46,7 +117,7 @@ class Copier( object ):
             filepaths_to_update = self.make_complete_files_to_update_list()  # TODO
         else:
             filepaths_to_update = files_to_process[u'files_updated']
-        self.log.debug( u'in utils.Processor.get_files_to_update(); filepaths_to_update, `%s`' % filepaths_to_update )
+        self.log.debug( u'in utils.processor.Copier.get_files_to_update(); filepaths_to_update, `%s`' % filepaths_to_update )
         return filepaths_to_update
 
     def get_files_to_remove( self, files_to_process ):
@@ -57,7 +128,7 @@ class Copier( object ):
             filepaths_to_remove = self.make_complete_files_to_remove_list()  # TODO
         else:
             filepaths_to_remove = files_to_process[u'files_removed']
-        self.log.debug( u'in utils.Processor.get_files_to_remove(); filepaths_to_remove, `%s`' % filepaths_to_remove )
+        self.log.debug( u'in utils.processor.Copier.get_files_to_remove(); filepaths_to_remove, `%s`' % filepaths_to_remove )
         return filepaths_to_remove
 
     ## copy files
@@ -68,6 +139,7 @@ class Copier( object ):
         self._copy_resources()
         self._build_unified_inscriptions()
         self._copy_inscriptions()
+        return
 
     def _copy_resources( self ):
         """ Updates resources directory. """
