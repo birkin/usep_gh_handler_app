@@ -41,7 +41,7 @@ class XIncludeUpdater( object ):
     def update_xinclude_references( files_to_update ):
         """ Updates xi:include href entries.
             `files_to_update` is a list like: [ u'xml_inscriptions/metadata_only/CA.Berk.UC.HMA.L.8-4286.xml', u'etc' ] """
-        self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); starting.'
+        self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); starting.' )
         for inscription_path_segment in files_to_update:
             full_file_path = u'%s/%s' % ( self.GIT_CLONED_DIR_PATH, inscription_path_segment )
             self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); updating file, `%s`' % full_file_path )
