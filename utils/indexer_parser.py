@@ -64,7 +64,7 @@ class Parser( object ):
     try:
       self.xml_doc = etree.fromstring( self.xml.encode(u'utf-8') )  # str required because xml contains an encoding declaration
     except lxml.etree.XMLSyntaxError, e:
-      log.error( u'in Parser.loadAndDocifyInscriptionXml(); error instantiating xml_doc; xml_path is: %s; e is: %s' % (self.xml_path, repr(e).decode(u'utf-8', u'replace')) )
+      self.log.error( u'in Parser.loadAndDocifyInscriptionXml(); error instantiating xml_doc; xml_path is: %s; e is: %s' % (self.xml_path, repr(e).decode(u'utf-8', u'replace')) )
       self.parse_errors = u'in Parser.loadAndDocifyInscriptionXml(); unable to load xml string into an xml doc'
 
   def loadAndDocifyBiblXml(self):
@@ -78,7 +78,7 @@ class Parser( object ):
         assert unicode(type(self.bib_doc)) == u"<type 'lxml.etree._Element'>", Exception( u'type(self.bib_doc) should be lxml.etree._Element; it is: %s' % unicode(type(self.bib_doc)) )
         return self.bib_doc
     except Exception as e:
-      log.error( u'in Parser.loadAndDocifyBiblXml(); exception e is: %s' % repr(e).decode(u'utf-8', u'replace') )
+      self.log.error( u'in Parser.loadAndDocifyBiblXml(); exception e is: %s' % repr(e).decode(u'utf-8', u'replace') )
       self.parse_errors = u'in Parser.loadAndDocifyBiblXml(); unable to load expected bib doc'
 
   def makeBibDocs(self):
@@ -137,7 +137,7 @@ class Parser( object ):
       return self.bib_authors
     except Exception as e:
       message = u'parseBibAuthors() exception is: %s' % repr(e).decode(u'utf-8', u'replace')
-      log.error( message )
+      self.log.error( message )
       self.parse_errors = u'in Parser.parseBibAuthors(); problem parsing bib-authors'
 
   def _parse_bib_authors_from_monograph( self, bib_match_element, bib_authors ):
@@ -412,7 +412,7 @@ class Parser( object ):
       # self.log.debug( u'in Parser.parseId(); created i_id is: %s' % self.i_id )
       return self.i_id
     except Exception as e:
-      log.error( u'in Parser.parseId(); exception is: %s' % repr(e).decode(u'utf-8', u'replace') )
+      self.log.error( u'in Parser.parseId(); exception is: %s' % repr(e).decode(u'utf-8', u'replace') )
       self.parse_errors = u'parseId() exception is: %s' % repr(e).decode(u'utf-8', u'replace')
 
   def parse_graphic_name( self ):
