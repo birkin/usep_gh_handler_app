@@ -37,6 +37,7 @@ class XIncludeUpdater( object ):
     def __init__( self, log ):
         """ Settings. """
         self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
+        self.log = log
 
     def update_xinclude_references( self, files_to_update ):
         """ Updates xi:include href entries.
