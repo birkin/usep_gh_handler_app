@@ -65,14 +65,26 @@ class XIncludeUpdater( object ):
 
     def _update_xml( self, initial_xml ):
         """ Updates and returns xml. """
+        modified_xml = initial_xml
         mapper = {
             u'http://library.brown.edu/usep_data/resources/include_publicationStmt.xml': u'../resources/include_publicationStmt.xml',
             u'http://library.brown.edu/usep_data/resources/include_taxonomies.xml': u'../resources/include_taxonomies.xml',
             u'http://library.brown.edu/usep_data/resources/titles.xml': u'../resources/titles.xml',
         }
         for (key, value) in mapper.items():
-            modified_xml = initial_xml.replace( key, value )
+            modified_xml = modified_xml.replace( key, value )
         return modified_xml
+
+    # def _update_xml( self, initial_xml ):
+    #     """ Updates and returns xml. """
+    #     mapper = {
+    #         u'http://library.brown.edu/usep_data/resources/include_publicationStmt.xml': u'../resources/include_publicationStmt.xml',
+    #         u'http://library.brown.edu/usep_data/resources/include_taxonomies.xml': u'../resources/include_taxonomies.xml',
+    #         u'http://library.brown.edu/usep_data/resources/titles.xml': u'../resources/titles.xml',
+    #     }
+    #     for (key, value) in mapper.items():
+    #         modified_xml = initial_xml.replace( key, value )
+    #     return modified_xml
 
     # def update_xinclude_references( files_to_update ):
     #     """ Updates xi:include href entries.
