@@ -47,7 +47,9 @@ class XIncludeUpdater( object ):
             full_file_path = u'%s/%s' % ( self.GIT_CLONED_DIR_PATH, inscription_path_segment )
             self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); updating file, `%s`' % full_file_path )
             initial_xml = self._load_xml( full_file_path )
+            self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); initial_xml, `%s`' % initial_xml[0:500] )
             updated_xml = self._update_xml( initial_xml )
+            self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); updated_xml, `%s`' % updated_xml[0:500] )
             with open( full_file_path, u'w' ) as f:
                 f.write( updated_xml )
         return
