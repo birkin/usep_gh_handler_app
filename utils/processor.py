@@ -49,7 +49,7 @@ class XIncludeUpdater( object ):
             initial_xml = self._load_xml( full_file_path )
             updated_xml = self._update_xml( initial_xml )
             with open( full_file_path, u'w' ) as f:
-                f.write( xml )
+                f.write( updated_xml )
         return
 
     def _load_xml( self, full_file_path ):
