@@ -9,9 +9,9 @@ Listener for a github usep-data push. Flow...
 - which initiates job `utils.processor.run_copy_files`
 - which initiates job `utils.processor.run_xinclude_updater`
 - which initiates job `utils.indexer.run_update_index`
-- which initiates 2 jobs:
-    - `utils.indexer.run_update_entry` (if needed) (and which does nothing further)
-    - `utils.indexer.run_remove_entry` (if needed) (and which does nothing further)
+- which initiates, for each entry, the jobs (if needed):
+    - `utils.indexer.run_update_entry` (does nothing further)
+    - `utils.indexer.run_remove_entry` (does nothing further)
 
 
 ### Notes

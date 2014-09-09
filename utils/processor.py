@@ -124,47 +124,53 @@ class XIncludeUpdater( object ):
         self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
         self.log = log
 
-    def update_xinclude_references( self, files_to_update ):
+    def update_xinclude_references( self ):
         """ Updates xi:include href entries.
-            `files_to_update` is a list like: [ u'xml_inscriptions/metadata_only/CA.Berk.UC.HMA.L.8-4286.xml', u'etc' ] """
+            Called by run_xinclude_updater() """
         self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); starting.' )
-        for inscription_path_segment in files_to_update:
-            full_file_path = u'%s/inscriptions/%s' % ( self.WEBSERVED_DATA_DIR_PATH, self._make_filename(inscription_path_segment) )
-            self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); updating file, `%s`' % full_file_path )
-            initial_xml = self._load_xml( full_file_path )
-            self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); initial_xml, `%s`' % initial_xml[0:500] )
-            updated_xml = self._update_xml( initial_xml )
-            self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); updated_xml, `%s`' % updated_xml[0:500] )
-            with open( full_file_path, u'w' ) as f:
-                f.write( updated_xml )
+        inscriptions_filepath_list = self._make_inscriptions_filepath_list()
+        for path in inscriptions_filepath_list:
+            xml = self._open_file( path )
+            updated_xml = self._update_xml( xml )
+            with open( path, u'w' ) as f:
+                f.write( updated_xml.encode(u'utf-8') )
         return
 
-    def _make_filename( self, inscription_path_segment ):
-        """ Returns filename from path.
+    def _make_inscriptions_filepath_list( self ):
+        """ Builds and returns a list of inscription filepaths.
             Called by update_xinclude_references() """
-        parts = inscription_path_segment.split( u'/' )
-        return parts[-1]
+        inscriptions_web_dir_path = u'%s/inscriptions/' % self.WEBSERVED_DATA_DIR_PATH
+        contents = []
+        contents_try = os.listdir( inscriptions_web_dir_path )
+        for entry in contents_try:
+            if entry[-4:] == u'.xml':
+                contents.append( u'%s/%s' % (inscriptions_web_dir_path, entry) )
+        return contents
 
-    def _load_xml( self, full_file_path ):
-        """ Loads and returns xml unicode string.
-            Called by update_xinclude_references(). """
-        with open( full_file_path ) as f:
+    def _open_file( self, path ):
+        """ Returns unicode xml string.
+            Called by update_xinclude_references() """
+        with open( path ) as f:
             xml = f.read()
         if type( xml ) == str:
             xml = xml.decode( u'utf-8' )
+        assert type( xml ) == unicode, type( xml )
         return xml
 
-    def _update_xml( self, initial_xml ):
-        """ Updates and returns xml. """
-        modified_xml = initial_xml
+    def _update_xml( self, xml ):
+        """ Returns updated unicode xml string.
+            Called by update_xinclude_references() """
         mapper = {
             u'http://library.brown.edu/usep_data/resources/include_publicationStmt.xml': u'../resources/include_publicationStmt.xml',
             u'http://library.brown.edu/usep_data/resources/include_taxonomies.xml': u'../resources/include_taxonomies.xml',
-            u'http://library.brown.edu/usep_data/resources/titles.xml': u'../resources/titles.xml',
+            u'http://library.brown.edu/usep_data/resources/titles.xml': u'../resources/titles.xml'
         }
         for (key, value) in mapper.items():
-            modified_xml = modified_xml.replace( key, value )
-        return modified_xml
+            xml = xml.replace( key, value )
+            if type( xml ) == str:
+                xml = xml.decode( u'utf-8' )
+            assert type( xml ) == unicode, type( xml )
+        return xml
 
     # end class XIncludeUpdater()
 
@@ -213,7 +219,7 @@ def run_xinclude_updater( files_to_update, files_to_remove ):
     log.debug( u'in utils.processor.run_call_xinclude_replacer(); starting' )
     assert type( files_to_update ) == list; assert type( files_to_remove ) == list
     xinclude_updater = XIncludeUpdater( log )
-    xinclude_updater.update_xinclude_references( files_to_update )
+    xinclude_updater.update_xinclude_references()
     log.debug( u'in processor.run_call_xinclude_updater(); enqueuing next job' )
     q.enqueue_call(
         func=u'usep_gh_handler_app.utils.indexer.run_update_index',
