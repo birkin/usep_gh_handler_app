@@ -7,6 +7,7 @@ Listener for a github usep-data push. Flow...
 - listener determines files-to-process (update & remove)
 - listener initiates job `utils.processor.run_call_git_pull`
 - which initiates job `utils.processor.run_copy_files`
+- which initiates job `utils.processor.run_xinclude_updater`
 - which initiates job `utils.indexer.run_update_index`
 - which initiates 2 jobs:
     - `utils.indexer.run_update_entry` (if needed) (and which does nothing further)

@@ -45,7 +45,7 @@ def handle_github_push():
         app_helper.log_github_post( flask.request )
         app_helper.trigger_dev_if_production( flask.request.host )  # github can only hit production; we want dev updated, too
         if flask.request.data or u'force' in flask.request.path:
-            files_to_process = app_helper.prep_data_dict( flask.request.data )  # dict of lists; files_updated, files_removed
+            files_to_process = app_helper.prep_data_dict( flask.request.data )  # returns dict of lists; files_updated, files_removed
             q.enqueue_call (
                 func=u'usep_gh_handler_app.utils.processor.run_call_git_pull',
                 kwargs = {u'files_to_process': files_to_process} )

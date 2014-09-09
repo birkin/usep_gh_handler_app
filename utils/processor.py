@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 
+"""
+Contains:
+- Puller() class, for running git-pull.
+- Copier() class, for moving files from the local git directory to the web-accessible unified-inscription directory.
+- XIncludeUpdater() class, for updating inscription xi:include references.
+- Three job-queue caller functions (one for each class).
+"""
+
 import datetime, json, logging, os, pprint, shutil, time
 import envoy, redis, rq
 from usep_gh_handler_app.utils import log_helper
@@ -26,92 +34,6 @@ class Puller( object ):
         return
 
     ## end class Puller()
-
-
-
-
-class XIncludeUpdater( object ):
-    """ Contains functions for updating inscription <xi:include references.
-        Reason is that the folder structure as exists for editors and on github is slightly different than in web-app."""
-
-    def __init__( self, log ):
-        """ Settings. """
-        self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
-        self.log = log
-
-    def update_xinclude_references( self, files_to_update ):
-        """ Updates xi:include href entries.
-            `files_to_update` is a list like: [ u'xml_inscriptions/metadata_only/CA.Berk.UC.HMA.L.8-4286.xml', u'etc' ] """
-        self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); starting.' )
-        for inscription_path_segment in files_to_update:
-            full_file_path = u'%s/%s' % ( self.GIT_CLONED_DIR_PATH, inscription_path_segment )
-            self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); updating file, `%s`' % full_file_path )
-            initial_xml = self._load_xml( full_file_path )
-            self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); initial_xml, `%s`' % initial_xml[0:500] )
-            updated_xml = self._update_xml( initial_xml )
-            self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); updated_xml, `%s`' % updated_xml[0:500] )
-            with open( full_file_path, u'w' ) as f:
-                f.write( updated_xml )
-        return
-
-    def _load_xml( self, full_file_path ):
-        """ Loads and returns xml unicode string.
-            Called by update_xinclude_references(). """
-        with open( full_file_path ) as f:
-            xml = f.read()
-        if type( xml ) == u'str':
-            xml = xml.decode( u'utf-8' )
-        return xml
-
-    def _update_xml( self, initial_xml ):
-        """ Updates and returns xml. """
-        modified_xml = initial_xml
-        mapper = {
-            u'http://library.brown.edu/usep_data/resources/include_publicationStmt.xml': u'../resources/include_publicationStmt.xml',
-            u'http://library.brown.edu/usep_data/resources/include_taxonomies.xml': u'../resources/include_taxonomies.xml',
-            u'http://library.brown.edu/usep_data/resources/titles.xml': u'../resources/titles.xml',
-        }
-        for (key, value) in mapper.items():
-            modified_xml = modified_xml.replace( key, value )
-        return modified_xml
-
-    # def _update_xml( self, initial_xml ):
-    #     """ Updates and returns xml. """
-    #     mapper = {
-    #         u'http://library.brown.edu/usep_data/resources/include_publicationStmt.xml': u'../resources/include_publicationStmt.xml',
-    #         u'http://library.brown.edu/usep_data/resources/include_taxonomies.xml': u'../resources/include_taxonomies.xml',
-    #         u'http://library.brown.edu/usep_data/resources/titles.xml': u'../resources/titles.xml',
-    #     }
-    #     for (key, value) in mapper.items():
-    #         modified_xml = initial_xml.replace( key, value )
-    #     return modified_xml
-
-    # def update_xinclude_references( files_to_update ):
-    #     """ Updates xi:include href entries.
-    #         `files_to_update` is a list like: [ u'xml_inscriptions/metadata_only/CA.Berk.UC.HMA.L.8-4286.xml', u'etc' ] """
-    #     self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); starting.'
-    #     for inscription_path_segment in files_to_update:
-    #         full_file_path = u'%s/%s' % ( self.GIT_CLONED_DIR_PATH, inscription_path_segment )
-    #         self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); updating file, `%s`' % full_file_path )
-    #         with open( full_file_path ) as f:
-    #             xml = f.read()
-    #         if type( xml ) == u'str':
-    #             xml = xml.decode( u'utf-8' )
-    #         mapper = {
-    #             u'http://library.brown.edu/usep_data/resources/include_publicationStmt.xml': u'../resources/include_publicationStmt.xml',
-    #             u'http://library.brown.edu/usep_data/resources/include_taxonomies.xml': u'../resources/include_taxonomies.xml',
-    #             u'http://library.brown.edu/usep_data/resources/titles.xml': u'../resources/titles.xml',
-    #         }
-    #         for (key, value) in mapper.items():
-    #             xml = xml.replace( key, value )
-    #         with open( full_file_path, u'w' ) as f:
-    #             f.write( xml )
-    #     return
-
-    # end class XIncludeUpdater()
-
-
-
 
 
 class Copier( object ):
@@ -191,62 +113,81 @@ class Copier( object ):
     ## end class Copier()
 
 
+class XIncludeUpdater( object ):
+    """ Contains functions for updating inscription <xi:include references.
+        The xi:include references have to be change because
+            the folder structure as exists for editors and on github is slightly different than in web-app.
+        Occurs after copy to unified inscription directory. """
+
+    def __init__( self, log ):
+        """ Settings. """
+        self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
+        self.log = log
+
+    def update_xinclude_references( self, files_to_update ):
+        """ Updates xi:include href entries.
+            `files_to_update` is a list like: [ u'xml_inscriptions/metadata_only/CA.Berk.UC.HMA.L.8-4286.xml', u'etc' ] """
+        self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); starting.' )
+        for inscription_path_segment in files_to_update:
+            full_file_path = u'%s/inscriptions/%s' % ( self.WEBSERVED_DATA_DIR_PATH, self._make_filename(inscription_path_segment) )
+            self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); updating file, `%s`' % full_file_path )
+            initial_xml = self._load_xml( full_file_path )
+            self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); initial_xml, `%s`' % initial_xml[0:500] )
+            updated_xml = self._update_xml( initial_xml )
+            self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); updated_xml, `%s`' % updated_xml[0:500] )
+            with open( full_file_path, u'w' ) as f:
+                f.write( updated_xml )
+        return
+
+    def _make_filename( self, inscription_path_segment ):
+        """ Returns filename from path.
+            Called by update_xinclude_references() """
+        parts = inscription_path_segment.split( u'/' )
+        return parts[-1]
+
+    def _load_xml( self, full_file_path ):
+        """ Loads and returns xml unicode string.
+            Called by update_xinclude_references(). """
+        with open( full_file_path ) as f:
+            xml = f.read()
+        if type( xml ) == str:
+            xml = xml.decode( u'utf-8' )
+        return xml
+
+    def _update_xml( self, initial_xml ):
+        """ Updates and returns xml. """
+        modified_xml = initial_xml
+        mapper = {
+            u'http://library.brown.edu/usep_data/resources/include_publicationStmt.xml': u'../resources/include_publicationStmt.xml',
+            u'http://library.brown.edu/usep_data/resources/include_taxonomies.xml': u'../resources/include_taxonomies.xml',
+            u'http://library.brown.edu/usep_data/resources/titles.xml': u'../resources/titles.xml',
+        }
+        for (key, value) in mapper.items():
+            modified_xml = modified_xml.replace( key, value )
+        return modified_xml
+
+    # end class XIncludeUpdater()
+
+
 ## runners ##
 
 q = rq.Queue( u'usep', connection=redis.Redis() )
-
-# def run_call_git_pull( files_to_process ):
-#     """ Initiates a git pull update.
-#             Spawns a call to Processor.process_file() for each result found.
-#         Triggered by usep_gh_handler.handle_github_push(). """
-#     log = log_helper.setup_logger()
-#     assert sorted( files_to_process.keys() ) == [ u'files_removed', u'files_updated', u'timestamp']
-#     log.debug( u'in processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
-#     time.sleep( 2 )  # let any existing jobs in process finish
-#     ( puller, copier ) = ( Puller(log), Copier(log) )
-#     puller.call_git_pull()
-#     ( files_to_update, files_to_remove ) = ( copier.get_files_to_update(files_to_process), copier.get_files_to_remove(files_to_process) )
-#     log.debug( u'in processor.run_call_git_pull(); enqueuing next job' )
-#     q.enqueue_call(
-#         func=u'usep_gh_handler_app.utils.processor.run_copy_files',
-#         kwargs={u'files_to_update': files_to_update, u'files_to_remove': files_to_remove} )
-#     return
 
 def run_call_git_pull( files_to_process ):
     """ Initiates a git pull update.
             Spawns a call to Processor.process_file() for each result found.
         Triggered by usep_gh_handler.handle_github_push(). """
     log = log_helper.setup_logger()
-    assert sorted( files_to_process.keys() ) == [ u'files_removed', u'files_updated', u'timestamp']
-    log.debug( u'in processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
+    assert sorted( files_to_process.keys() ) == [ u'files_removed', u'files_updated', u'timestamp']; log.debug( u'in utils.processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
     time.sleep( 2 )  # let any existing jobs in process finish
     ( puller, copier ) = ( Puller(log), Copier(log) )
     puller.call_git_pull()
     ( files_to_update, files_to_remove ) = ( copier.get_files_to_update(files_to_process), copier.get_files_to_remove(files_to_process) )
-    log.debug( u'in processor.run_call_git_pull(); enqueuing next job' )
-    q.enqueue_call(
-        func=u'usep_gh_handler_app.utils.processor.run_call_xinclude_updater',
-        kwargs={u'files_to_update': files_to_update, u'files_to_remove': files_to_remove} )
-    return
-
-
-
-def run_call_xinclude_updater( files_to_update, files_to_remove ):
-    """ Updates the three <xi:include href="../path/inscription.xml"> hrefs in each inscription file.
-        Reason is that the folder structure as exists for editors and on github is slightly different than in web-app.
-        Triggered bu utils.processor.run_call_git_pull(). """
-    log = log_helper.setup_logger()
-    log.debug( u'in utils.processor.run_call_xinclude_replacer(); starting' )
-    assert type( files_to_update ) == list; assert type( files_to_remove ) == list
-    xinclude_updater = XIncludeUpdater( log )
-    xinclude_updater.update_xinclude_references( files_to_update )
-    log.debug( u'in processor.run_call_xinclude_updater(); enqueuing next job' )
+    log.debug( u'in utils.processor.run_call_git_pull(); enqueuing next job' )
     q.enqueue_call(
         func=u'usep_gh_handler_app.utils.processor.run_copy_files',
         kwargs={u'files_to_update': files_to_update, u'files_to_remove': files_to_remove} )
     return
-
-
 
 def run_copy_files( files_to_update, files_to_remove ):
     """ Runs a copy and then triggers an index job.
@@ -259,6 +200,21 @@ def run_copy_files( files_to_update, files_to_remove ):
     log.debug( u'in utils.processor.run_copy_files(); files_to_remove, `%s`' % pprint.pformat(files_to_remove) )
     copier = Copier( log )
     copier.copy_files()
+    q.enqueue_call(
+        func=u'usep_gh_handler_app.utils.processor.run_xinclude_updater',
+        kwargs={u'files_to_update': files_to_update, u'files_to_remove': files_to_remove} )
+    return
+
+def run_xinclude_updater( files_to_update, files_to_remove ):
+    """ Updates the three <xi:include href="../path/inscription.xml"> hrefs in each inscription file.
+        Reason is that the folder structure as exists for editors and on github is slightly different than in web-app.
+        Triggered bu utils.processor.run_copy_files(). """
+    log = log_helper.setup_logger()
+    log.debug( u'in utils.processor.run_call_xinclude_replacer(); starting' )
+    assert type( files_to_update ) == list; assert type( files_to_remove ) == list
+    xinclude_updater = XIncludeUpdater( log )
+    xinclude_updater.update_xinclude_references( files_to_update )
+    log.debug( u'in processor.run_call_xinclude_updater(); enqueuing next job' )
     q.enqueue_call(
         func=u'usep_gh_handler_app.utils.indexer.run_update_index',
         kwargs={u'files_updated': files_to_update, u'files_removed': files_to_remove} )

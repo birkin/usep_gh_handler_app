@@ -87,17 +87,6 @@ class Indexer( object ):
         self.log.debug( u'in utils.indexer.Indexer.remove_index_entry(); post complete; response is: %s' % response )
         return
 
-    # def remove_index_entry( self, filename ):
-    #     """ Updates solr index for a removed file. """
-    #     inscription_id = filename.strip().split(u'.xml')[0]
-    #     self.log.debug( u'in utils.indexer.Indexer.remove_index_entry(); filename, `%s`; inscription_id, `%s`: `%s`' % (filename, inscription_id) )
-    #     s = solr.Solr( self.SOLR_URL )
-    #     response = s.delete( id=inscription_id )
-    #     s.commit()
-    #     s.close()
-    #     self.log.debug( u'in utils.indexer.Indexer.remove_index_entry(); post complete; response is: %s' % response )
-    #     return
-
     ## enqueue checking functions
 
     def check_updated_file_path( self, updated_file_path ):
@@ -129,7 +118,7 @@ q = rq.Queue( u'usep', connection=redis.Redis() )
 
 def run_update_index( files_updated, files_removed ):
     """ Creates index jobs (doesn't actually call Indexer() directly.
-        Triggered by utils.processor.run_copy_files(). """
+        Triggered by utils.processor.run_xinclude_updater(). """
     log = log_helper.setup_logger()
     indexer = Indexer( log )
     for updated_file_path in files_updated:
