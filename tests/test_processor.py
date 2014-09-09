@@ -14,13 +14,13 @@ class XIncludeUpdaterTest( unittest.TestCase ):
             - cd to tests directory
             - run `python ./test_processor.py` or `python ./test_processor.py XIncludeUpdaterTest._make_filename` """
 
-    def test_make_filename(self):
-        updater = XIncludeUpdater( log=log )
-        segment = u'/path/to/file/CA.Berk.UC.HMA.L.8-4286.xml'
-        self.assertEqual(
-            u'CA.Berk.UC.HMA.L.8-4286.xml',
-            updater._make_filename( segment )
-            )
+    # def test_make_filename(self):
+    #     updater = XIncludeUpdater( log=log )
+    #     segment = u'/path/to/file/CA.Berk.UC.HMA.L.8-4286.xml'
+    #     self.assertEqual(
+    #         u'CA.Berk.UC.HMA.L.8-4286.xml',
+    #         updater._make_filename( segment )
+    #         )
 
     # end class XIncludeUpdaterTest()
 
