@@ -20,6 +20,7 @@ q = rq.Queue( u'usep', connection=redis.Redis() )
 
 
 @app.route( u'/reindex_all/', methods=[u'GET'] )
+@basic_auth.required
 def reindex_all():
     """ Triggers a git-pull and a re-index of everything.
         Called via admin. """
