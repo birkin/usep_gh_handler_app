@@ -3,7 +3,7 @@
 
 """ Cleans up default rq failed-queue.
     Only cleans up jobs from a target queue.
-    Useful for experimenting with rq & redis, while also indulging ocd tendencies.
+    Useful for experimenting with rq & redis.
     """
 
 import os, pprint

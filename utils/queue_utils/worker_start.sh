@@ -25,4 +25,4 @@ echo "worker name: " $USEP_WORKER_NAME
 echo "log filename: " $USEP_WORKER_LOG_FILENAME
 echo "queue name: " $USEP_QUEUE_NAME
 
-rqworker --name $USEP_WORKER_NAME $USEP_QUEUE_NAME >> $USEP_WORKER_LOG_FILENAME 2>&1 &
+rqworker --name $USEP_WORKER_NAME --pid /var/run/rq_usep/PID $USEP_QUEUE_NAME >> $USEP_WORKER_LOG_FILENAME 2>&1 &
