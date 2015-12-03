@@ -157,7 +157,7 @@
         <p/>
       </div>
       <div type="bibliography">
-        <xi:include href="http://library.brown.edu/usep/usepi_bib.xml">
+        <xi:include href="http://library.brown.edu/usep/titles.xml">
           <xi:fallback>
             <p>US Ep bibliography</p>
           </xi:fallback>

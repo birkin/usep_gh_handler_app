@@ -154,9 +154,9 @@ URL will actually only have the file name, which is the machine readable USEP nu
             <div type="edition">
                 <ab>
                     <lb n="1"/>
-                    ΑΦΡΟΔΙΤΗ 
+                    ΑΦΡΟΔΙΤΗ
                     <lb n="2"/>
-                    ΗΦΑΙΣΤΟΣ    
+                    ΗΦΑΙΣΤΟΣ
                 </ab>
                 <!--
 The marked up transcription goes here, surrounded by <ab> </ab> elements
@@ -166,7 +166,7 @@ The marked up transcription goes here, surrounded by <ab> </ab> elements
                 <p/>
             </div>
             <div type="bibliography">
-                <xi:include href="http://library.brown.edu/usep/usepi_bib.xml">
+                <xi:include href="http://library.brown.edu/usep/titles.xml">
                     <xi:fallback>
                         <p>US Ep bibliography</p>
                     </xi:fallback>

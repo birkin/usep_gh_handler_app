@@ -19,7 +19,7 @@ class IndexerTest( unittest.TestCase ):
         indexer = Indexer( log )
         solr_dict = indexer._build_solr_dict(
             inscription_xml_path=u'./test_files/CA.Berk.UC.HMA.G.8-4213.xml',
-            bib_xml_path=u'./test_files/usepi_bib.xml' )
+            bib_xml_path=u'./test_files/titles.xml' )
         # print u'solr_dict...'; pprint.pprint( solr_dict )
         # expected = [u'CA.Berk.UC.HMA.G.8-4213']
         # self.assertEqual( expected, solr_dict.keys() )
@@ -55,7 +55,7 @@ class IndexerTest( unittest.TestCase ):
         indexer = Indexer( log )
         solr_dict = indexer._build_solr_dict(
             inscription_xml_path=u'./test_files/CA.Berk.UC.HMA.G.8-4213.xml',
-            bib_xml_path=u'./test_files/usepi_bib.xml' )
+            bib_xml_path=u'./test_files/titles.xml' )
         expected = u'foo'
         # self.assertEqual( expected, indexer._post_solr_update() )
         self.assertTrue( '<int name="status">0</int>' in indexer._post_solr_update() )
