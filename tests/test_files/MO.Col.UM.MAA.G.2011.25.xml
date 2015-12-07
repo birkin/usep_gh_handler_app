@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?oxygen RNGSchema="http://dev.stg.brown.edu/projects/usepigraphy/schema/exp-epidoc.rng" type="xml"?>
+<?oxygen RNGSchema="http://cds.library.brown.edu/projects/usepigraphy/schema/exp-epidoc.rng" type="xml"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <teiHeader>
+    <teiHeader><!-- testing1 -->
 
         <fileDesc>
 
@@ -28,9 +28,9 @@
 
             <publicationStmt>
                 <xi:include
-                    href="http://dev.stg.brown.edu/projects/usepigraphy/xml/include_publicationStmt.xml">
+                    href="../resources/include_publicationStmt.xml">
                     <xi:fallback>
-                        <p>The Publications Statement should appear in this space.</p>
+                        <p>The Publications Statement should appear here.</p>
                     </xi:fallback>
                 </xi:include>
                 <idno type="USEpigraphy" xml:id="MO.Col.UM.MAA.G.2011.25">MO.Col.UM.MAA.G.2011.25</idno>
@@ -80,7 +80,7 @@
                     <msContents>
                         <textLang mainLang="grc"/> <!-- la, grc, ett ?? -->
                         <msItem class="#funerary.epitaph">
-                        <p>epitaph for Heliodora</p>
+                        <p>Epitaph for Heliodora</p>
                         </msItem>
                     </msContents>
 
@@ -119,14 +119,13 @@
                             <supportDesc ana="#stone.limestone">
 
                                 <support>
-                                <p>limestone stele</p>
+                                    <p>Limestone stele</p>
                                      <dimensions type="surface" unit="cm">
                                         <height/>
                                         <width/>
                                         <depth/>
                                      </dimensions>
-                                    <p/>
-                               </support>
+                                   </support>
 
                                 <condition ana="#complete">
                                     <p>chipped around edges and some surface abrasions</p>
@@ -201,10 +200,6 @@
                             <placeName ref="africa.egypt">Egypt, probably Terenouthis (Kom Abou Billou)</placeName>
                         </origin>
 
-                        <provenance>
-                            <date notBefore="0001" notAfter="0002">xx</date>
-                            <placeName ref="xx"></placeName>
-                        </provenance>
                     </history>
 
                 </msDesc>
@@ -223,8 +218,7 @@
 
                 <listBibl>
                     <bibl>
-                        <ptr type="rest-of-bibl" target="#unpub"/>
-                        <biblScope type="item"></biblScope>
+                        <ptr type="rest-of-bibl" target="#unpub"/>                        
                     </bibl>
                 </listBibl>
             </sourceDesc>
@@ -249,7 +243,7 @@
                 -->
                 
                 <xi:include
-                    href="http://dev.stg.brown.edu/projects/usepigraphy/xml/include_taxonomies.xml">
+                    href="../resources/include_taxonomies.xml">
                     <xi:fallback>
                         <p>Taxonomies for US Epigraphy controlled values</p>
                     </xi:fallback>
@@ -284,8 +278,7 @@
      -->
 
     <facsimile>
-        <graphic url=""/>
-        <surface>
+       <surface>
             <desc/>
             <graphic url=""/>
         </surface>
@@ -294,12 +287,12 @@
     <text>
         <body>
             <div type="edition">
-               <ab><lb/>ΉΛΙΟΔΩΡΑ ΜΑΘΗΜΑΤΙΚΗ ΑΓ
-                <lb/>ΝΗ ΑΚΑΤΑΓΝΩCΤΟC ΠΑΡ
-                <lb/>ΘΕΝΟC ΦΙΛΑΔΕΛΦΟC ΩΣ ΝΚ
-                <lb/>ΕΥΤΧΙ
+               <ab><lb n="1"/>ΉΛΙΟΔΩΡΑ ΜΑΘΗΜΑΤΙΚΗ ΑΓ
+                <lb n="2"/>ΝΗ ΑΚΑΤΑΓΝΩCΤΟC ΠΑΡ
+                <lb n="3"/>ΘΕΝΟC ΦΙΛΑΔΕΛΦΟC ΩΣ ΝΚ
+                <lb n="4"/>ΕΥΤΧΙ
                 </ab>
-            </div><div type="bibliography"> <xi:include href="http://dev.stg.brown.edu/projects/usepigraphy/xml/titles.xml"> <xi:fallback> <p>US Ep bibliography</p> </xi:fallback> </xi:include> </div>
+            </div><div type="bibliography"> <xi:include href="../resources/titles.xml"> <xi:fallback> <p>US Ep bibliography</p> </xi:fallback> </xi:include> </div>
         </body>
     </text>
 </TEI>
