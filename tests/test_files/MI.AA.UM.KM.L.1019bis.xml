@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?oxygen RNGSchema="http://dev.stg.brown.edu/projects/usepigraphy/schema/exp-epidoc.rng" type="xml"?><TEI xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.tei-c.org/ns/1.0">
-   <teiHeader>
+<?oxygen RNGSchema="http://cds.library.brown.edu/projects/usepigraphy/schema/exp-epidoc.rng" type="xml"?><TEI xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader><!-- testing1 -->
       <fileDesc>
          <titleStmt>
             <title>MI.AA.UM.KM.L.1019bis</title>
          </titleStmt>
          <publicationStmt>
-            <xi:include href="http://dev.stg.brown.edu/projects/usepigraphy/xml/include_publicationStmt.xml">
+            <xi:include href="../resources/include_publicationStmt.xml">
                <xi:fallback>
-                  <p>The Publications Statement should appear in this space. (c) Brown University</p>
+                  <p>The Publications Statement should appear here. (c) Brown University</p>
                </xi:fallback>
             </xi:include>
             <idno type="USEpigraphy" xml:id="MI.AA.UM.KM.L.1019bis">MI.AA.UM.KM.L.1019bis</idno>
@@ -20,12 +20,12 @@
                   <settlement>AA</settlement>
                   <institution>UM</institution>
                   <repository>KM</repository>
-                  <idno>1019</idno>
+                  <idno>1019bis</idno>
                </msIdentifier>
                <msContents>
                   <textLang mainLang="lat" otherLangs=""/>
                   <msItem class="#funerary.epitaph">
-                     <p>epitaph of a M. Vibius Lupus</p>
+                     <p>Epitaph of a M. Vibius Lupus</p>
                   </msItem>
                </msContents>
                            
@@ -33,9 +33,8 @@
                   <objectDesc ana="#stele">
                      <supportDesc ana="#stone.marble">
                         <support>
-                           <seg type="material">reconstituted marble slab</seg>
-                           <seg type="form">stele</seg>
-                           <p>fine-grained white marble</p>
+                           <seg type="material">Fine-grained white marble</seg>
+                           <p>Reconstituted marble slab</p>
                            <dimensions type="surface" unit="m">
                               <height>0.45</height>
                               <width>0.294</width>
@@ -89,15 +88,17 @@
                   <biblScope type="item">43-44, no. 48</biblScope>
                </bibl>
                <bibl>
-                  <ptr type="edh"
-                       target="http://www.rzuser.uni-heidelberg.de/bin/user/~f56/suchen.pl?hdnr=008018"/>
-                  <biblScope type="item">EDH nr. HD008018</biblScope>
+                  <ref type="external"
+                     target="http://edh-www.adw.uni-heidelberg.de/edh/inschrift/HD008018?">EDH nr. HD008018</ref>
+                </bibl>
+               <bibl>
+                  <ref type="external" target="http://www.edr-edr.it/edr_programmi/res_complex_comune.php?do=book&amp;id_nr=EDR080852">EDR080852</ref>
                </bibl>
             </listBibl>
          </sourceDesc>
       </fileDesc>
       <encodingDesc>
-         <xi:include href="http://dev.stg.brown.edu/projects/usepigraphy/xml/include_taxonomies.xml">
+         <xi:include href="../resources/include_taxonomies.xml">
             <xi:fallback>
                <p>Taxonomies for US Epigraphy controlled values</p>
             </xi:fallback>
@@ -107,6 +108,8 @@
       <revisionDesc>
          <change when="2010-09-29" who="CDS">Converted to September 2009 EpiDoc</change>
          <change when="2011-05-17" who="EM">Older inscriptions with info updated to 2009 template</change>
+         <change when="2014-10-14" who="SJD">Updated EDR bibl entries</change>
+         <change when="2015-08-17" who="SJD">Updated EDR link</change>
       </revisionDesc>
    </teiHeader>
    <facsimile>
@@ -124,8 +127,7 @@
                <persName>
                   <name type="praenomen" key="Marcus">
                      <expan>
-                        <abbr>M</abbr>
-                        <ex>arcus</ex>
+                        <abbr>M</abbr><ex>arcus</ex>
                      </expan>
                   </name> 
                   <name type="gentilicium" key="Vibius">Vibius</name> 
@@ -133,45 +135,36 @@
                     <lb n="2" break="no"/>pus</name>
                </persName> miles ex
                     <lb n="3"/>Classe <expan>
-                  <abbr>Pr</abbr>
-                  <ex>aetoria</ex>
+                  <abbr>Pr</abbr><ex>aetoria</ex>
                </expan> Mi
                     <lb n="4" break="no"/>
                <expan>
-                  <abbr>sen</abbr>
-                  <ex>en</ex>
-                  <abbr>s</abbr>
-                  <ex>is</ex>
+                  <abbr>sen</abbr><ex>en</ex>
+                  <abbr>s</abbr><ex>is</ex>
                </expan> 
                <expan>
-                  <abbr>nat</abbr>
-                  <ex>ione</ex>
+                  <abbr>nat</abbr><ex>ione</ex>
                </expan> 
                <expan>
-                  <abbr>Bes</abbr>
-                  <ex>sus</ex>
+                  <abbr>Bes</abbr><ex>sus</ex>
                </expan>
                     <lb n="5"/>
                <expan>
-                  <abbr>mil</abbr>
-                  <ex>itavit</ex>
+                  <abbr>mil</abbr><ex>itavit</ex>
                </expan> 
                <expan>
-                  <abbr>ann</abbr>
-                  <ex>is</ex>
+                  <abbr>ann</abbr><ex>is</ex>
                </expan> 
                <num xml:lang="lat" value="19">XVIIII</num>
                     <lb n="6"/>vixit annis <num xml:lang="lat" value="35">XXXV</num>
                     <lb n="7"/>heredes bene merenti <expan>
-                  <abbr>fec</abbr>
-                  <ex>erunt</ex>
+                  <abbr>fec</abbr><ex>erunt</ex>
                </expan>
                     <lb n="8"/>
                <persName>
                   <name type="praenomen" key="Lucius">
                      <expan>
-                        <abbr>L</abbr>
-                        <ex>ucius</ex>
+                        <abbr>L</abbr><ex>ucius</ex>
                      </expan>
                   </name> 
                   <name type="gentilicium" key="Cornelius">Cornelius</name> 
@@ -181,15 +174,13 @@
                </num> 
                <expan>
                   <abbr>Iuno<hi rend="supraline">n</hi>
-                  </abbr>
-                  <ex>e</ex>
+                  </abbr><ex>e</ex>
                </expan>
                     <lb n="9"/>
                <persName>
                   <name type="praenomen" key="Marcus">
                      <expan>
-                        <abbr>M</abbr>
-                        <ex>arcus</ex>
+                        <abbr>M</abbr><ex>arcus</ex>
                      </expan>
                   </name> 
                   <name type="gentilicium" key="Maecenius">Maec<supplied reason="omitted">e</supplied>nius</name>
@@ -200,8 +191,7 @@
                <persName>
                   <name type="praenomen" key="Lucius">
                      <expan>
-                        <abbr>L</abbr>
-                        <ex>ucius</ex>
+                        <abbr>L</abbr><ex>ucius</ex>
                      </expan>
                   </name> 
                   <name type="gentilicium" key="Lucilius">Lucilius</name> 
@@ -213,7 +203,7 @@
             </div>
          <div type="apparatus">
             <p/>
-         </div><div type="bibliography"> <xi:include href="http://dev.stg.brown.edu/projects/usepigraphy/xml/titles.xml"> <xi:fallback> <p>US Ep bibliography</p> </xi:fallback> </xi:include> </div>
+         </div><div type="bibliography"> <xi:include href="../resources/titles.xml"> <xi:fallback> <p>US Ep bibliography</p> </xi:fallback> </xi:include> </div>
 
       </body>
    </text>

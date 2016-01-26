@@ -19,10 +19,10 @@ class IndexerTest( unittest.TestCase ):
         indexer = Indexer( log )
         solr_dict = indexer._build_solr_dict(
             inscription_xml_path=u'./test_files/CA.Berk.UC.HMA.G.8-4213.xml',
-            bib_xml_path=u'./test_files/usepi_bib.xml' )
+            bib_xml_path=u'./test_files/titles.xml' )
         # print u'solr_dict...'; pprint.pprint( solr_dict )
-        expected = [u'CA.Berk.UC.HMA.G.8-4213']
-        self.assertEqual( expected, solr_dict.keys() )
+        # expected = [u'CA.Berk.UC.HMA.G.8-4213']
+        # self.assertEqual( expected, solr_dict.keys() )
         expected = [
             u'bib_authors',
             u'bib_ids',
@@ -47,16 +47,18 @@ class IndexerTest( unittest.TestCase ):
             u'text_genre',
             u'title',
             u'writing']
-        self.assertEqual( expected, sorted(solr_dict[u'CA.Berk.UC.HMA.G.8-4213'].keys()) )
+        # self.assertEqual( expected, sorted(solr_dict[u'CA.Berk.UC.HMA.G.8-4213'].keys()) )
+        self.assertEqual( expected, sorted(solr_dict.keys()) )
 
     def test__post_solr_update(self):
         """ Tests update of solr. """
         indexer = Indexer( log )
         solr_dict = indexer._build_solr_dict(
             inscription_xml_path=u'./test_files/CA.Berk.UC.HMA.G.8-4213.xml',
-            bib_xml_path=u'./test_files/usepi_bib.xml' )
+            bib_xml_path=u'./test_files/titles.xml' )
         expected = u'foo'
-        self.assertEqual( expected, indexer._post_solr_update() )
+        # self.assertEqual( expected, indexer._post_solr_update() )
+        self.assertTrue( '<int name="status">0</int>' in indexer._post_solr_update() )
 
 
 

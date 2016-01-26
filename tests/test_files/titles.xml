@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?oxygen RNGSchema="http://dev.stg.brown.edu/projects/usepigraphy/schema/exp-epidoc.rng" type="xml"?>
+<?oxygen RNGSchema="http://cds.library.brown.edu/projects/usepigraphy/schema/exp-epidoc.rng" type="xml"?>
 <listBibl xmlns="http://www.tei-c.org/ns/1.0">
+  <bibl type="j" xml:id="arch_anz">
+    <abbr type="primary">AA</abbr>
+    <title>Archäologischer Anzeiger</title>
+    <pubPlace>Berlin</pubPlace>
+    <bibl type="v" xml:id="arch_anz_1926">
+      <biblScope type="vol">
+        <num value="1926"/></biblScope>
+      <date when="1926">1926</date>
+      <bibl type="a" xml:id="Brueckner1926">
+        <author><persName>Brueckner</persName><persName type="sort">Brueckner, A.</persName></author>
+        <title>Attische Grabreliefs</title>
+        <biblScope type="pp">264-277</biblScope>
+      </bibl>
+    </bibl>
+  </bibl>
   <bibl type="j" xml:id="acta_ad_arch">
     <abbr type="primary">ActaAArtHist</abbr>
     <abbr type="alt">AAAH</abbr>
@@ -28,11 +43,17 @@
     <bibl type="v" xml:id="AE_1898">
       <date when="1898">1898</date>
     </bibl>
+    <bibl type="v" xml:id="AE_1899">
+      <date when="1899">1899</date>
+    </bibl>
     <bibl type="v" xml:id="AE_1901">
       <date when="1901">1901</date>
     </bibl>
     <bibl type="v" xml:id="AE_1902">
       <date when="1902">1902</date>
+    </bibl>
+    <bibl type="v" xml:id="AE_1903">
+      <date when="1903">1903</date>
     </bibl>
     <bibl type="v" xml:id="AE_1905">
       <date when="1905">1905</date>
@@ -70,6 +91,9 @@
     <bibl type="v" xml:id="AE_1955">
       <date when="1955">1955</date>
     </bibl>
+    <bibl type="v" xml:id="AE_1962">
+      <date when="1962">1962</date>
+    </bibl>
     <bibl type="v" xml:id="AE_1966">
       <date when="1966">1966</date>
     </bibl>
@@ -82,6 +106,9 @@
     <bibl type="v" xml:id="AE_1977">
       <date when="1977">1977</date>
     </bibl>
+    <bibl type="v" xml:id="AE_1979">
+      <date when="1979">1979</date>
+    </bibl>
     <bibl type="v" xml:id="AE_1980">
       <date when="1980">1980</date>
     </bibl>
@@ -90,6 +117,9 @@
     </bibl>
     <bibl type="v" xml:id="AE_1984">
       <date when="1984">1984</date>
+    </bibl>
+    <bibl type="v" xml:id="AE_1986">
+      <date when="1986">1986</date>
     </bibl>
     <bibl type="v" xml:id="AE_1988">
       <date when="1988">1988</date>
@@ -109,6 +139,9 @@
     <bibl type="v" xml:id="AE_2005">
       <date when="2005">2005</date>
     </bibl>
+    <bibl type="v" xml:id="AE_2009">
+      <date when="2009">2009</date>
+    </bibl>
   </bibl>
   <bibl type="j" xml:id="AEA">
     <abbr type="primary">AEA</abbr>
@@ -126,6 +159,26 @@
     <title>The Athenian Agora, Volume XV. Inscriptions: The Athenian Councillors</title>
     <pubPlace>Princeton</pubPlace>
     <date when="1974">1974</date>
+  </bibl>
+  <bibl type="j" xml:id="AICAR">
+    <abbr type="primary">AICAR</abbr>
+    <title>Art Institute of Chicago, Annual Report</title>
+    <pubPlace>Chicago</pubPlace>
+    <bibl type="v" xml:id="AICAR_2008-9">
+      <date when="2009">2009</date>
+    </bibl>
+    </bibl>
+  <bibl type="j" xml:id="AICMS">
+    <abbr type="primary">AICMS</abbr>
+    <title>Art Institute of Chicago Museum Studies</title>
+    <pubPlace>Chicago</pubPlace>
+    <bibl type="v" xml:id="AICMS_20.1">
+      <biblScope from="20.1">20.1</biblScope>
+    <date when="1994">1994</date>
+      <bibl type="a" xml:id="AICMS_Pedley">
+        <author>Pedley</author>
+     </bibl>
+    </bibl>
   </bibl>
   <bibl type="j" xml:id="AJA">
     <abbr type="primary">AJA</abbr>
@@ -164,15 +217,17 @@
       <bibl type="a" xml:id="AJA_Olcott2">
         <author>Olcott</author>
         <ref type="jstor" target="http://www.jstor.org/stable/496855">Unpublished Latin
-          Inscriptions, pp. 39-46</ref>(external link--access to JSTOR required)</bibl>
+          Inscriptions, pp. 39-46</ref>(external link--access to JSTOR required)
+      </bibl>
     </bibl>
     <bibl type="v" xml:id="AJA_14">
       <biblScope from="14">14</biblScope>
       <date when="1910">1910</date>
       <bibl type="a" xml:id="AJA_Magoffin">
         <author>Magoffin</author>
-        <ref type="jstor" target="http://www.jstor.org/stable/496896">Unpublished Inscriptions from
-          Latium, pp. 51-59</ref>(external link--access to JSTOR required)</bibl>
+        <ref type="jstor" target="http://www.jsftor.org/stable/496896">Unpublished Inscriptions from
+          Latium, pp. 51-59</ref>(external link--access to JSTOR required)
+      </bibl>
     </bibl>
     <bibl type="v" xml:id="AJA_19">
       <biblScope from="19">19</biblScope>
@@ -228,7 +283,7 @@
         <ref type="jstor" target="http://www.jstor.org/stable/499668">Shield and Mandorla, pp.
           227-236</ref>(external link--access to JSTOR required)</bibl>
       <bibl type="a" xml:id="AJA_Comfort1">
-        <author>Comfort</author>
+        <author><persName type="sort">Comfort, H.</persName></author>
         <ref type="jstor" target="http://www.jstor.org/stable/499183">Decorated Arretine Ware in the
           National Museum, Washington, pp. 506-511</ref>
       </bibl>
@@ -263,6 +318,13 @@
         <ref type="jstor" target="http://www.jstor.org/stable/500412">An Insulting Latin Graffito,
           pp. 321-322</ref>(external link--access to JSTOR required)</bibl>
     </bibl>
+    <bibl type="v" xml:id="AJA_54">
+      <biblScope from="54">54</biblScope>
+      <date when="1950">1950</date>
+      <bibl type="a" xml:id="AJA_54_Beazley">
+        <ref type="jstor" target="http://www.jstor.org/stable/501003">Some Inscriptions on Vases: V</ref>(external link--access to JSTOR required)
+      </bibl>
+    </bibl>
     <bibl type="v" xml:id="AJA_58">
       <biblScope from="58">58</biblScope>
       <date when="1954">1954</date>
@@ -280,14 +342,13 @@
           Brick Stamp in Kansas</ref>
       </bibl>
     </bibl>
-    <bibl type="v" xml:id="AJA_61">
-      <biblScope from="61">61</biblScope>
-      <date when="1957">1957</date>
-      <bibl type="a" xml:id="AJA_Beazley">
-        <author>Beazley</author>
-        <ref type="jstor" target="http://www.jstor.org/stable/501075">Some Inscriptions on Vases:
-          VII</ref>
-      </bibl>
+      <bibl type="v" xml:id="AJA_61">
+        <biblScope from="61">61</biblScope>
+        <date when="1957">1957</date>
+        <bibl type="a" xml:id="AJA_Beazley">
+          <author>Beazley</author>
+          <ref type="jstor" target="http://www.jstor.org/stable/501075">Some Inscriptions on Vases: VII</ref>
+        </bibl>
     </bibl>
     <bibl type="v" xml:id="AJA_64">
       <biblScope from="64">64</biblScope>
@@ -329,14 +390,21 @@
           Inscriptions from Puteoli and Vicinity, pp. 151-167</ref>
       </bibl>
     </bibl>
+    <bibl type="v" xml:id="AJA_86">
+      <biblScope from="86">86</biblScope>
+      <date when="1982">1982</date>
+      <bibl type="a" xml:id="AJA_Voutiras">
+        <author>E. Voutiras</author>
+        <ref type="jstor" target="http://www.jstor.org./stable/504835">A Dedication of the Hebdomaistai to the Pythian Apollo, pp. 229-233</ref>
+    </bibl>
+    </bibl>
     <bibl type="v" xml:id="AJA_95">
-      <biblScope from="95">95</biblScope>
-      <date when="1991">1991</date>
-      <bibl type="a" xml:id="AJA_Shapiro">
-        <author>Shapiro, H.A.</author>
-        <ref type="jstor" target="http://www.jstor.org/stable/505896">The Iconography of Mourning in
-          Athenian Art</ref>
-      </bibl>
+        <biblScope from="95">95</biblScope>
+        <date when="1991">1991</date>
+        <bibl type="a" xml:id="AJA_Shapiro">
+          <author>Shapiro, H.A.</author>
+          <ref type="jstor" target="http://www.jstor.org/stable/505896">The Iconography of Mourning in Athenian Art</ref>
+        </bibl>
     </bibl>
     <bibl type="v" xml:id="AJA_96">
       <biblScope from="96">96</biblScope>
@@ -366,7 +434,7 @@
       <biblScope from="30">30</biblScope>
       <date when="1909">1909</date>
       <bibl type="a" xml:id="AJP_Wilson2.1">
-        <author>Wilson</author>
+        <author><persName type="sort">Wilson</persName></author>
         <ref type="jstor" target="http://www.jstor.org/stable/288460">Latin Inscriptions at the
           Johns Hopkins University: II, pp. 61-71</ref>
       </bibl>
@@ -434,6 +502,39 @@
         Treasure-Record, pp. 38-44</ref>
     </bibl>
   </bibl>
+  <bibl type="m" xml:id="Allen">
+      <abbr type="primary">Allen, Handbook of the Egyptian Collection</abbr>
+      <author><persName type="sort">Allen, T.G.</persName></author>
+      <title>Handbook of the Egyptian Collection</title>
+      <pubPlace>Chicago</pubPlace>
+      <date when="1923">1923</date>
+    </bibl>
+  <bibl type="m" xml:id="Alexandria">
+    <abbr type="primary">Alexandria and Alexandrianism</abbr>
+    <title>Alexandria and Alexandrianism: Papers Delivered at a Symposium Organized by the J. Paul Getty Museum and The Getty Center for the History of Art and the Humanities and Held at the Museum April 22-25, 1993</title>
+    <pubPlace>Malibu</pubPlace>
+    <date when="1996">1996</date>
+    <bibl type="a" xml:id="Parlasca_1996">
+      <author><persName type="sort">Parlasca, K.</persName></author>
+      <title>Ein spätrömischer bemalter Sarg aus Ägypten im J. Paul Getty Museum</title>
+      <biblScope type="pp">155-169</biblScope>
+    </bibl>
+  </bibl>
+  <bibl type="m" xml:id="Amyx">
+    <abbr type="primary">Echoes from Olympus</abbr>
+    <editor><persName type="sort">Amyx, D. A.</persName></editor>
+    <title>Echoes from Olympus: Reflections of Divinity in Small-Scale Classical Art</title>
+    <pubPlace>Berkeley, CA</pubPlace>
+    <date when="1974">1974</date>
+  </bibl>
+  <bibl type="j" xml:id="AntAfr">
+    <title>Bulletin des antiquités africaines</title>
+    <pubPlace>Paris</pubPlace>
+    <bibl type="v" xml:id="AntAfr_1884">
+      <biblScope from="2">2</biblScope>
+      <date when="1884">1884</date>
+    </bibl>
+  </bibl>
   <bibl type="j" xml:id="Antichthon">
     <title>Antichthon</title>
     <pubPlace>Bundanoon, NSW</pubPlace>
@@ -446,13 +547,12 @@
       </bibl>
     </bibl>
   </bibl>
-  <bibl type="m" xml:id="Ancient_Virginia">
-    <abbr type="primary">Ancient Art in the Virginia Museum</abbr>
-    <author><persName/><persName type="sort"/></author>
-    <title>Ancient Art in the Virginia Museum</title>
-    <pubPlace>Richmond</pubPlace>
-    <date when="1973">1973</date>
-  </bibl>
+    <bibl type="m" xml:id="Ancient_Virginia">
+      <abbr type="primary">Ancient Art in the Virginia Museum</abbr>
+      <title>Ancient Art in the Virginia Museum</title>
+      <pubPlace>Richmond</pubPlace>
+      <date when="1973">1973</date>
+    </bibl>  
   <bibl type="j" xml:id="Antike_Plastik">
     <abbr type="primary">AntP</abbr>
     <title>Antike Plastik</title>
@@ -463,9 +563,9 @@
     </bibl>
   </bibl>
   <bibl type="j" xml:id="Antike_Kunst">
-    <abbr type="primary">AntK</abbr>
-    <title>Antike Kunst</title>
-    <pubPlace>Berlin</pubPlace>
+     <abbr type="primary">AntK</abbr>
+     <title>Antike Kunst</title>
+     <pubPlace>Berlin</pubPlace>
     <bibl type="v" xml:id="Antike_Kunst_35">
       <biblScope from="35">35</biblScope>
       <date when="1992">1992</date>
@@ -478,11 +578,101 @@
   <bibl type="j" xml:id="Archaeology">
     <title>Archaeology</title>
     <pubPlace>New York</pubPlace>
+    <bibl type="v" xml:id="Archaeology_11">
+      <biblScope from="11">11</biblScope>
+      <date when="1958">1958</date>
+      <bibl type="a" xml:id="Archaeology_11_Brinkerhoff">
+        <author><persName type="sort">Brinkerhoff, D. M.</persName></author>
+        <title>Greek and Etruscan Art in the Museum of Rhode Island School of Design</title>
+      </bibl>
+    </bibl>
     <bibl type="v" xml:id="Archaeology_30">
       <biblScope from="30">30</biblScope>
       <date when="1977">1977</date>
     </bibl>
+    <bibl type="v" xml:id="Archaeology_48">
+      <biblScope from="48">48</biblScope>
+      <date when="1995">1995</date>
+      <bibl type="a" xml:id="Bianchi_1995">
+        <author><persName type="sort">Bianchi, R. S.</persName></author>
+        <title>The Mummy as Medium</title>
+      </bibl>
+    </bibl>
   </bibl>
+  <bibl type="j" xml:id="ArchDelt">
+    <abbr type="primary">ArchDelt</abbr>
+    <title>Archaiologikon Deltion</title>
+    <bibl type="v" xml:id="ArchDelt_32">
+      <biblScope type="vol">32</biblScope>
+      <date when="1977">1977</date>
+      <bibl type="a" xml:id="ArchDelt_Kaninia">
+        <author><persName>Kaninia</persName><persName type="sort">Kaninia, E.</persName></author>
+        <title>Ανάγλυφη βάση επιτύμβιας στήλης από το Μουσείο του Πειραιά</title>
+      </bibl>
+    </bibl>
+  </bibl>
+  <bibl type="j" xml:id="ArchNews">
+    <abbr type="primary">ArchNews</abbr>
+    <title>Archaeological News</title>
+    <pubPlace>Athens, GA</pubPlace>
+    <date when="1972">1972-1998/2000</date>
+    <bibl type="v" xml:id="ArchNews_14">
+      <biblScope from="14">14</biblScope>
+      <date when="1985">1985</date>
+      <bibl type="a" xml:id="ArchNews_14_Grose">
+         <author>Grose, D.</author>
+         <title>Roman Vessels with Double-Line Greek Inscriptions: A New Inventory</title>
+      </bibl>
+    </bibl>
+  </bibl>
+  <bibl type="j" xml:id="Arctos">
+    <abbr type="primary">Arctos</abbr>
+    <title>Arctos</title>
+    <bibl type="v" xml:id="Arctos_9">
+      <biblScope from="9">9</biblScope>
+      <date when="1975">1975</date>
+      <bibl type="a" xml:id="Arctos_9_Solin">
+        <author><persName type="sort">Solin, H.</persName></author>
+        <title>Analecta epigraphica XV-XXVII</title>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="Arctos_39">
+      <biblScope from="39">39</biblScope>
+      <date when="2005">2005</date>
+      <bibl type="a" xml:id="Arctos_39_Solin">
+      <author><persName type="sort">Solin</persName></author>
+      <title>Analecta epigraphica CCXXIII-CCXXX. p. 159-198</title>
+    </bibl>
+    </bibl>
+  </bibl>
+  <bibl type="j" xml:id="ArtinAmerica">
+    <abbr type="primary">Art in America</abbr>
+      <title>Art in America</title>
+      <bibl type="v" xml:id="ArtinAmerica_15">
+        <biblScope from="15">15</biblScope>
+        <date when="1927">1927</date>
+        <bibl type="a" xml:id="ArtinAmerica_Richter">
+          <author><persName type="sort">Richter</persName></author>
+          <title>Greek Art in Detroit, pp. 25-35</title>
+        </bibl>
+      </bibl>
+  </bibl>
+  <bibl type="m" xml:id="AshmeadPhillips">
+    <abbr type="primary">Ashmead and Phillips</abbr>
+    <author><persName type="sort">Ashmead, A. H.</persName> and <persName>Phillips, K. M.</persName></author>
+    <title>Classical Vases: Excluding Attic Black-Figure, Attic Red-Figure and Attic White Ground</title>
+    <pubPlace>Providence, RI</pubPlace>
+    <date when="1976">1976</date>
+  </bibl>
+    <bibl type="j" xml:id="BAIC">
+      <abbr type="primary">BAIC</abbr>
+      <title>Bulletin of the Art Institute of Chicago</title>
+      <pubPlace>Chicago</pubPlace>
+      <bibl type="v" xml:id="BAIC_18">
+        <biblScope from="18">18</biblScope>
+        <date when="1924">1924</date>
+      </bibl>
+    </bibl>
   <bibl type="m" xml:id="Baldwin_Torelli">
     <abbr type="primary">Baldwin and Torelli, Latin Inscriptions Kelsey Museum</abbr>
     <author><persName>Baldwin</persName><persName type="sort">Baldwin, M.W. and Torelli, M.
@@ -503,9 +693,30 @@
     <abbr type="primary">BCH</abbr>
     <title>Bulletin de Correspondance Hellénique</title>
     <pubPlace>Paris</pubPlace>
+    <bibl type="v" xml:id="BCH_7">
+      <biblScope from="7">7</biblScope>
+      <date when="1883">1883</date>
+    </bibl>
+    <bibl type="v" xml:id="BCH_91">
+      <biblScope from="91">91</biblScope>
+      <date when="1967">1967</date>
+      <bibl type="a" xml:id="BCH_91_Thasos">
+        <author><persName type="sort">Bernard, P.</persName> and <persName>Salviat, F.</persName></author>
+        <title>Inscriptions de Thasos</title>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="BCH_95">
+      <biblScope from="95">95</biblScope>
+      <date when="1971">1971</date>
+      <bibl type="a" xml:id="BCH_95_Amandry">
+        <author><persName type="sort">Amandry, P.</persName></author>
+        <title>Collection Paul Canellopoulos I: armes et
+          lébès de bronze</title>
+      </bibl>
+    </bibl>
     <bibl type="v" xml:id="BCH_108">
       <biblScope from="108">108</biblScope>
-      <date when="1894">1894</date>
+      <date when="1984">1984</date>
     </bibl>
   </bibl>
   <bibl type="j" xml:id="BAN">
@@ -526,6 +737,9 @@
     <bibl type="v" xml:id="BE_1944">
       <date when="1944">1944</date>
     </bibl>
+    <bibl type="v" xml:id="BE_1949">
+      <date when="1949">1949</date>
+    </bibl>
     <bibl type="v" xml:id="BE_1955">
       <date when="1955">1955</date>
     </bibl>
@@ -534,6 +748,9 @@
     </bibl>
     <bibl type="v" xml:id="BE_1963">
       <date when="1963">1963</date>
+    </bibl>
+    <bibl type="v" xml:id="BE_1971">
+      <date when="1971">1971</date>
     </bibl>
     <bibl type="v" xml:id="BE_1973">
       <date when="1973">1973</date>
@@ -552,6 +769,20 @@
     <abbr type="primary">BullCom</abbr>
     <title>Bullettino della Commissione archeologica comunale di Roma</title>
     <pubPlace>L'Erma di Bretschneider (Roma)</pubPlace>
+    <bibl type="v" xml:id="BullCom_1887">
+      <date when="1887">1887</date>
+      <bibl type="a" xml:id="Gatti_1887">
+        <author><persName type="sort">Gatti, G.</persName></author>
+        <title>Trovamenti Risguardanti la Topografia e la Epigrafia Urbana</title>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="BullCom_1889">
+      <date when="1889">1889</date>
+      <bibl type="a" xml:id="Gatti_1889">
+        <author><persName type="sort">Gatti, G.</persName></author>
+        <title>Trovamenti Risguardanti la Topografia e la Epigrafia Urbana</title>
+      </bibl>
+    </bibl>
     <bibl type="v" xml:id="BullCom_1905">
       <biblScope from="33">33</biblScope>
       <date when="1905">1905</date>
@@ -570,25 +801,31 @@
     </bibl>
   </bibl>
   <bibl type="m" xml:id="Beazley">
-    <abbr type="primary">Beazley, Sir John.</abbr>
-    <author><persName>Beazley</persName><persName type="sort">Bernard, J.</persName></author>
-    <title>Ephemeris</title>
-    <date when="1955">1955</date>
-  </bibl>
-  <bibl type="m" xml:id="Beazley_2">
-    <abbr> type="primary">Beazley, Sir John.</abbr>
-    <author><persName>Beazley</persName><persName type="sort">Beazley, J.</persName></author>
-    <title>Paralipomena: Additions to Attic Black-figure Vase-painters and to Attic Red-figure
-      Vase-painters, Second edition.</title>
-    <pubPlace>Oxford, Clarendon Press</pubPlace>
-    <date when="1971">1971</date>
-  </bibl>
+      <abbr type="primary">Beazley, Sir John.</abbr>
+      <author><persName>Beazley</persName><persName type="sort">Bernard, J.</persName></author>
+      <title>Ephemeris</title>
+      <date when="1955">1955</date>
+    </bibl>
+    <bibl type="m" xml:id="Beazley_2">
+      <abbr> type="primary">Beazley, Sir John.</abbr>
+      <author><persName>Beazley</persName><persName type="sort">Beazley, J.</persName></author>
+      <title>Paralipomena: Additions to Attic Black-figure Vase-painters and to Attic Red-figure Vase-painters, Second edition.</title>
+      <pubPlace>Oxford, Clarendon Press</pubPlace>
+      <date when="1971">1971</date>
+    </bibl>
   <bibl type="m" xml:id="Beazley_ARVP">
-    <abbr> type="primary">Beazley, Sir John.</abbr>
+    <abbr type="primary">Beazley, Sir John</abbr>
     <author><persName>Beazley</persName><persName type="sort">Beazley, J.</persName></author>
     <title>Attic Red Figure Vase-Painting, 2nd ed.</title>
     <pubPlace>New York</pubPlace>
     <date when="1984">1984</date>
+  </bibl>
+  <bibl type="m" xml:id="Beazley_EVP">
+    <abbr type="primary">Beazley, EVP</abbr>
+    <author><persName type="sort">Beazley, J.</persName></author>
+    <title>Etruscan Vase-Painting</title>
+    <pubPlace>Oxford</pubPlace>
+    <date when="1947">1947</date>
   </bibl>
   <bibl type="m" xml:id="Bernard">
     <abbr type="primary">Bernand, Inscriptions métriques</abbr>
@@ -596,6 +833,14 @@
     <title>Inscriptions métriques de l'Egypte gréco-romaine</title>
     <pubPlace>Paris</pubPlace>
     <date when="1969">1969</date>
+  </bibl>
+  <bibl type="m" xml:id="Bradley">
+    <abbr type="primary">Bradley, Discovering the Roman Family</abbr>
+    <author><persName>Bradely</persName><persName type="sort">Bradley, K.</persName></author>
+    <title>Discovering the Roman Family</title>
+    <pubPlace>New York</pubPlace>
+    <publisher>Oxford University Press</publisher>
+    <date when="1991">1991</date>
   </bibl>
   <bibl type="m" xml:id="Bodel">
     <abbr type="primary">Bodel, Roman Brick Stamps Kelsey Museum</abbr>
@@ -605,7 +850,7 @@
     <date when="1983">1983</date>
   </bibl>
   <bibl type="m" xml:id="Bodel_Tracy">
-    <abbr>Bodel, J and S. Tracy, Inscriptions in the USA</abbr>
+    <abbr type="primary">Bodel, J and S. Tracy, Inscriptions in the USA</abbr>
     <author><persName>Bodel</persName><persName type="sort">Bodel, J. and S. Tracy</persName>
     </author><author><persName>Tracy</persName></author>
     <title>Greek and Latin Inscriptions in the USA: A Checklist.</title>
@@ -633,6 +878,13 @@
     <pubPlace>Berne</pubPlace>
     <date when="1987">1987</date>
   </bibl>
+  <bibl type="m" xml:id="Bothmer_1985">
+    <abbr type="primary">von Bothmer, Amasis Painter</abbr>
+    <author><persName>von Bothmer</persName><persName type="sort">von Bothmer, D.</persName></author>
+    <title>The Amasis Painter and his World. Vase-Painting in Sixth-Century B.C. Athens</title>
+    <pubPlace>London and Malibu</pubPlace>
+    <date when="1985">1985</date>
+  </bibl>
   <bibl type="m" xml:id="Bothmer">
     <abbr type="primary">von Bothmer, Glories of the Past</abbr>
     <author><persName>von Bothmer</persName><persName type="sort">von Bothmer, D.
@@ -641,12 +893,29 @@
     <pubPlace>New York</pubPlace>
     <date when="1991">1991</date>
   </bibl>
+  
   <bibl type="j" xml:id="BMA">
     <title>The Brooklyn Museum Annual</title>
     <pubPlace>Brooklyn</pubPlace>
     <bibl type="v" xml:id="BMA_11">
       <biblScope from="11">11 (1969-1970)</biblScope>
       <date when="1969">1969</date>
+    </bibl>
+    <bibl type="a" xml:id="BMA_11_Parlasca">
+      <author><persName type="sort">Parlasca, K.</persName></author>
+      <title>A New Grave Relief from Syria</title>
+    </bibl>
+  </bibl>
+  <bibl type="j" xml:id="BMB">
+    <title>Brooklyn Museum Bulletin</title>
+    <pubPlace>Brooklyn</pubPlace>
+    <bibl type="v" xml:id="BMB_17">
+      <biblScope from="17">17</biblScope>
+      <date when="1956">1956</date>
+      <bibl type="a" xml:id="BMB_17_Riefstahl">
+        <author><persName type="sort">Riefstahl, E.</persName></author>
+        <title>Nemesis and the Wheel of Fate</title>
+      </bibl>
     </bibl>
   </bibl>
   <bibl type="j" xml:id="BaB">
@@ -671,13 +940,14 @@
   <bibl type="j" xml:id="BSCMAG">
     <title>Bulletin of Smith College. Hillyer Art Gallery</title>
     <pubPlace>Northampton, MA</pubPlace>
-    <bibl type="v" xml:id="BSCMAG_2"/>
+    <bibl type="v" xml:id="BSCMAG_2">
     <biblScope from="2">2</biblScope>
     <date when="1921">1921</date>
+    </bibl>
   </bibl>
   <bibl type="j" xml:id="BSCMA">
     <title>The Bulletin of Smith College. Museum of Art</title>
-    <pubPlace>Northamton, MA</pubPlace>
+    <pubPlace>Northampton, MA</pubPlace>
     <bibl type="v" xml:id="BSCMA_18">
       <biblScope from="18">18</biblScope>
       <date when="1937">1937</date>
@@ -698,9 +968,57 @@
     <pubPlace>Malibu</pubPlace>
     <date when="1977">1977</date>
   </bibl>
+  <bibl type="j" xml:id="BullRISD">
+    <abbr type="primary">BullRISD</abbr>
+    <title>Bulletin of the Rhode Island School of Design</title>
+    <pubPlace>Providence, RI</pubPlace>
+    <bibl type="v" xml:id="BullRISD_22">
+      <biblScope from="22">22</biblScope>
+      <date when="1934">1934</date>
+      <bibl type="a" xml:id="BullRISD_22_Rowe">
+        <author><persName type="sort">Rowe, L. E.</persName></author>
+        <title>The Bronze Situla</title>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="BullRISD_28">
+      <biblScope from="28">28</biblScope>
+      <date when="1940">1940</date>
+      <bibl type="a" xml:id="BullRISD_28_Hanfmann">
+        <author><persName type="sort">Hanfmann, G. M. A.</persName></author>
+        <title>The Etruscans and their Art</title>
+      </bibl>
+      <bibl type="a" xml:id="BullRISD_28_Whatmough">
+        <author><persName type="sort">Whatmough, J.</persName></author>
+        <title>The Inscription on the Bolognese Situla</title>
+      </bibl>
+    </bibl>
+  </bibl>
+  <bibl type="c" xml:id="Buffa">
+    <abbr type="primary">Iscrizioni etrusche</abbr>
+    <author><persName type="sort">Buffa, M.</persName></author>
+    <title>Nuova raccolta di iscrizioni etrusche</title>
+    <pubPlace>Florence</pubPlace>
+    <date when="1935">1935</date>
+  </bibl>
+  <bibl type="j" xml:id="CCG">
+    <abbr type="primary">CCG</abbr>
+    <title>Cahiers du Centre Gustave-Glotz</title>
+    <pubPlace>Paris</pubPlace>
+    <publisher>de Boccard</publisher>
+    <bibl type="v" xml:id="CCG_18">
+      <biblScope type="vol">18</biblScope>
+      <date when="2007">2007</date>
+      <bibl type="a" xml:id="CCG_Gangloff">
+        <author><persName>Gangloff</persName><persName type="sort">Gangloff, A.</persName></author>
+        <title>Les poètes dans les inscriptions grecques de Rome: esquisse d’une approche socioculturelle</title>
+        <biblScope type="pp">349-374</biblScope>
+      </bibl>
+    </bibl>
+  </bibl>
   <bibl type="m" xml:id="CAAJPG">
-    <abbr type="primary">CAAPG</abbr>
-    <author><persName>Vermeule and Neuerburg</persName><persName type="sort">Vermeule, C. and Neuerburg</persName></author>
+    <abbr type="primary">CAAJPG</abbr>
+    <author><persName>Vermeule and Neuerburg</persName><persName type="sort">Vermeule, C. and
+        Neuerburg</persName></author>
     <title>Catalogue of Ancient Art in the J. Paul Getty Museum: the larger statuary, wall paintings
       and mosaics</title>
     <pubPlace>Malibu</pubPlace>
@@ -713,12 +1031,25 @@
     <pubPlace>London</pubPlace>
     <date when="1965">1965</date>
   </bibl>
-  <bibl type="m" xml:id="Carpenter">
-    <abbr type="primary">Carpenter, Art and Myth</abbr>
-    <author><persName>Carpenter</persName><persName type="sort">Carpenter</persName></author>
-    <title>Art and Myth in Ancient Greece </title>
-    <pubPlace>London</pubPlace>
-    <date when="1991">1991</date>
+    <bibl type="m" xml:id="Carpenter">
+      <abbr type="primary">Carpenter, Art and Myth</abbr>
+      <author><persName>Carpenter</persName><persName type="sort">Carpenter</persName></author>
+      <title>Art and Myth in Ancient Greece </title>
+      <pubPlace>London</pubPlace>
+      <date when="1991">1991</date>
+    </bibl>
+  <bibl type="m" xml:id="Carter_Morris">
+    <abbr type="primary">Carter and Morris, Ages of Homer</abbr>
+    <author><persName>Carter, J. B.</persName><persName type="sort">Carter, J. B. and S. P. Morris</persName>
+      <persName>S. P. Morris</persName>, eds.</author>
+    <title>The Ages of Homer: A Tribute to Emily Townsend Vermeule</title>
+    <pubPlace>Austin</pubPlace>
+    <date when="1995">1995</date>
+    <bibl type="a" xml:id="Miller_1995">
+      <author><persName type="sort">Miller, M. C.</persName></author>
+      <title>Priam, King of Troy</title>
+      <biblScope type="pp">449-465</biblScope>
+    </bibl>
   </bibl>
   <bibl type="m" xml:id="CAT">
     <abbr type="primary">Clairmont, Classical Attic Tombstones</abbr>
@@ -769,6 +1100,14 @@
     <pubPlace>London</pubPlace>
     <date when="1877">1877</date>
   </bibl>
+  <bibl type="m" xml:id="Cesnola_Salaminia">
+    <abbr type="primary">di Cesnola, Salaminia</abbr>
+    <author><persName>di Cesnola</persName><persName type="sort">Cesnola, A.P.
+      di</persName></author>
+    <title>Salamnia</title>
+    <pubPlace>London</pubPlace>
+    <date when="1882">1882</date>
+  </bibl>
   <bibl type="m" xml:id="CCV">
     <abbr type="primary">Chase, Comstock and Vermeule, MFA Boston Arretine Pottery</abbr>
     <author><persName>Chase, Comstock and Vermeule</persName><persName type="sort">Chase, G.H,
@@ -804,6 +1143,9 @@
     </bibl>
     <bibl type="v" xml:id="CIL_II">
       <biblScope from="2">II</biblScope>
+    </bibl>
+    <bibl type="v" xml:id="CIL_II2">
+      <biblScope from="2.2.5">II(2)/5</biblScope>
     </bibl>
     <bibl type="v" xml:id="CIL_III">
       <biblScope from="3">III</biblScope>
@@ -856,18 +1198,99 @@
       1967</pubPlace>
     <date when="1948">1948, reprint. 1967</date>
   </bibl>
+  <bibl type="m" xml:id="Bloch_Bolli">
+    <abbr type="primary">Bloch, Bolli Laterzi</abbr>
+    <author><persName>Bloch, H.</persName><persName type="sort">Bloch, H.</persName></author>
+    <title>I bolli laterizi e la storia edilizia romana</title>
+    <pubPlace>Rome</pubPlace>
+    <date when="1947">1947</date>
+  </bibl>
+  <bibl type="j" xml:id="Chiron">
+    <abbr type="primary">Chiron</abbr>
+    <title>Chiron</title>
+    <pubPlace>Munich</pubPlace>
+    <date when="1971">1971-</date>
+    <bibl type="v" xml:id="Chiron_19">
+      <biblScope from="19">19</biblScope>
+      <date when="1989">1989</date>
+      <bibl type="a" xml:id="Chiron_19_KajavaAronenSolin">
+        <author><persName type="sort">Kajava, M.</persName>, <persName>J. Aronen</persName> and <persName>H. Solin</persName></author>
+        <title>Aratus, a New Epithet of Jupiter: CIL X 5779 Reconsidered</title>
+        <biblScope type="pp">103-118</biblScope>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="Chiron_41">
+      <biblScope from="41">41</biblScope>
+      <date when="2011">2011</date>
+      <bibl type="a" xml:id="Chiron_41_Jones">
+        <author><persName>Jones</persName> <persName type="sort">Jones, C. P.</persName></author>
+        <title>Cleopatra VII in Teos?</title>
+        <biblScope type="pp">41-53</biblScope>
+      </bibl>
+    </bibl>
+  </bibl>
   <bibl type="j" xml:id="CivCatt">
     <abbr type="primary">CivCatt</abbr>
     <title>La Civilta Cattolica</title>
     <pubPlace>Roma</pubPlace>
     <date when="1850">1850-</date>
-    <bibl type="a" xml:id="CivCatt_Ferrua">
-      <author><persName>Ferrua</persName><persName type="sort">Ferrua, A.</persName></author>
-      <title>Antichita Christiane. La guardia a cavallo.</title>
-      <pubPlace>Roma</pubPlace>
-      <date when="1949">1949</date>
+    <bibl type="v" xml:id="CivCatt_94">
+      <biblScope from="94">94</biblScope>
+      <date when="1949"></date>
+      <bibl type="a" xml:id="CivCatt_94_Ferrua">
+        <author><persName>Ferrua</persName><persName type="sort">Ferrua, A.</persName></author>
+        <title>Antichita Christiane. La guardia a cavallo.</title>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="CivCatt_135">
+      <biblScope from="135">135</biblScope>
+      <date when="1990">1990</date>
+      <bibl type="a" xml:id="CivCatt_135_Ferrua">
+        <author><persName>Ferrua</persName><persName type="sort">Ferrua, A.</persName></author>
+        <title>NEED TITLE</title>
+      </bibl>
+    </bibl>
+  </bibl>  
+  <bibl type="m" xml:id="Clairmont">
+    <abbr type="primary">Clairmont, Patrios Nomos</abbr>
+    <author><persName>Clairmont></persName><persName type="sort">Clairmont, C.</persName></author>
+    <title>Patrios Nomos. Public Burial in Athens During the Fifth and Fourth Centuries, B.C.</title>
+    <pubPlace>Oxford</pubPlace>
+    <date when="1983">1983</date>
+  </bibl> 
+  <bibl type="j" xml:id="C_M">
+    <abbr type="primary">CM</abbr>
+    <abbr type="alt">ClassMed</abbr>
+    <title>Classica et mediaevalia</title>
+    <pubPlace>Copenhagen</pubPlace>
+    <date when="1938">1938-</date>
+    <bibl type="v" xml:id="C_M_40">
+      <biblScope type="vol">40</biblScope>
+      <date when="1989">1989</date>
+      <bibl type="a" xml:id="C_M_40_Nielsen">
+        <abbr type="primary">Nielsen, On the Use of the Terms of Relation 'mamma' and 'tata'</abbr>
+        <author><persName>Nielsen</persName><persName type="sort">Nielsen, H. S.</persName></author>
+        <title>On the Use of the Terms of Relation 'mamma' and 'tata' in the Epitaphs of CIL VI</title>
+        <biblScope type="pp">191-196</biblScope>
+      </bibl>
     </bibl>
   </bibl>
+  <bibl type="j" xml:id="CP">
+    <abbr type="primary">CP</abbr>
+    <abbr type="alt">CPh</abbr>
+    <title>Classical Philology</title>
+    <pubPlace>Chicago</pubPlace>
+    <date when="1906">1906-</date>
+    <bibl type="v" xml:id="CP_59">
+      <biblScope from="59">59</biblScope>
+      <date when="1964">1964</date>
+      <bibl type="a" xml:id="CP_59_Peterson">
+        <abbr type="primary">Peterson, Earliest Christian Inscriptions of Egypt</abbr>
+        <author><persName type="sort">Peterson, H.</persName></author>
+        <title>The Earliest Christian Inscriptions of Egypt</title>
+      </bibl>
+    </bibl>      
+  </bibl>  
   <bibl type="c" xml:id="CLE">
     <abbr type="primary">CLE</abbr>
     <author><persName>Bücheler and Lommatzch</persName><persName type="sort">Bücheler, F. and
@@ -875,6 +1298,40 @@
     <title>Anthologia Latina pars posterior: Carmina Latina Epigraphica</title>
     <pubPlace>Leipzig</pubPlace>
     <date when="1895">1895-97, 1926</date>
+  </bibl>
+  <bibl type="m" xml:id="Cohen_NotClassical">
+    <abbr type="primary">Cohen, Not the Classical Ideal</abbr>
+    <editor><persName type="sort">Cohen, Beth</persName></editor>
+    <title>Not the Classical Ideal: Athens and the Construction of the Other in Greek Art</title>
+    <pubPlace>Leiden</pubPlace>
+    <date when="2000">2000</date>
+    <bibl type="a" xml:id="Cohen_2000">
+      <abbr type="primary">Cohen, Man-Killers</abbr>
+      <author><persName type="sort">Cohen, Beth</persName></author>
+      <title>Man-killers and Their Victims: Inversions of the Heroic Ideal in Classical Art</title>
+      <biblScope type="pp">98-131</biblScope>
+    </bibl>
+  </bibl>
+  <bibl type="m" xml:id="Cooney">
+    <abbr type="primary">Cooney, Pagan and Christian Egypt</abbr>
+    <author><persName type="sort">Cooney, J. D.</persName></author>
+    <title>Pagan and Christian Egypt: Egyptian art from the first to the tenth century A.D. Exhibited at the Brooklyn Museum by the Department of Ancient Art, January 23-March 9, 1941</title>
+    <pubPlace>Brooklyn</pubPlace>
+    <date when="1941">1941</date>
+  </bibl>
+  <bibl type="m" xml:id="Cooney_1943">
+    <abbr type="primary">Cooney, Late Egyptian and Coptic Art</abbr>
+    <author><persName type="sort">Cooney, J. D.</persName></author>
+    <title>Late Egyptian and Coptic Art: An Introduction to the Collections in the Brooklyn Museum</title>
+    <pubPlace>Brooklyn</pubPlace>
+    <date when="1943">1943</date>
+  </bibl>
+  <bibl type="m" xml:id="Cozzo">
+    <abbr type="primary">Cozzo, Industria</abbr>
+    <author><persName type="sort">Cozzo, G.</persName></author>
+    <title>Una industria nella Roma imperiale: i laterizi ed i bolli doliari</title>
+    <pubPlace>Rome</pubPlace>
+    <date when="1929">1929</date>
   </bibl>
   <bibl type="m" xml:id="CVB">
     <abbr type="primary">Comstock and Vermeule, MFA Boston Bronzes</abbr>
@@ -932,7 +1389,7 @@
       <author><persName>Alexander</persName><persName type="sort">Alexander, C.</persName></author>
       <title>Corpus Vasorum Antiquorum, United States of America, The Metropolitan Museum of Art,
         New York, Fascicule 1: Arretine Relief Ware</title>
-      <pubPlace>Cambridge</pubPlace>
+      <pubPlace>Cambridge, MA</pubPlace>
       <biblScope from="11.1">11.1</biblScope>
       <date when="1943">1943</date>
     </bibl>
@@ -941,9 +1398,15 @@
       <author><persName>Van Ingen</persName><persName type="sort">Van Ingen, W.</persName></author>
       <title>Corpus Vasorum Antiquorum, United States of America, University of Michigan, Fascicule
         1</title>
-      <pubPlace>Cambridge</pubPlace>
+      <pubPlace>Cambridge, MA</pubPlace>
       <biblScope>11.3</biblScope>
       <date>1933</date>
+    </bibl>
+    <bibl type="v" xml:id="CVA_USA_2.1">
+      <author><persName type="sort">Luce, S. B.</persName></author>
+      <title>Corpus Vasorum Antiquorum, United States of America, Providence: Museum of the Rhode Island School of Design, Fascicule 1</title>
+      <pubPlace>Cambridge, MA</pubPlace>
+      <date when="1933">1933</date>
     </bibl>
   </bibl>
   <bibl type="m" xml:id="DArms_RomNap">
@@ -952,6 +1415,27 @@
     <title>Romans on the Bay of Naples</title>
     <pubPlace>Cambridge</pubPlace>
     <date when="1970">1970</date>
+  </bibl>
+  <bibl type="m" xml:id="DelChiaro">
+    <abbr type="primary">Del Chiaro, Genucilia Group</abbr>
+    <author><persName type="sort">Del Chiaro, M.</persName></author>
+    <title>The Genucilia Group: A Class of Etruscan Red-figured Plates</title>
+    <pubPlace>Berkeley, CA</pubPlace>
+    <date when="1957">1957</date>
+  </bibl>
+  <bibl type="m" xml:id="DelChiaro_1974">
+    <abbr type="primary">Del Chiaro, Caere</abbr>
+    <author><persName type="sort">Del Chiaro, M.</persName></author>
+    <title>Etruscan Red-Figured Vase-Painting at Caere</title>
+    <pubPlace>Berkeley, CA</pubPlace>
+    <date when="1974">1974</date>
+  </bibl>
+  <bibl type="m" xml:id="DeMaio_1981">
+    <abbr type="primary">De Maio, Alfonso Carafa</abbr>
+    <author><persName>De Maio, Romeo</persName><persName type="sort">De Maio, R.</persName></author>
+    <title>Alfonso Carafa, Cardinale di Napoli</title>
+    <pubPlace>Vatican City</pubPlace>
+    <date when="1981">1981</date>
   </bibl>
   <bibl type="m" xml:id="Dentzer">
     <abbr type="primary">Dentzer, Motif du banquet couché</abbr>
@@ -968,6 +1452,13 @@
     <pubPlace>Mainz am Rhein</pubPlace>
     <date when="1964">1964</date>
   </bibl>
+  <bibl type="m" xml:id="Dietz">
+    <abbr type="primary">Senatus contra principem</abbr>
+    <author><persName type="sort">Dietz, K.</persName></author>
+    <title>Senatus contra principem: Untersuchungen zur senatorischen Opposition gegen Kaiser Maximinus Thrax</title>
+    <pubPlace>Munich</pubPlace>
+    <date when="1980">1980</date>
+  </bibl>
   <bibl type="m" xml:id="Domaszewski1967">
     <abbr type="primary">von Domaszewski, Rangordnung</abbr>
     <author><persName>von Domaszewski</persName><persName type="sort">Domaszewski, A.
@@ -982,6 +1473,23 @@
     <title>Inscriptions grecques dialectes de Sicile</title>
     <pubPlace>Rome</pubPlace>
     <date when="1989">1989</date>
+  </bibl>
+  <bibl type="m" xml:id="Ducat1971">
+    <abbr type="primary">Ducat, Ptoion</abbr>
+    <author><persName type="sort">Ducat, J.</persName></author>
+    <title>Les Kouroi du Ptoion</title>
+    <pubPlace>Paris</pubPlace>
+    <date when="1971">1971</date>
+  </bibl>
+  <bibl type="m" xml:id="Melanges_syriens">
+    <abbr type="primary">Mélanges syriens</abbr>
+    <title>Mélanges syriens offerts à monsieur René Dussaud : secrétaire perpétuel de l'Académie des inscriptions et belles-lettres </title>
+    <pubPlace>Paris</pubPlace>
+    <date when="1939">1939</date>
+    <bibl type="a" xml:id="Melanges_syriens_Cumont">
+      <author><persName type="sort">Cumont, F.</persName></author>
+      <title>Un dieu supposé syrien, associé à Heron en Egypt</title>
+    </bibl>
   </bibl>
   <bibl type="m" xml:id="Eck1979">
     <abbr type="primary">Eck, Staatlich Organisation Italiens</abbr>
@@ -998,6 +1506,30 @@
     <bibl type="v" xml:id="Ede_15">
       <biblScope from="15">XV</biblScope>
       <date when="1993">1993</date>
+    </bibl>
+  </bibl>
+  <bibl type="m" xml:id="Eijk1995">
+    <abbr type="primary">Eijk et al., Ancient Medicine in its Socio-Cultural Context</abbr>
+    <author><persName>Eijk</persName><persName type="sort">Eijk, P. J., H. F. J. Horstmanshoff, and P. H. Schrijvers (eds.)</persName></author>
+    <title>Ancient Medicine in its Socio-Cultural Context: Papers Read at the Congress Held at Leiden University, 13-15 April 1992</title>
+     <pubPlace>Leiden</pubPlace>
+     <date when="1995">1995</date>
+    <bibl type="a" xml:id="Solin1995">
+      <abbr type="primary">Solin, Die sogenannten Berufsnamen antiker Ärzte</abbr>
+      <author><persName>Solin</persName><persName type="sort">Solin, H.</persName></author>
+      <title>Die sogenannten Berufsnamen antiker Ärzte</title>
+    </bibl>
+  </bibl>
+  <bibl type="m" xml:id="EG">
+    <abbr type="primary">EG</abbr>
+    <author><persName type="sort">Guarducci, M.</persName></author>
+    <title>Epigrafia greca</title>
+    <pubPlace>Rome</pubPlace>
+    <date when="1967">1967-1978</date>
+    <bibl type="v" xml:id="EG_1">
+      <abbr type="primary">EG I</abbr>
+      <biblScope from="1">I</biblScope>
+      <title>Caratteri e storia della disciplina. La Scrittura greca dalle origini all'età imperiale</title>
     </bibl>
   </bibl>
   <bibl type="c" xml:id="Eph_Ep">
@@ -1020,6 +1552,14 @@
       <biblScope from="8">VIII</biblScope>
       <date when="1899">1899</date>
     </bibl>
+    <bibl type="v" xml:id="Eph_Ep_IX">
+      <biblScope from="9">IX</biblScope>
+      <date when="1913">1913</date>
+      <bibl type="a" xml:id="Eph_Ep_IX_Dessau">
+        <author><persName type="sort">Dessau, H.</persName></author>
+        <title>Additamenta secunda ad corporis vol. XIV</title>
+      </bibl>
+    </bibl>
   </bibl>
   <bibl type="j" xml:id="Epigraphica">
     <abbr type="primary">Epigraphica</abbr>
@@ -1037,6 +1577,41 @@
       <title>Inscrizioni inedite della via Latina</title>
     </bibl>
   </bibl>
+    <bibl type="v" xml:id="Epigraphica_46">
+      <biblScope from="46">46</biblScope>
+      <date when="1984">1984</date>
+      <bibl type="a" xml:id="Epigraphica_46_Priuli">
+        <author>Priuli</author>
+        <title>Una lapide sepolcrale di Roma con iscrizione incisa nel recto e minuta dello stesso testo graffita nel verso</title>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="Epigraphica_62">
+      <biblScope from="62">62</biblScope>
+      <date when="2000">2000</date>
+      <bibl type="a" xml:id="Epigraphica_62_HernandezPerez">
+        <author><persName type="sort">Hernandez Perez, R.</persName> and <persName>X. Gomez Font</persName></author>
+        <title>Un nuevo carmen epigraphicum hispano. Edición y comentario</title>
+        <biblScope type="pp">101-110</biblScope>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="Epigraphica_70">
+      <biblScope from="70">70</biblScope>
+      <date when="2008">2008</date>
+      <bibl type="a" xml:id="Epigraphica_70_Massaro">
+        <author><persName type="sort">Massaro, M.</persName></author>
+        <title>Questioni di epigrafia scipionica</title>
+        <biblScope type="pp">31-90</biblScope>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="Epigraphica_71">
+      <biblScope from="71">71</biblScope>
+      <date when="2009">2009</date>
+      <bibl type="a" xml:id="Epigraphica_71_Donahue">
+        <author><persName type="sort">Donahue, J. F.</persName></author>
+        <title>A Latin Funerary Epitaph from the College of William and Mary in Virginia</title>
+        <biblScope type="pp">370-372</biblScope>
+      </bibl>
+    </bibl>
   </bibl>
   <bibl type="j" xml:id="Epig_Anatolica">
     <abbr type="primary">EpigAnat</abbr>
@@ -1077,12 +1652,41 @@
     <pubPlace>Mainz</pubPlace>
     <date when="1962">1962</date>
   </bibl>
+  <bibl type="m" xml:id="FestschrAmelung">
+    <abbr type="primary">Antike Plastik</abbr>
+    <title>Antike Plastik. Walther Amelung zum sechzigsten Geburtstag</title>
+    <pubPlace>Berlin/Leipzig</pubPlace>
+    <date when="1928">1928</date>
+    <bibl type="a" xml:id="FestscrhAmelung_Richter">
+      <author><persName type="sort">Richter, G. M. A.</persName></author>
+      <title>A bronze prize hydria</title>
+      <biblScope type="pp">182-191</biblScope>
+    </bibl>
+  </bibl>
+  <bibl type="c" xml:id="Iscrizioni_Chiese">
+    <abbr type="primary">Iscrizioni delle Chiese</abbr>
+    <editor><persName>Forcella, Vincenzo</persName><persName type="sort">Forcella, V.</persName></editor>
+    <title>Iscrizioni delle Chiese e d'Altri Edifici da Roma dal Secolo XI Fino al Giorni Nostri</title>
+    <pubPlace>Roma</pubPlace>
+    <date when="1869">1869-1884</date>
+    <bibl type="v" xml:id="Iscrizioni_Chiese_4">
+      <biblScope from="4">4</biblScope>
+      <date when="1874">1874</date>
+    </bibl>
+  </bibl>
   <bibl type="m" xml:id="Forma_Italiae">
     <abbr type="primary">Forma Italiae 35 Tibur</abbr>
     <author><persName>Mari</persName><persName type="sort">Mari, Z.</persName></author>
     <title>Forma Italiae 35. Tibur 4</title>
     <pubPlace>Florence</pubPlace>
     <date when="1991">1991</date>
+  </bibl>
+  <bibl type="m" xml:id="FouillesDelphV">
+    <abbr type="primary">Fouilles de Delphes V</abbr>
+    <author><persName type="sort">Rolley, C.</persName></author>
+    <title>Fouilles de Delphes, V: Monuments figurés. Les statuettes de bronze.</title>
+    <pubPlace>Paris</pubPlace>
+    <date when="1969">1969</date>
   </bibl>
   <bibl type="m" xml:id="Frel1979">
     <abbr type="primary">Frel, Checklist</abbr>
@@ -1098,13 +1702,50 @@
     <pubPlace>Malibu</pubPlace>
     <date when="1981">1981</date>
   </bibl>
-  <bibl type="m" xml:id="Frel1983">
-    <abbr type="primary">Frel, Greek Vases</abbr>
-    <author><persName>Frel</persName><persName type="sort">Jiri Frel, J.</persName></author>
-    <title>Greek Vases in the J. Paul Getty Museum: Vol. 1. (Occasional Papers on Antiquities,
-      1).</title>
+    <bibl type="m" xml:id="Frel1983">
+      <abbr type="primary">Frel, Greek Vases</abbr>
+      <author><persName>Frel</persName><persName type="sort">Jiri Frel, J.</persName></author>
+      <title>Greek Vases in the J. Paul Getty Museum: Vol. 1. (Occasional Papers on Antiquities, 1).</title>
+      <pubPlace>Malibu</pubPlace>
+      <date when="1983">1983</date>
+    </bibl>
+  <bibl type="m" xml:id="Frothingham">
+    <abbr type="primary">Frothingham, Sigillate Pottery</abbr>
+    <author><persName type="sort">Frothingham, Alice Wilson</persName></author>
+    <title>Sigillate Pottery of the Roman Empire: From Excavations in Spain, Made Chiefly by the President of the Hispanic Society of America at Italica</title>
+    <pubPlace>New York</pubPlace>
+    <date when="1937">1937</date>
+  </bibl>
+  <bibl type="m" xml:id="Getty_Vases_2">
+    <abbr type="primary">Greek Vases JPGM Vol. 2</abbr>
+    <author><persName type="sort">Frel, J.</persName> and <persName>S. K. Morgan</persName></author>
+    <title>Greek Vases in the J. Paul Getty Museum: Vol. 2. (Occasional Papers on Antiquities, 3)</title>
     <pubPlace>Malibu</pubPlace>
-    <date when="1981">1983</date>
+    <date when="1985">1985</date>
+    <bibl type="a" xml:id="Brommer_1985">
+      <author><persName type="sort">Brommer, F.</persName></author>
+      <title>Herakles und Theseus auf Vasen in Malibu</title>
+      <biblScope type="pp">183-228</biblScope>
+    </bibl>
+  </bibl>
+  <bibl type="m" xml:id="Getty_Vases_5">
+    <abbr type="primary">Greek Vases JPGM Vol. 5</abbr>
+    <author><persName type="sort">True, M.</persName></author>
+    <title>Greek Vases in the J. Paul Getty Museum: Vol. 5. (Occasional Papers on Antiquities, 7)</title>
+    <pubPlace>Malibu</pubPlace>
+    <date when="1991">1991</date>
+    <bibl type="a" xml:id="Buitron-Oliver_1991">
+      <author><persName type="sort">Buiton-Oliver, D.</persName></author>
+      <title>A Cup for a Hero</title>
+      <biblScope type="pp">65-74</biblScope>
+    </bibl>
+  </bibl>
+    <bibl type="m" xml:id="French">
+    <abbr type="primary">French, Notes [on a] journey to Europe</abbr>
+    <author><persName>French</persName><persName type="sort">French, W.M.R</persName></author>
+    <title>French, Notes [on a] journey to Europe with Mr. and Mrs. C.L. Hutchinson starting from New York Sat'y Mch. 9, 1889-</title>
+    <pubPlace>Chicago</pubPlace>
+    <date when="1889">1889</date>
   </bibl>
   <bibl type="m" xml:id="Froehner">
     <abbr type="primary">Froehner, Collection Juliene Gréau</abbr>
@@ -1120,18 +1761,24 @@
     <pubPlace>Oxford</pubPlace>
     <date when="1992">1992</date>
   </bibl>
-  <bibl type="j" xml:id="GettyTB">
-    <abbr type="primary">GettyTB</abbr>
-    <abbr type="alt">GTB</abbr>
-    <title>The J. Paul Getty Trust Bulletin</title>
-    <pubPlace>Malibu</pubPlace>
-    <bibl type="v" xml:id="GettyTB_2">
-      <date when="1987">Winter/Spring 1987</date>
-      <bibl type="a" xml:id="GettyTB_Clark_Wilson">
-        <author>Clark, A.J. and Wilson, J.</author>
+  <bibl type="m" xml:id="Gerhard">
+    <author><persName type="sort">Gerhard, E.</persName></author>
+    <title>Etruskische Spiegel V</title>
+    <pubPlace>Berlin</pubPlace>
+    <date when="1884">1884-1897</date>
+  </bibl>
+    <bibl type="j" xml:id="GettyTB">
+      <abbr type="primary">GettyTB</abbr>
+      <abbr type="alt">GTB</abbr>
+      <title>The J. Paul Getty Trust Bulletin</title>
+      <pubPlace>Malibu</pubPlace>
+      <bibl type="v" xml:id="GettyTB_2">
+        <date when="1987">Winter/Spring 1987</date>
+        <bibl type="a" xml:id="GettyTB_Clark_Wilson">
+          <author>Clark, A.J. and Wilson, J.</author>
+        </bibl>
       </bibl>
     </bibl>
-  </bibl>
   <bibl type="j" xml:id="GettyMusJ">
     <abbr type="primary">GettyMusJ</abbr>
     <abbr type="alt">GMusJ</abbr>
@@ -1165,14 +1812,34 @@
     <bibl type="v" xml:id="GettyMusJ_11">
       <biblScope from="11">11</biblScope>
       <date when="1983">1983</date>
+      <bibl type="a" xml:id="Brashear_1983">
+        <author><persName type="sort">Brashear, W.</persName></author>
+        <title>A Byzantine Sale of Land</title>
+      </bibl>
     </bibl>
     <bibl type="v" xml:id="GettyMusJ_12">
       <biblScope from="12">12</biblScope>
       <date when="1984">1984</date>
+      <bibl type="a" xml:id="GettyMusJ_12_Acq">
+        <author><persName type="sort">Walsh, J.</persName></author>
+        <title>Acquisitions/1983</title>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="GettyMusJ_14">
+      <biblScope from="14">14</biblScope>
+      <date when="1986">1986</date>
+      <bibl type="a" xml:id="GettyMusJ_14_Acq">
+        <author><persName type="sort">Walsh, J.</persName></author>
+        <title>Acquisitions/1985</title>
+      </bibl>
     </bibl>
     <bibl type="v" xml:id="GettyMusJ_18">
       <biblScope from="18">18</biblScope>
       <date when="1990">1990</date>
+      <bibl type="a" xml:id="Elston_1990">
+        <author><persName type="sort">Elston, M.</persName></author>
+        <title>Ancient Repairs of Greek Vases in the J. Paul Getty Museum</title>
+      </bibl>
     </bibl>
     <bibl type="v" xml:id="GettyMusJ_21">
       <biblScope from="21">21</biblScope>
@@ -1220,6 +1887,82 @@
       <date when="1985">1985</date>
     </bibl>
   </bibl>
+  <bibl type="m" xml:id="Grisanti_Solin">
+    <abbr type="primary">Grisanti and Solin, Dis Manibus</abbr>
+    <author><persName type="sort">Grisanti, G. T.</persName> and <persName>Solin, H.</persName></author>
+    <title>Dis Manibus, pili, epitaffi, et altre cose antiche di Giovannantonio Dosio: Il codice N.A. 618 della Biblioteca Nazionale di Firenze</title>
+    <pubPlace>Pisa</pubPlace>
+    <date when="2011">2011</date>
+  </bibl>
+  <bibl type="m" xml:id="Guarducci_Epigrafia">
+    <abbr type="primary">Guarducci, M., Epigrafia Greca</abbr>
+    <author><persName>Guarducci, M.</persName><persName type="sort">Gunnella, M.</persName></author>
+    <title>Epigrafia greca. 4 vols. Vol.
+      1, Caratteri e storia della disciplina. La Scrittura greca dalle
+      origini all'età imperiale (1967); 2, Epigrafi di carattere pubblico
+      (1969); 3, Epigrafi di carattere privato (1974); 4, Epigrafi sacre
+      pagane e cristiane (1978)</title>
+    <pubPlace>Rome</pubPlace>
+    <date from="1967" to="1978">1967-1978</date>
+  </bibl>
+  <bibl type="m" xml:id="Guarducci_Epigrafia_1">
+    <abbr type="primary">Guarducci, M., Epigrafia Greca</abbr>
+    <author><persName>Guarducci, M.</persName><persName type="sort">Gunnella, M.</persName></author>
+    <title>Epigrafia greca. 4 vols. Vol. 1, Caratteri e storia della disciplina. La Scrittura greca dalle
+      origini all'età imperiale</title>
+    <pubPlace>Rome</pubPlace>
+    <date when="1967">1967</date>
+  </bibl>
+  <bibl type="m" xml:id="Guarducci_Epigrafia_2">
+    <abbr type="primary">Guarducci, M., Epigrafia Greca</abbr>
+    <author><persName>Guarducci, M.</persName><persName type="sort">Gunnella, M.</persName></author>
+    <title>Epigrafia greca. 4 vols. Vol. 2, Epigrafi di carattere pubblico</title>
+    <pubPlace>Rome</pubPlace>
+    <date when="1969">1969</date>
+  </bibl>
+  <bibl type="m" xml:id="Guarducci_Epigrafia_3">
+    <abbr type="primary">Guarducci, M., Epigrafia Greca</abbr>
+    <author><persName>Guarducci, M.</persName><persName type="sort">Gunnella, M.</persName></author>
+    <title>Epigrafia greca. 4 vols. Vol. 3, Epigrafi di carattere privato.</title>
+    <pubPlace>Rome</pubPlace>
+    <date when="1974">1974</date>
+  </bibl>
+  <bibl type="m" xml:id="Guarducci_Epigrafia_4">
+    <abbr type="primary">Guarducci, M., Epigrafia Greca</abbr>
+    <author><persName>Guarducci, M.</persName><persName type="sort">Gunnella, M.</persName></author>
+    <title>Epigrafia greca. 4 vols. Rome 1967-1978. Vol. 4, Epigrafi sacre
+      pagane e cristiane.</title>
+    <pubPlace>Rome</pubPlace>
+    <date when="1978">1978</date>
+  </bibl>
+  <bibl type="m" xml:id="Gunnella_Medici">
+    <abbr type="primary">Gunnella, Le antichita di Palazzo Medici Riccardi</abbr>
+    <author><persName>Gunnella, A.</persName><persName type="sort">Gunnella, A.</persName></author>
+    <title>Le antichita di Palazzo Medici Riccardi I: Le iscrizioni del cortile</title>
+    <pubPlace>Florence</pubPlace>
+    <date when="1998">1998</date>
+  </bibl>
+  <bibl type="m" xml:id="Hadzsits_1931">
+    <abbr type="primary">Hadzsits, (ed.), Classical Studies in honor of John C. Rolfe</abbr>
+    <editor><persName>Hadzsits, G. D.</persName><persName type="sort">Hadzsits, G. D.</persName></editor>
+    <title>Classical Studies in Honor of John C. Rolfe</title>
+    <pubPlace>Philadelphia</pubPlace>
+    <date when="1931">1931</date>
+    <bibl type="a" xml:id="Van_Buren_1931">
+      <abbr type="primary">Van Buren, Epigraphica</abbr>
+      <author><persName>Van Buren, A. W.</persName><persName type="sort">Van Buren, A. W.</persName></author>
+      <title>Epigraphica</title>
+      <biblScope type="pp">315-319</biblScope>
+      <date when="1931">1931</date>
+    </bibl>
+  </bibl>
+    <bibl type="m" xml:id="Heesen_2011">
+      <abbr type="primary">Heesen, Athenian Little-Master Cups</abbr>
+      <author><persName type="sort">Heesen, P.</persName></author>
+      <title>Athenian Little-Master Cups</title>
+      <pubPlace>Alkmaar</pubPlace>
+      <date when="2011">2011</date>
+    </bibl>
   <bibl type="m" xml:id="Heisserer">
     <abbr type="primary">Heisserer, Classical Antiquities Stovall Museum</abbr>
     <author><persName>Heisserer</persName><persName type="sort">Heisserer, A.J.</persName></author>
@@ -1227,6 +1970,13 @@
       University of Oklahoma</title>
     <pubPlace>Norman</pubPlace>
     <date when="1986">1986</date>
+  </bibl>
+  <bibl type="m" xml:id="Helen1975">
+    <abbr type="primary">Helen, The Organization of Roman Brick Production</abbr>
+    <author><persName>Helen, T.</persName><persName type="sort">Helen, T.</persName></author>
+    <title>The Organization of Roman Brick Production in the First and Second Century AD. An interpretation of Roman Brick Stamps</title>
+    <pubPlace>Helsinki</pubPlace>
+    <date when="1975">1975</date>
   </bibl>
   <bibl type="m" xml:id="Herbert_AABC">
     <abbr type="primary">Herbert, Ancient Art Bowdoin College</abbr>
@@ -1241,6 +1991,13 @@
     <title>Greek and Latin Inscriptions in the Brooklyn Museum</title>
     <pubPlace>Brooklyn</pubPlace>
     <date when="1972">1972</date>
+  </bibl>
+  <bibl type="m" xml:id="Herz">
+    <abbr type="primary">Herz, Untersuchungen zum Festkalender</abbr>
+    <author><persName>Herz</persName><persName type="sort">Herz, P.</persName></author>
+    <title>Untersuchungen zum Festkalender der römischen Kaiserzeit nach datierten Weih- und Ehreninschriften</title>
+    <pubPlace>Mainz</pubPlace>
+    <date when="1975">1975</date>
   </bibl>
   <bibl type="j" xml:id="Hesperia">
     <abbr type="primary">Hesperia</abbr>
@@ -1301,9 +2058,22 @@
       </bibl>
     </bibl>
   </bibl>
+  <bibl type="m" xml:id="Hill1945">
+    <abbr type="primary">Hill, Fashions of the Past</abbr>
+    <author><persName>Hill</persName><persName type="sort">Hill, D. K.</persName></author>
+    <title>Fashions of the Past</title>
+    <pubPlace>Baltimore</pubPlace>
+    <date when="1945">1945</date>
+  </bibl>
+  <bibl type="m" xml:id="Hoenn">
+    <author><persName type="sort">Hoenn, K.</persName></author>
+    <title>Artemis, Gestaltwandel einer Göttin</title>
+    <pubPlace>Zurich</pubPlace>
+    <date when="1946">1946</date>
+  </bibl>
   <bibl type="m" xml:id="HoffmannCenturies">
     <abbr type="primary">Hoffmann, Ten Centuries</abbr>
-    <author><persName>Hoffman</persName><persName type="sort">Hoffman, H.</persName></author>
+    <author><persName>Hoffmann</persName><persName type="sort">Hoffmann, H.</persName></author>
     <title>Ten Centuries that Shaped the West: Greek and Roman Art in Texas Collections</title>
     <pubPlace>Houston</pubPlace>
     <date when="1971">1971</date>
@@ -1315,13 +2085,20 @@
     <pubPlace>Mainz</pubPlace>
     <date when="1972">1972</date>
   </bibl>
-  <bibl type="m" xml:id="Hoffmann_Collecting">
-    <abbr type="primary">Hoffmann, Collecting Greek Antiquities</abbr>
-    <author><persName>Hoffmann</persName><persName type="sort">Hoffmann, H.</persName></author>
-    <title>Collecting Greek Antiquities</title>
-    <pubPlace>New York</pubPlace>
-    <date when="1971">1971</date>
-  </bibl>
+      <bibl type="m" xml:id="Hoffmann_Collecting">
+        <abbr type="primary">Hoffmann, Collecting Greek Antiquities</abbr>
+        <author><persName>Hoffmann</persName><persName type="sort">Hoffmann, H.</persName></author>
+        <title>Collecting Greek Antiquities</title>
+        <pubPlace>New York</pubPlace>
+        <date when="1971">1971</date>
+      </bibl>
+    <bibl type="m" xml:id="HolyokeHandbook">
+      <abbr type="primary">MHCAM Handbook</abbr>
+      <author><persName>Harris</persName><persName type="sort">Harris, J.</persName></author>
+      <title>The Mount Holyoke College Art Museum: Handbook of the Collection</title>
+      <pubPlace>South Hadley, MA</pubPlace>
+      <date when="1984">1984</date>
+    </bibl>
   <bibl type="m" xml:id="Husk_Bea_Rey">
     <abbr type="primary">Huskinson, Beard and Reynolds, Image and Mystery</abbr>
     <author><persName>Huskinson, Beard and Reynolds</persName><persName type="sort">Huskinson, G.,
@@ -1339,9 +2116,18 @@
       <biblScope from="20">20</biblScope>
       <date when="1909">1909</date>
       <bibl type="a" xml:id="HSCP_Moore">
-        <author>Moore</author>
+        <author><persName type="sort">Moore, C. H.</persName></author>
         <ref type="jstor" target="http://www.jstor.org/stable/310347">Latin Inscriptions in the
           Harvard Collection of Classical Antiquities, pp. 1-14</ref>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="HSCP_58-9">
+      <biblScope from="58-9">58/59</biblScope>
+      <date when="1948">1948</date>
+      <bibl type="a" xml:id="Bloch_Indices">
+        <author>Bloch</author>
+        <ref type="jstor" target="http://www.jstor.org/stable/310947">Indices to the Roman Brick-Stamps Published in Volumes XV 1 of the Corpus Inscriptionum
+          Latinarum and LVI-LVII of the Harvard Studies in Classical Philology </ref>
       </bibl>
     </bibl>
     <bibl type="v" xml:id="HSCP_68">
@@ -1412,11 +2198,18 @@
     <pubPlace>Bonn</pubPlace>
     <date when="1976">1976</date>
   </bibl>
+  <bibl type="c" xml:id="ICH">
+    <abbr type="primary">ICH</abbr>
+    <author><persName type="sort">Hübner, E.</persName></author>
+    <title>Inscriptiones Hispaniae Christianae</title>
+    <pubPlace>Berlin</pubPlace>
+    <date when="1871">1871</date>
+  </bibl>
   <bibl type="c" xml:id="ICUR">
     <abbr type="primary">ICUR ns</abbr>
     <author><persName>Silvagni and Ferra</persName><persName type="sort">Silvagni, A. and Ferra, A.
         (eds.)</persName></author>
-    <title>Incriptiones Christianae Urbis Romae. Nova Series</title>
+    <title>Inscriptiones Christianae Urbis Romae. Nova Series</title>
     <pubPlace>Rome</pubPlace>
     <date when="1922">1922-</date>
   </bibl>
@@ -1426,16 +2219,28 @@
     <pubPlace>Berlin</pubPlace>
     <date when="1873">1873-</date>
     <bibl type="v" xml:id="IG_I3">
-      <biblScope from="1.3">I (3)</biblScope>
+      <biblScope from="1.3">I 3</biblScope>
     </bibl>
     <bibl type="v" xml:id="IG_II">
       <biblScope from="2">II</biblScope>
     </bibl>
     <bibl type="v" xml:id="IG_II2">
-      <biblScope from="2.2">II (2)</biblScope>
+      <biblScope from="2.2">II 2</biblScope>
+    </bibl>
+    <bibl type="v" xml:id="IG_II-III.3">
+      <biblScope from="2-3.3">II-III 3</biblScope>>
     </bibl>
     <bibl type="v" xml:id="IG_V.2">
-      <biblScope from="5.2">V (2)</biblScope>
+      <biblScope from="5.2">V 2</biblScope>
+    </bibl>
+    <bibl type="v" xml:id="IG_IX1.2">
+      <biblScope from="9.2">IX 1(2)</biblScope>
+    </bibl>
+    <bibl type="v" xml:base="IG_X">
+      <biblScope from="10">X</biblScope>
+    </bibl>
+    <bibl type="v" xml:id="IG_XII.4">
+      <biblScope from="12.4">XII 4</biblScope>
     </bibl>
     <bibl type="v" xml:id="IG_XIV">
       <biblScope from="14">XIV</biblScope>
@@ -1480,16 +2285,23 @@
   <bibl type="c" xml:id="ILLRP">
     <abbr type="primary">ILLRP</abbr>
     <author><persName>Degrassi</persName><persName type="sort">Degrassi, A.</persName></author>
-    <title>Incriptiones Latinae Liberae Rei Publicae</title>
+    <title>Inscriptiones Latinae Liberae Rei Publicae</title>
     <pubPlace>Florence, vol. l-2, 1965; vol. 2, 1963</pubPlace>
     <date when="1963">1963, 1965</date>
   </bibl>
   <bibl type="c" xml:id="ILS">
     <abbr type="primary">ILS</abbr>
     <author><persName>Dessau</persName><persName type="sort">Dessau, A.</persName></author>
-    <title>Incriptiones Latinae Selectae</title>
+    <title>Inscriptiones Latinae Selectae</title>
     <pubPlace>Berlin</pubPlace>
     <date when="1892">1892-1916</date>
+  </bibl>
+  <bibl type="m" xml:id="Immerwahr">
+    <abbr type="primary">Immerwahr, Attic Script</abbr>
+    <author><persName type="sort">Immerwahr, H.</persName></author>
+    <title>Attic Script: A Survey</title>
+    <pubPlace>Oxford</pubPlace>
+    <date when="1990">1990</date>
   </bibl>
   <bibl type="m" xml:id="Smyrna">
     <abbr type="primary">Petzl, Inschriften von Smyrna</abbr>
@@ -1501,18 +2313,26 @@
       <biblScope from="1">I</biblScope>
     </bibl>
   </bibl>
-  <bibl type="j" xml:id="IM">
-    <abbr type="primary">IM</abbr>
-    <title>Istanbuler Mitteilungen</title>
-    <pubPlace>Istanbul</pubPlace>
-    <bibl type="v" xml:id="IM_40">
-      <date when="1990">1990</date>
-      <bibl type="a" xml:id="IM_Parlasca">
-        <author>Parlasca, Klaus</author>
-        <title>Kleinasiatische Terracotten mit Bleiglasur</title>
-        <ref>195-199</ref>
+    <bibl type="j" xml:id="IM">
+      <abbr type="primary">IM</abbr>
+      <title>Istanbuler Mitteilungen</title>
+      <pubPlace>Istanbul</pubPlace>
+      <bibl type="v" xml:id="IM_40">
+        <date when="1990">1990</date>
+        <bibl type="a" xml:id="IM_Parlasca">
+          <author>Parlasca, Klaus</author>
+          <title>Kleinasiatische Terracotten mit Bleiglasur</title>
+          <ref>195-199</ref>
+        </bibl>
       </bibl>
     </bibl>
+  <bibl type="m" xml:id="JHU-Gilman">
+    <abbr type="primary">Johns Hopkins Museum Catalog-Gilman Collection</abbr>
+    <title>Johns Hopkins Museum Catalog Gilman collection</title>
+  </bibl>
+  <bibl type="m" xml:id="JHU-Dunning">
+    <abbr type="primary">Johns Hopkins Museum Catalog-Dunning Collection</abbr>
+    <title>Johns Hopkins Museum Catalog Gilman collection</title>
   </bibl>
   <bibl type="m" xml:id="Johnston">
     <abbr type="primary">Johnston, Trademarks</abbr>
@@ -1521,19 +2341,25 @@
     <pubPlace>Warminster</pubPlace>
     <date when="1979">1979</date>
   </bibl>
+  <bibl type="m" xml:id="Kastelic">
+    <author><persName type="sort">Kastelic, J.</persName></author>
+    <title>Situla Art</title>
+    <pubPlace>New York</pubPlace>
+    <date when="1965">1965</date>
+  </bibl>
   <bibl type="m" xml:id="Korshak">
-    <abbr type="primary">Korshak, Frontal Face</abbr>
-    <author><persName>Korshak</persName><persName type="sort">Korshak, Y.</persName></author>
-    <title>Frontal Faces in Attic Vase Painting of the Archaic Period</title>
-    <pubPlace>Palos Heights</pubPlace>
-    <date when="1987">1987</date>
-  </bibl>
-  <bibl type="m" xml:id="LIMC_2">
-    <abbr type="primary">Lexicon Iconographicum Mythologiae Classicae II</abbr>
-    <title>Lexicon Iconographicum Mythologiae Classicae, Volume II</title>
-    <pubPlace>Zurich</pubPlace>
-    <date when="1984">1984</date>
-  </bibl>
+        <abbr type="primary">Korshak, Frontal Face</abbr>
+        <author><persName>Korshak</persName><persName type="sort">Korshak, Y.</persName></author>
+        <title>Frontal Faces in Attic Vase Painting of the Archaic Period</title>
+        <pubPlace>Palos Heights</pubPlace>
+        <date when="1987">1987</date>
+      </bibl>
+      <bibl type="m" xml:id="LIMC_2">
+        <abbr type="primary">LIMC II</abbr>
+        <title>Lexicon Iconographicum Mythologiae Classicae, Volume II</title>
+        <pubPlace>Zurich</pubPlace>
+        <date when="1984">1984</date>
+      </bibl>
   <bibl type="m" xml:id="LSAG">
     <abbr type="primary">Jeffery, Local Scripts of Archaic Greece</abbr>
     <author><persName>Jeffery</persName><persName type="sort">Jeffery, L.H.</persName></author>
@@ -1552,6 +2378,25 @@
       <date when="1968">1968-1969</date>
       <bibl type="a" xml:id="JAC_Engemann">
         <author>Engemann</author>
+      </bibl>
+    </bibl>
+  </bibl>
+  <bibl type="m" xml:id="Jacobsthal_1933">
+    <author><persName type="sort">Jacobsthal, P.</persName></author>
+    <title>Diskoi</title>
+    <pubPlace>New York</pubPlace>
+    <date when="1933">1933</date>
+  </bibl>
+  <bibl type="j" xml:id="JRA">
+    <abbr type="primary">JRA</abbr>
+    <title>Journal of Roman Archaeology</title>
+    <pubPlace>Portsmouth, RI</pubPlace>
+    <bibl type="v" xml:id="JRA_13">
+      <biblScope from="13">13</biblScope>
+      <date when="2000">2000</date>
+      <bibl type="a" xml:id="JRA_Tuck">
+        <author>Tuck, S. L.</author>
+        <title>A new identification for the 'Porticus Aemilia'</title>
       </bibl>
     </bibl>
   </bibl>
@@ -1578,10 +2423,36 @@
       </bibl>
     </bibl>
   </bibl>
+  <bibl type="j" xml:id="JRS">
+    <abbr type="primary">JRS</abbr>
+    <title>Journal of Roman Studies</title>
+    <pubPlace>London</pubPlace>
+    <date when="1911">1911-</date>
+    <bibl type="v" xml:id="JRS_25">
+      <biblScope from="25">25</biblScope>
+      <date when="1935">1935</date>
+      <bibl type="a" xml:id="JRS_25_Harden">
+        <author><persName type="sort">Harden, D. B.</persName></author>
+        <title>Romano-Syrian Glasses with Mould-Blown Inscriptions</title>
+        <biblScope type="pp">163-186</biblScope>
+      </bibl>
+    </bibl>
+  </bibl>
+  <bibl type="m" xml:id="Jockey">
+    <abbr type="primary">Jockey, Marbres</abbr>
+    <editor><persName type="sort">Jockey, P.</persName></editor>
+    <title>Marbres et autres roches de la Méditerranée antique</title>
+    <pubPlace>Paris</pubPlace>
+    <date when="2009">2009</date>
+    <bibl type="a" xml:id="VanKeuren_2009">
+      <author><persName type="sort">Van Keuren, F.</persName> et al.</author>
+      <title>Multimethod Provenance Investigation of Eight Roman Funerary
+        Monuments from the Licinian Tomb and the via Ostiense, Rome</title>
+    </bibl>
+  </bibl>
   <bibl type="m" xml:id="Jucker">
     <abbr type="primary">Jucker and Willers, Gesichter</abbr>
-    <author><persName>Jucker</persName><persName type="sort">Jucker, H. and Willers,
-      D.</persName></author>
+    <author><persName>Jucker</persName><persName type="sort">Jucker, H. and D. Willers</persName></author>
     <author><persName>Willers</persName></author>
     <title>Gesichter: Griechische und römische Bildnisse aus Schweizer Besitz</title>
     <pubPlace>Bern</pubPlace>
@@ -1595,24 +2466,35 @@
     <pubPlace>New Haven</pubPlace>
     <date when="1996">1996</date>
   </bibl>
-  <bibl type="j" xml:id="Kerameus">
-    <abbr type="primary">Kerameus</abbr>
-    <title>Kerameus</title>
-    <bibl type="v" xml:id="Kerameus_9">
-      <date when="1995">1995</date>
-      <bibl type="a" xml:id="Kerameus_Buitron_Oliver">
-        <author>Buitron-Oliver, Diana</author>
-        <title>Douris. A Master-Painter of Athenian Red-Figure Vases.</title>
-        <ref>27, 32, 38, 54</ref>
+    <bibl type="j" xml:id="Kerameus">
+      <abbr type="primary">Kerameus</abbr>
+      <title>Kerameus</title>
+      <bibl type="v" xml:id="Kerameus_9">
+        <date when="1995">1995</date>
+        <bibl type="a" xml:id="Kerameus_Buitron_Oliver">
+          <author>Buitron-Oliver, Diana</author>
+          <title>Douris. A Master-Painter of Athenian Red-Figure Vases.</title>
+          <ref>27, 32, 38, 54</ref>
+        </bibl>
       </bibl>
     </bibl>
-  </bibl>
   <bibl type="m" xml:id="Koch">
     <abbr type="primary">Koch, Roman Funerary Sculpture J. Paul Getty Museum</abbr>
     <author><persName>Koch</persName><persName type="sort">Koch, B.</persName></author>
     <title>Roman Funerary Sculpture. Catalog of the Collections, The J. Paul Getty Museum</title>
     <pubPlace>Malibu</pubPlace>
     <date when="1988">1988</date>
+  </bibl>
+  <bibl type="m" xml:id="Koch_1993">
+    <editor><persName type="sort">Koch, G.</persName></editor>
+    <title>Grabeskunst der römischen Kaiserzeit</title>
+    <pubPlace>Mainz</pubPlace>
+    <date when="1993">1993</date>
+    <bibl type="a" xml:id="Bauschung_1993">
+      <author><persName type="sort">Bauschung, D.</persName></author>
+      <title>Grabaltäre mit Girlanden und frühe
+        Girlandensarkophage. Zur Genese der kaiserzeitlichen Sepulkralkunst.</title>
+    </bibl>
   </bibl>
   <bibl type="m" xml:id="Kockel">
     <abbr type="primary">Kockel, Porträtreliefs stadtrömischer Grabbauten</abbr>
@@ -1621,12 +2503,41 @@
     <pubPlace>Mainz</pubPlace>
     <date when="1993">1993</date>
   </bibl>
+  <bibl type="m" xml:id="Kruschwitz_2007">
+    <abbr type="primary">Kruschwitz, Die metrischen Inschriften</abbr>
+    <editor><persName>Kruschwitz</persName><persName type="sort">Kruschwitz, P.</persName></editor>
+    <title>Die metrischen Inschriften der römischen Republik</title>
+    <pubPlace>Berlin</pubPlace>
+    <publisher>de Gruyter</publisher>
+    <date when="2007">2007</date>
+    <bibl type="a" xml:id="Cugusi_2007">
+      <abbr type="primary">Cugusi, Ricezione del codice epigrafico</abbr>
+      <author><persName>Cugusi</persName><persName type="sort">Cugusi, P.</persName></author>
+      <title>Ricezione del codice epigrafico e interazione tra carmi epigrafici e letteratura latina nelle età repubblicana e augustea</title>
+      <biblScope type="pp">1-62</biblScope>
+      <date when="2007">2007</date>
+    </bibl>
+    <bibl type="a" xml:id="Massaro_2007">
+      <abbr type="primary">Massaro, Metri e ritmi nella epigrafia latina di età repubblicana</abbr>
+      <author><persName>Massaro</persName><persName type="sort">Massaro, M.</persName></author>
+      <title>Metri e ritmi nella epigrafia latina di età repubblicana</title>
+      <biblScope type="pp">121-168</biblScope>
+      <date when="2007">2007</date>
+    </bibl>
+  </bibl>
   <bibl type="m" xml:id="ABAP">
     <abbr type="primary">Kroll, Athenican Bronze Allotment Plates</abbr>
     <author><persName>Kroll</persName><persName type="sort">Kroll, J. H.</persName></author>
     <title>Athenian Bronze Allotment Plates</title>
     <pubPlace>Cambridge</pubPlace>
     <date when="1972">1972</date>
+  </bibl>
+  <bibl type="m" xml:id="Lattimore_Epitaphs">
+    <abbr type="primary">Lattimore, Themes in Greek and Latin Epitaphs</abbr>
+    <author><persName>Lattimore, R.</persName><persName type="sort">Lattimore, R.</persName></author>
+    <title>Themes in Greek and Latin Epitaphs</title>
+    <pubPlace>Urbana, Illinois</pubPlace>
+    <date when="1942">1942</date>
   </bibl>
   <bibl type="j" xml:id="Latomus">
     <abbr type="primary">Latomus</abbr>
@@ -1635,6 +2546,11 @@
     <bibl type="v" xml:id="Latomus_28">
       <biblScope from="28">28</biblScope>
       <date when="1969">1969</date>
+      <bibl type="a" xml:id="Latomus_28_Martin">
+        <author><persName type="sort">Martin, K. M.</persName></author>
+        <title>A Reassessment of the Evidence for the comes Britanniarum in the Fourth Century</title>
+        <biblScope type="pp">408-428</biblScope>
+      </bibl>
     </bibl>
   </bibl>
   <bibl type="m" xml:id="Lawton">
@@ -1644,19 +2560,19 @@
     <pubPlace>Oxford</pubPlace>
     <date when="1995">1995</date>
   </bibl>
-  <bibl type="j" xml:id="LIMC">
-    <abbr type="primary">LIMC</abbr>
-    <title>Lexicon Iconographicum Mythologiae Classicae</title>
-    <pubPlace>New Brunswick</pubPlace>
-    <bibl type="v" xml:id="LIMC_6">
-      <date when="1992">1992</date>
-      <bibl type="a" xml:id="LIMC_KasperButz">
-        <author>Kasper-Butz, I., Krauskopf, I.</author>
-        <title>Kekrops</title>
-        <ref>1089</ref>
+    <bibl type="j" xml:id="LIMC">
+      <abbr type="primary">LIMC</abbr>
+      <title>Lexicon Iconographicum Mythologiae Classicae</title>
+      <pubPlace>New Brunswick</pubPlace>
+      <bibl type="v" xml:id="LIMC_6">
+        <date when="1992">1992</date>
+        <bibl type="a" xml:id="LIMC_KasperButz">
+          <author>Kasper-Butz, I., Krauskopf, I.</author>
+          <title>Kekrops</title>
+          <ref>1089</ref>
+        </bibl>
       </bibl>
     </bibl>
-  </bibl>
   <bibl type="m" xml:id="PUAES">
     <abbr type="primary">Littman and Prentice, Syria-Princeton III A</abbr>
     <author><persName>Littman and Prentice</persName><persName type="sort">Littman, E. and Prentice,
@@ -1669,6 +2585,19 @@
       <biblScope from="3A">III A</biblScope>
     </bibl>
   </bibl>
+  <bibl type="e" xml:id="Libitina3">
+    <title>Libitina e Dintorni</title>
+    <pubPlace>Rome</pubPlace>
+    <date when="2004">2004</date>
+    <bibl type="a" xml:id="Libitina3_Barbera">
+      <author><persName>Barbera, R.</persName><persName type="sort">Barbera, R.</persName></author>
+      <title>Iura sepulcrorum a Roma. Inediti e revisioni</title>
+    </bibl>
+    <bibl type="a" xml:id="Libitina3_Evangelisti">
+      <author><persName>Evangelisti, S and D. Nonnnis</persName><persName type="sort">Evangelisti, S and D. Nonnnis</persName></author>
+      <title>Itus, aditus, ambitus, similia. L'accesso al sepolcro: garanzie e finalità</title>
+    </bibl>
+  </bibl>
   <bibl type="c" xml:id="LSO">
     <abbr type="primary">LSO</abbr>
     <author><persName>Steinby and Helen</persName><persName type="sort">Steinby, M. with Helen,
@@ -1678,10 +2607,43 @@
     <pubPlace>Rome</pubPlace>
     <date when="1977">1977-1978</date>
   </bibl>
+  <bibl type="m" xml:id="Lucke-Frey">
+    <abbr type="primary">Die Situla in Providence</abbr>
+    <author><persName type="sort">Lucke, W.</persName> and <persName>Frey, O.-H.</persName></author>
+    <title>Die Situla in Providence (Rhode Island). Ein Beitrag zur Situlenkunst des Osthallstattkreises</title>
+    <pubPlace>Berlin</pubPlace>
+    <date when="1962">1962</date>
+  </bibl>
+  <bibl type="m" xml:id="Manchester">
+    <abbr type="primary">Manchester, Recasting the Past</abbr>
+    <author><persName>Manchester</persName><persName type="sort">Manchester, K.</persName></author>
+    <title>Recasting the Past: Collecting and Presenting Antiquities at the Art Institute of Chicago</title>
+    <pubPlace>New Haven</pubPlace>
+    <date when="2012">2012</date>
+    <bibl type="a" xml:id="Alexander">
+      <abbr type="primary">Alexander, From Plaster to Stone</abbr>
+      <author><persName type="sort">Alexander, K.</persName></author>
+      <title>From Plaster to Stone: Ancient Art at the Art Institute of Chicago</title>
+    </bibl>
+  </bibl>
+  <bibl type="m" xml:id="Mangold">
+    <abbr type="primary">Mangold, Athenatypen auf attischen Weihreliefs des 5. und 4. Jhs. V. Chr.</abbr>
+    <author><persName>Mangold</persName><persName type="sort">Mangold, M.</persName></author>
+    <title>Athenatypen auf attischen Weihreliefs des 5. und 4. Jhs. V. Chr. Hefte des Archäologischen Seminars der Universität Bern, Beiheft 2</title>
+    <pubPlace>Bern</pubPlace>
+    <date when="1993">1993</date>
+  </bibl>
+  <bibl type="m" xml:id="Marini_IscrDol">
+    <abbr type="primary">Marini, Iscr. Dol.</abbr>
+    <author><persName type="sort">Marini, G.</persName></author>
+    <title>Iscrizioni Antiche Doliari</title>
+    <pubPlace>Rome</pubPlace>
+    <date when="1884">1884</date>
+  </bibl>
   <bibl type="m" xml:id="Marucchi">
     <abbr type="primary">Marucchi, Epigrafia Cristiana</abbr>
     <author><persName>Marucchi</persName><persName type="sort">Marucchi, O.</persName></author>
-    <title>Epigrafia Cristiana</title>
+    <title>Epigrafia Cristiana: Trattato Elementare</title>
     <pubPlace>Hoepli</pubPlace>
     <date when="1910">1910</date>
   </bibl>
@@ -1689,22 +2651,52 @@
     <abbr type="primary">Masson, Inscriptions chypriotes syllabiques</abbr>
     <author><persName>Masson</persName><persName type="sort">Masson, O.</persName></author>
     <title>Les inscriptions chypriotes syllabiques</title>
-    <pubPlace>Paris</pubPlace>
+    <pubPlace>Paris</pubPlace> 
     <date when="1983">1983</date>
   </bibl>
+  <bibl type="j" xml:id="Mastia">
+    <abbr type="primary">Mastia</abbr>
+    <title>Mastia: Revista del Museo Arqueológico Municipal de Cartagena</title>
+    <pubPlace>Cartagena</pubPlace>
+    <date from="1973">1973-</date>
+    <bibl type="v" xml:id="Mastia_5">
+      <biblScope from="5">5</biblScope>
+      <date when="2006">2006</date>
+      <bibl type="a" xml:id="Mastia_5_Yebenes">
+        <author><persName type="sort">Perea Yébenes, Sabino</persName></author>
+        <title>Una lectura alternativa del nuevo epígrafe de Carthago Nova. (Y un epitafio monumental, quizás de Roma, inédito)</title>
+        <biblScope type="pp">133-140</biblScope>
+      </bibl>
+    </bibl>
+  </bibl>
+  <bibl type="m" xml:id="Matheson1980">
+    <abbr type="primary">Matheson, Ancient Glass in the Yale University Art Gallery</abbr>
+    <author><persName>Matheson</persName><persName type="sort">Matheson, S. B.</persName></author>
+    <title>Ancient Glass in the Yale University Art Gallery</title>
+    <pubPlace>New Haven</pubPlace>
+    <date when="1980">1980</date>
+  </bibl>    
   <bibl type="m" xml:id="Mattusch">
     <abbr type="primary">Mattusch, Classical Bronzes</abbr>
-    <author><persName>Mattusch</persName><persName type="sort">Mattusch, Carol</persName></author>
-    <title>Classical Bronzes. The Art and Craft of Greek and Roman Statuary</title>
-    <pubPlace>Ithaca and London</pubPlace>
-    <date when="1996">1996</date>
-  </bibl>
+        <author><persName>Mattusch</persName><persName type="sort">Mattusch, Carol</persName></author>
+        <title>Classical Bronzes. The Art and Craft of Greek and Roman Statuary</title>
+        <pubPlace>Ithaca and London</pubPlace>
+        <date when="1996">1996</date>
+      </bibl>
   <bibl type="m" xml:id="Mayo">
     <abbr type="primary">Mayo, The Art of South Italy</abbr>
     <author><persName>Mayo</persName><persName type="sort">Mayo, M.E.</persName></author>
     <title>The Art of South Italy: Vases from Magna Graecia : an exhibition, Volume 44</title>
     <pubPlace>Richmond</pubPlace>
     <date when="1982">1982</date>
+  </bibl>
+  <bibl type="m" xml:id="McCabe_Smyrna">
+    <abbr type="primary">McCabe, Smyrna Inscriptions. Texts and List</abbr>
+    <author><persName>McCabe</persName><persName type="sort">McCann, Donald, F.</persName></author>
+    <title>Smyrna Inscriptions. Texts and List. «The Princeton
+      Project on the Inscriptions of Anatolia»</title>
+    <pubPlace>Princeton, NJ</pubPlace>
+    <date when="1988">1988</date>
   </bibl>
   <bibl type="m" xml:id="McCann">
     <abbr type="primary">McCann, Roman Sarcophagi Metropolitan Museum of Art</abbr>
@@ -1732,8 +2724,38 @@
           American Academy in Rome, pp. 89-133</ref>
       </bibl>
     </bibl>
+    <bibl type="v" xml:id="MAAR_2008">
+      <biblScope from="53">53</biblScope>
+      <date when="2008">2008</date>
+      <bibl type="a" xml:id="MAAR_GiganteHouston">
+        <author>Gigante, L. M. and Houston, G. W.</author>
+        <title>A Collection of Inscriptions from the Via Salaria Necropolis Now in the Speed Art Museum, Louisville, Kentucky</title>
+        <ref type="jstor" target="http://www.jstor.org/stable/25609504">A Collection of Inscriptions from the Via Salaria Necropolis Now in the Speed Art Museum,
+          Louisville, Kentucky, pp. 27-78</ref>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="MAAR_2011-12">
+      <biblScope from="56">56-57</biblScope>
+      <date when="2011">2011-2012</date>
+      <bibl type="a" xml:id="MAAR_2011-12_LaFollette">
+        <author><persName type="sort">La Follette, P.</persName></author>
+        <title>Parsing Piety: the Sacred Still
+          Life in Roman Relief Sculpture</title>
+      </bibl>
+    </bibl>
   </bibl>
-  <bibl type="j" xml:id="MDAIA">
+  <bibl type="j" xml:id="MAR">
+      <abbr type="primary">Monumenta Artis Romanae</abbr>
+      <title>Monumenta Artis Romanae</title>
+      <bibl type="v" xml:id="MAR_23">
+        <date when="1995">1995</date>
+        <bibl type="a" xml:id="MAR_Scholl">
+          <author>Scholl, Andreas et al.</author>
+          <title>Die antiken Skulpturen in Farnborough Hall sowie in Althorp House, Blenheim Palace, Lyme Park und Penrice Castle</title>
+      </bibl>
+      </bibl>
+    </bibl>
+ <bibl type="j" xml:id="MDAIA">
     <abbr type="primary">AM</abbr>
     <abbr type="alt">MDAIA</abbr>
     <title>Mitteilungen des Deutschen Archälogischen Instituts, Athenische Abteilung</title>
@@ -1754,11 +2776,12 @@
       </bibl>
     </bibl>
     <bibl type="v" xml:id="MDAIA_106">
-      <biblScope from="106">106</biblScope>
-      <date when="1991">1991</date>
-      <bibl type="a" xml:id="MDAIA_Vollkommer">
-        <author>Vollkommer</author>
-      </bibl>
+        <biblScope from="106">106</biblScope>
+        <date when="1991">1991</date>
+        <bibl type="a" xml:id="MDAIA_Vollkommer">
+          <author><persName type="sort">Vollkommer, R.</persName></author>
+          <title>Zur Deutung der Loewenfrau in der fruehgriechischen Kunst</title>
+        </bibl>
     </bibl>
   </bibl>
   <bibl type="j" xml:id="MDAIR">
@@ -1817,12 +2840,33 @@
       <date when="1984">1984-1985</date>
     </bibl>
   </bibl>
+  <bibl type="m" xml:id="Michaelis_1882">
+    <abbr type="primary">Michaelis, Ancient Marbles</abbr>
+    <author><persName type="sort">Michaelis, Adolf</persName></author>
+    <title>Ancient Marbles in Great Britain</title>
+    <pubPlace>Cambridge</pubPlace>
+    <date when="1882">1882</date>
+  </bibl>
   <bibl type="m" xml:id="Michel">
     <abbr type="primary">Michel, Recueil d'inscriptions grecques</abbr>
     <author><persName>Michel</persName><persName type="sort">Michel, C.</persName></author>
     <title>Recueil d'inscriptions grecques</title>
     <pubPlace>Brussels</pubPlace>
     <date when="1900">1900</date>
+  </bibl>
+  <bibl type="j" xml:id="MDAI_A">
+    <abbr type="primary">MDAI(A)</abbr>
+    <title>Mitteilungen des Deutschen Archäologischen Instituts, Athenische Abteilung</title>
+    <pubPlace>Berlin</pubPlace>
+    <bibl type="v" xml:id="MDAI_A_93">
+      <biblScope type="vol">93</biblScope>
+      <date when="1978">1978</date>
+      <bibl type="a" xml:id="MDAI_A_93_Schmaltz">
+      <author><persName>Schmaltz</persName><persName type="sort">Schmatlz, B.</persName></author>
+        <title>Zu einer attischer Grabmalbasis des 4. Jahrhunderts v. Chr.</title>
+        <biblScope type="pp">83-97</biblScope>
+      </bibl>
+    </bibl>
   </bibl>
   <bibl type="m" xml:id="Mitten">
     <abbr type="primary">Mitten, RISD Museum of Art Classical Bronzes</abbr>
@@ -1832,14 +2876,36 @@
     <pubPlace>Providence</pubPlace>
     <date when="1975">1975</date>
   </bibl>
-  <bibl type="m" xml:id="Mitten_Doeringer">
-    <abbr type="primary">Mitten and Doeringer, Master Bronzes from the Classical World</abbr>
-    <author><persName>Mitten</persName><persName type="sort">Mitten, D.G. and S.F.
+    <bibl type="m" xml:id="Mitten_Doeringer">
+      <abbr type="primary">Mitten and Doeringer, Master Bronzes from the Classical World</abbr>
+      <author><persName>Mitten</persName><persName type="sort">Mitten, D.G. and S.F.
         Doeringer</persName></author>
-    <author><persName>Doeringer</persName></author>
-    <title>Master Bronzes from the Classical World</title>
-    <pubPlace>Mainz</pubPlace>
-    <date when="1965">1965</date>
+      <author><persName>Doeringer</persName></author>
+      <title>Master Bronzes from the Classical World</title>
+      <pubPlace>Mainz</pubPlace>
+      <date when="1965">1965</date>
+    </bibl>
+  <bibl type="j" xml:id="MGR">
+    <abbr type="primary">MGR</abbr>
+    <title>Miscellanea Greca e Romana</title>
+    <bibl type="v" xml:id="MGR_6">
+      <biblScope from="6">6</biblScope>
+      <date when="1978">1978</date>
+      <bibl type="a" xml:id="MGR_6_Barbieri">
+        <author><persName type="sort">Barbieri, F.</persName></author>
+        <title>Nuove iscrizioni di Ceccano</title>
+        <biblScope type="pp">459-496</biblScope>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="MGR_15">
+      <biblScope from="15">15</biblScope>
+      <date when="1990">1990</date>
+      <bibl type="a" xml:id="MGR_15_Chioffi">
+        <author>Chioffi, L.</author>
+        <title>Genius e iuno a Rome</title>
+        <biblScope type="pp">195-6</biblScope>
+      </bibl>
+    </bibl>
   </bibl>
   <bibl type="j" xml:id="MMAB">
     <abbr type="primary">BMMA</abbr>
@@ -1919,7 +2985,11 @@
     </bibl>
     <bibl type="v" xml:id="MMAB_58">
       <biblScope from="58">58</biblScope>
-      <date when="1963">1963</date>
+      <date when="1962">1962</date>
+      <bibl type="a" xml:id="MMAB_58_Bothmer">
+        <author><persName type="sort">Bothmer, D.</persName></author>
+        <ref type="jstor" target="http://www.jstor.org/stable/3257939">A Gold Libation Bowl</ref>
+      </bibl>
     </bibl>
     <bibl type="v" xml:id="MMAB_60">
       <biblScope from="60">60</biblScope>
@@ -1938,7 +3008,9 @@
       <biblScope from="22">22</biblScope>
       <date when="1969">1969</date>
       <bibl type="a" xml:id="Mnemosyne_Smutny">
-        <author>Smutny</author>
+        <author><persName type="sort">Smutny, R. J.</persName></author>
+        <title>Latinae Quinque Nuper Repertae</title>
+        <biblScope type="pp">191-194</biblScope>
       </bibl>
     </bibl>
   </bibl>
@@ -1994,6 +3066,14 @@
       <date when="1990">1990</date>
     </bibl>
   </bibl>
+  <bibl type="j" xml:id="Notizie_Scavi">
+    <title>Notizie degli Scavi di antichità</title>
+    <bibl type="v" xml:id="Notizie_Scavi_1986">
+      <bibl type="a" xml:id="Notizie_Scavi_1986_Priuli">
+        <author>Priuli</author>
+      </bibl>
+    </bibl>
+  </bibl>
   <bibl type="j" xml:id="NSA">
     <abbr type="primary">NSc</abbr>
     <abbr type="alt">NSA</abbr>
@@ -2005,11 +3085,17 @@
     <bibl type="v" xml:id="NSA_1886">
       <date when="1886">1886</date>
     </bibl>
+    <bibl type="v" xml:id="NSA_1891">
+      <date when="1891">1891</date>
+    </bibl>
     <bibl type="v" xml:id="NSA_1893">
       <date when="1893">1893</date>
     </bibl>
     <bibl type="v" xml:id="NSA_1900">
       <date when="1900">1900</date>
+    </bibl>
+    <bibl type="v" xml:id="NSA_1904">
+      <date when="1904">1904</date>
     </bibl>
     <bibl type="v" xml:id="NSA_1905">
       <date when="1905">1905</date>
@@ -2020,17 +3106,19 @@
     <bibl type="v" xml:id="NSA_1912">
       <date when="1912">1912</date>
     </bibl>
+    <bibl type="v" xml:id="NSA_1919">
+      <date when="1919">1919</date>
+    </bibl>
   </bibl>
-  <bibl type="m" xml:id="Ober">
-    <abbr type="primary">Ober and Hedrick, Birth of Greek Democracy</abbr>
-    <author><persName>Ober</persName><persName type="sort">Ober, J. and C.W.
+    <bibl type="m" xml:id="Ober">
+      <abbr type="primary">Ober and Hedrick, Birth of Greek Democracy</abbr>
+      <author><persName>Ober</persName><persName type="sort">Ober, J. and C.W.
       Hedrick</persName></author>
-    <author><persName>Hedrick</persName></author>
-    <title>The Birth of Greek Democracy. An Exhibition Celebrating the 2500th Anniversary of
-      Democracy.</title>
-    <pubPlace>Washington, D.C.</pubPlace>
-    <date when="1993">1993</date>
-  </bibl>
+      <author><persName>Hedrick</persName></author>
+      <title>The Birth of Greek Democracy. An Exhibition Celebrating the 2500th Anniversary of Democracy.</title>
+      <pubPlace>Washington, D.C.</pubPlace>
+      <date when="1993">1993</date>
+    </bibl>
   <bibl type="c" xml:id="OGIS">
     <abbr type="primary">OGIS</abbr>
     <author><persName>Dittenberger</persName><persName type="sort">Dittenberger,
@@ -2043,6 +3131,18 @@
     </bibl>
     <bibl type="v" xml:id="OGIS_2">
       <date when="1905">1905</date>
+    </bibl>
+  </bibl>
+  <bibl type="j" xml:id="OLZ">
+    <abbr type="primary">OLZ</abbr>
+    <title>Orientalistische Literaturzeitung</title>
+    <pubPlace>Berlin</pubPlace>
+    <bibl type="v" xml:id="OLZ_54">
+      <biblScope from="54">54</biblScope>
+      <date when="1959">1959</date>
+      <bibl type="a" xml:id="OLZ_54_Parlasca">
+        <author><persName type="sort">Parlasca, K.</persName></author>
+      </bibl>
     </bibl>
   </bibl>
   <bibl type="m" xml:id="Osborne">
@@ -2061,6 +3161,14 @@
     <pubPlace>Bonn</pubPlace>
     <date when="1968">1968</date>
   </bibl>
+    <bibl type="c" xml:id="OCVArret_2">
+      <abbr type="primary">Corpus Vasorum Arretinorum</abbr>
+      <author><persName>Oxé, Comfort, and Kenrick</persName><persName type="sort">Oxé, A., H. Comfort and P. Kenrick</persName></author>
+      <title>Corpus Vasorum Arretinorum. A Catalogue of the Signatures, Shapes and Chronology of
+        Italian Sigillata. 2nd Edition.</title>
+      <pubPlace>Bonn</pubPlace>
+      <date when="2000">2000</date>
+    </bibl>  
   <bibl type="m" xml:id="PAF">
     <abbr type="primary">Ancient Art Fleischman Collection</abbr>
     <author><persName type="sort">J. Paul Getty Museum, (ed.)</persName></author>
@@ -2077,12 +3185,39 @@
     <pubPlace>Princeton</pubPlace>
     <date when="2001">2001</date>
   </bibl>
+  <bibl type="m" xml:id="Pallottino">
+    <author><persName type="sort">Pallottino, M.</persName></author>
+    <title>Testimonia linguae etruscae</title>
+    <pubPlace>Florence</pubPlace>
+    <date when="1954">1954</date>
+  </bibl>
+  <bibl type="j" xml:id="PBSR">
+    <abbr type="primary">PBSR</abbr>
+    <title>Papers of the British School at Rome</title>
+    <pubPlace>London</pubPlace>
+    <date when="1902">1902-</date>
+    <bibl type="v" xml:id="PBSR_61">
+      <biblScope from="61">61</biblScope>
+      <date when="1983">1983</date>
+      <bibl type="a" xml:id="PBSR_61_Purcell">
+        <author><persName type="sort">Purcell, N.</persName></author>
+        <title>The apparitores: A study in social mobility</title>
+      </bibl>
+    </bibl>
+  </bibl>
   <bibl type="m" xml:id="Parca">
     <abbr type="primary">The Franchetti Collection</abbr>
     <author><persName>Parca</persName><persName type="sort">Parca, M.</persName></author>
     <title>The Franchetti Collection in Rome. Inscriptions and Sculptural Fragments</title>
     <pubPlace>Opuscula Epigraphica 6 (Rome)</pubPlace>
     <date when="1995">1995</date>
+  </bibl>
+  <bibl type="m" xml:id="Parlasca">
+    <abbr type="primary">Parlasca, Mumienporträts</abbr>
+    <author><persName type="sort">Parlasca, K.</persName></author>
+    <title>Mumienporträts und verwandte Denkmäler</title>
+    <pubPlace>Wiesbaden</pubPlace>
+    <date when="1966">1966</date>
   </bibl>
   <bibl type="j" xml:id="PP">
     <abbr type="primary">PP</abbr>
@@ -2133,13 +3268,13 @@
       </bibl>
     </bibl>
   </bibl>
-  <bibl type="m" xml:id="Picard">
-    <abbr type="primary">Picard, Manuel d'archéologie grecque</abbr>
-    <author><persName>Picard</persName><persName type="sort">Picard, C.</persName></author>
-    <title>Manuel d'archéologie grecque, La Sculpture. Vol.4, part 2</title>
-    <pubPlace>Paris</pubPlace>
-    <date when="1954">1954</date>
-  </bibl>
+    <bibl type="m" xml:id="Picard">
+      <abbr type="primary">Picard, Manuel d'archéologie grecque</abbr>
+      <author><persName>Picard</persName><persName type="sort">Picard, C.</persName></author>
+      <title>Manuel d'archéologie grecque, La Sculpture. Vol.4, part 2</title>
+      <pubPlace>Paris</pubPlace>
+      <date when="1954">1954</date>
+    </bibl>
   <bibl type="m" xml:id="Poseidon">
     <abbr type="primary">Poseidon</abbr>
     <author><persName>Robert H. Lowie Museum of Anthropology</persName><persName type="sort">Robert
@@ -2155,6 +3290,14 @@
     <pubPlace>Paris</pubPlace>
     <date when="1954">1954</date>
   </bibl>
+  <bibl type="m" xml:id="Pouilloux_Salamine">
+    <abbr type="primary">Pouilloux,Roesch and Marcillet-Jaubert, Salamine de Chypre</abbr>
+    <author><persName>Pouilloux, Roesch and Marcillet-Jaubert</persName><persName type="sort">Pouilloux, J., P. Roesch and J. Marcillet-Jaubert</persName></author>
+    <title>Salamine de Chypre, XIII. Testimonia Salaminia, 2. Corpus épigraphique</title>
+    <pubPlace>Paris</pubPlace>
+    <date when="1987">1987</date>
+  </bibl>
+  
   <bibl type="m" xml:id="Prentice">
     <abbr type="primary">Prentice, Syria-Princeton III B</abbr>
     <author><persName>Prentice</persName><persName type="sort">Prentice, W.K.</persName></author>
@@ -2162,6 +3305,20 @@
       and Latin Inscriptions. B. Northern Syria</title>
     <pubPlace>Leiden</pubPlace>
     <date when="1908">1908-1922</date>
+  </bibl>
+  <bibl type="m" xml:id="Proukakis">
+    <abbr type="primary">Proukakis, The Evolution of the Attic Marble Lekythoi</abbr>
+    <author><persName>Proukakis</persName><persName type="sort">Proukakis, A.M.</persName></author>
+    <title>The Evolution of the Attic Marble Lekythoi, and Their Relation to the Problem of Identifying the Dead among the Figures Shown on the Funerary Reliefs</title>
+    <pubPlace>London</pubPlace>
+    <date when="1971">1971</date>
+  </bibl>
+  <bibl type="m" xml:id="Purnelle">
+    <abbr type="primary">Purnelle, Les usages des graveurs</abbr>
+    <author><persName type="sort">Purnelle, G.</persName></author>
+    <title>Les usages des graveurs dans la notation d'upsilon et des phonemes aspires: le cas des anthroponymes grecs dans les inscriptions latines de Rome</title>
+    <pubPlace>Geneva</pubPlace>
+    <date when="1995">1995</date>
   </bibl>
   <bibl type="j" xml:id="Puteoli">
     <abbr type="primary">Puteoli</abbr>
@@ -2187,6 +3344,10 @@
     <bibl type="v" xml:id="RAM_46.2">
       <biblScope from="46.2">46.2</biblScope>
       <date when="1987">1987</date>
+      <bibl type="a" xml:id="RAM_Jones">
+        <author><persName type="sort">Jones, F. F.</persName></author>
+        <ref type="jstor" target="http://www.jstor.org/stable/3774596">A Bronze Head-Vase</ref>
+      </bibl>
       <bibl type="a" xml:id="RAM_Reynolds">
         <author>Reynolds</author>
         <ref type="jstor" target="http://www.jstor.org/stable/3774598">A Roman Military Diploma at
@@ -2216,44 +3377,119 @@
         <ref>210-215</ref>
       </bibl>
     </bibl>
-  </bibl>
-  <bibl type="j" xml:id="RArq">
-    <abbr type="primary">RArq</abbr>
-    <title>Revista de Arqueologia</title>
-    <pubPlace>Brazil</pubPlace>
-    <bibl type="v" xml:id="RArq_115">
-      <date when="1990">1990</date>
-      <bibl type="a" xml:id="RArq_Fernandez">
-        <author>Fernandez, I.G.</author>
-        <title>J. Paul Getty Museum</title>
-        <ref>48-56</ref>
+    <bibl type="v" xml:id="RA_3_3">
+      <biblScope from="3">Third series 3</biblScope>
+      <date when="1884">1884</date>
+      <bibl type="a" xml:id="RA_Vercoutre">
+        <author><persName type="sort">Vercoutre, A.</persName></author>
+        <title>Sur la Céramique Romaine de Sousse</title>
+        <biblScope type="pp">16-29</biblScope>
       </bibl>
     </bibl>
   </bibl>
-  <bibl type="j" xml:id="REG">
+  <bibl type="m" xml:id="Reeder1988">
+    <abbr type="primary">Reeder et al., Hellenistic Art In the Walters Art Gallery</abbr>
+    <author><persName>Reeder et al.</persName><persName type="sort">Reeder, E. D. et al.</persName></author>
+    <title>Hellenistic Art in the Walters Art Gallery</title>
+    <pubPlace>Baltimore</pubPlace>
+    <date when="1988">1988</date>
+  </bibl>
+  <bibl type="m" xml:id="Reeder1995">
+    <abbr type="primary">Reeder et al., Pandora: Women in Classical Greece</abbr>
+    <author><persName>Reeder et al.</persName><persName type="sort">Reeder, E. D. et al.</persName></author>
+    <title>Pandora: Women in Classical Greece</title>
+    <pubPlace>Baltimore</pubPlace>
+    <date when="1995">1995</date>
+  </bibl>
+    <bibl type="j" xml:id="RArq">
+      <abbr type="primary">RArq</abbr>
+      <title>Revista de Arqueologia</title>
+      <pubPlace>Brazil</pubPlace>
+      <bibl type="v" xml:id="RArq_115">
+        <date when="1990">1990</date>
+        <bibl type="a" xml:id="RArq_Fernandez">
+          <author>Fernandez, I.G.</author>
+          <title>J. Paul Getty Museum</title>
+          <ref>48-56</ref>
+        </bibl>
+      </bibl>
+    </bibl>
+  <bibl type="j" xml:id="REA">
+    <abbr type="primary">REA</abbr>
+    <title>Revue des études anciennes</title>
+    <pubPlace>Bordeaux</pubPlace>
+    <date when="1899">1899-</date>
+    <bibl type="v" xml:id="REA_66">
+      <biblScope from="66">66</biblScope> 
+      <date when="1964">1964</date>
+      <bibl type="a" xml:id="REA_66_Veyne">
+        <author><persName type="sort">Veyne, P.</persName></author>
+        <title>Martial, Virgile et quelques épitaphes</title>
+        <biblScope type="pp">48-52</biblScope>
+      </bibl>
+    </bibl>
+  </bibl>
+   <bibl type="j" xml:id="REG">
     <abbr type="primary">REG</abbr>
     <title>Revue des Études Grecques</title>
     <pubPlace>Paris</pubPlace>
     <bibl type="v" xml:id="REG_101">
       <biblScope from="101">101</biblScope>
       <date when="1988">1988</date>
+    </bibl>     
+  </bibl>
+  <bibl type="j" xml:id="REL">
+    <abbr type="primary">REL</abbr>
+    <title>Revue des Études latines</title>
+    <pubPlace>Paris</pubPlace>
+    <bibl type="v" xml:id="REL_14">
+      <biblScope from="14">14</biblScope>
+      <date when="1936">1936</date>
+      <bibl type="a" xml:id="REL_14_Picard">
+        <author><persName type="sort">Picard, C.</persName></author>
+        <title>Chronique de la sculpture étrusco-latine</title>
+      </bibl>
     </bibl>
   </bibl>
-  <bibl type="j" xml:id="RGZM">
-    <title>Römisch-Germanisches Zentralmuseum</title>
-    <pubPlace>Mainz</pubPlace>
-    <bibl type="v" xml:id="RGZM_8">
-      <biblScope from="8">8</biblScope>
-      <date when="1961">1961</date>
-      <bibl type="a" xml:id="RGZM_Brommer">
-        <author>Brommer, F.</author>
-        <title>""Die Gerburt der Athena"</title>
+    <bibl type="j" xml:id="RGZM">
+      <title>Römisch-Germanisches Zentralmuseum</title>
+      <pubPlace>Mainz</pubPlace>
+      <bibl type="v" xml:id="RGZM_8">
+        <biblScope from="8">8</biblScope>
+        <date when="1961">1961</date>
+        <bibl type="a" xml:id="RGZM_Brommer">
+          <author>Brommer, F.</author>
+          <title>""Die Gerburt der Athena"</title>
+      </bibl>
+    </bibl>
+    </bibl>
+  <bibl type="j" xml:id="RendLinc">
+    <abbr type="primary">RendLinc</abbr>
+    <title>Atti della Accademia Nazionale dei Lincei, Classe di Scienze Morali,
+      Storiche e Filologiche. Rendiconti.</title>
+    <pubPlace>Rome</pubPlace>
+    <date when="1892">1892-</date>
+    <bibl type="v" xml:id="RendLinc_28">
+      <biblScope from="28">28</biblScope>
+      <date when="1973">1973</date>
+      <bibl type="a" xml:id="RendLinc_28_Camilli">
+        <abbr type="primary">MNR I</abbr>
+        <author><persName type="sort">Camilli, L. et al.</persName> </author>
+        <title>Contributo allo studio dei bolli laterizi del Museo Nazionale Romano</title>
       </bibl>
     </bibl>
   </bibl>
   <bibl type="j" xml:id="RISD">
     <title>Rhode Island School of Design, Museum Notes</title>
     <pubPlace>Providence</pubPlace>
+    <bibl type="v" xml:id="RISD_11">
+      <biblScope from="11">11</biblScope>
+      <date when="1954">1954</date>
+      <bibl type="a" xml:id="RISD_11_Maxon">
+        <author><persName type="sort">Maxon, J.</persName></author>
+        <title>The Museum Revisited</title>
+      </bibl>
+    </bibl>
     <bibl type="v" xml:id="RISD_76">
       <biblScope from="76">76</biblScope>
       <date when="1989">1989</date>
@@ -2287,8 +3523,15 @@
       C.M.</persName></author>
     <title>Poor Man's Crystal: Utilitarian Glass from Ancient Rome, ca. 50 BC -AD 450. San Antonio
       Museum of Art.</title>
-    <pubPlace>San Antonia, TX</pubPlace>
+    <pubPlace>San Antonio, TX</pubPlace>
     <date when="1956">2003</date>
+  </bibl>
+  <bibl type="m" xml:id="Richardson_EtruscanArt">
+    <abbr type="primary">Richardson, The Etruscans</abbr>
+    <author><persName type="sort">Richardson, E. H.</persName></author>
+    <title>The Etruscans, Their Art and Civilization</title>
+    <pubPlace>Chicago</pubPlace>
+    <date when="1964">1964</date>
   </bibl>
   <bibl type="m" xml:id="Ridgway">
     <abbr type="primary">Ridgway, RISD Museum of Art Classical Sculpture</abbr>
@@ -2305,14 +3548,13 @@
     <pubPlace>Princeton</pubPlace>
     <date when="1994">1994</date>
   </bibl>
-  <bibl type="m" xml:id="Robertson">
-    <abbr type="primary">Robertson, Art of Vase Painting</abbr>
-    <author><persName>Robertson</persName><persName type="sort">Robertson,
-      Martin</persName></author>
-    <title>The Art of Vase Painting in Classical Athens</title>
-    <pubPlace>Cambridge</pubPlace>
-    <date when="1992">1992</date>
-  </bibl>
+    <bibl type="m" xml:id="Robertson">
+      <abbr type="primary">Robertson, Art of Vase Painting</abbr>
+      <author><persName>Robertson</persName><persName type="sort">Robertson, Martin</persName></author>
+      <title>The Art of Vase Painting in Classical Athens</title>
+      <pubPlace>Cambridge</pubPlace>
+      <date when="1992">1992</date>
+    </bibl>
   <bibl type="m" xml:id="Roxan">
     <abbr type="primary">Roxan, Roman Military Diplomas I</abbr>
     <abbr type="alt">RMD I</abbr>
@@ -2329,16 +3571,34 @@
     <pubPlace>Bloomington</pubPlace>
     <date when="1988">1988</date>
   </bibl>
-  <bibl type="j" xml:id="SA">
-    <abbr>Scientific American</abbr>
-    <title>Scientific American</title>
-    <bibl type="a" xml:id="SA_262">
-      <author>Vandiver, Pamela</author>
-      <title>"Ancient Glazes"</title>
-      <ref>111</ref>
+    <bibl type="j" xml:id="SA">
+      <abbr>Scientific American</abbr>
+      <title>Scientific American</title>
+        <bibl type="a" xml:id="SA_262">
+          <author>Vandiver, Pamela</author>
+          <title>"Ancient Glazes"</title>
+          <ref>111</ref>
+        </bibl>
+    </bibl>
+  <bibl type="m" xml:id="Salisbury_1994">
+    <abbr type="primary">Salisbury, Coptic Finewares</abbr>
+    <author><persName type="sort">Salisbury, A. H.</persName></author>
+    <title>Coptic Painted Finewares from Akhmin, Egypt. Ph.D. Thesis.</title>
+    <pubPlace>Minneapolis</pubPlace>
+    <date when="1994">1994</date>
+  </bibl>
+    <bibl type="c" xml:id="SGDI">
+    <abbr type="primary">Collitz et al., Sammlung der Griechischen Dialekt-Inscrhiften</abbr>
+    <editor><persName>Collitz</persName><persName type="sort">Collitz, H.</persName></editor>
+    <title>Sammlung der Griechischen Dialekt-Inscrhiften</title>
+    <pubPlace>Göttingen</pubPlace>
+    <date when="1884">1884-1915</date>
+    <bibl type="v" xml:id="SGDI_3">
+      <biblScope from="3">3</biblScope>
+      <date when="1895">1895</date>
     </bibl>
   </bibl>
-  <bibl type="j" xml:id="San_Antonio">
+    <bibl type="j" xml:id="San_Antonio">
     <abbr>SAMA Quarterly</abbr>
     <title>San Antonio Museum Association Quarterly</title>
     <pubPlace>San Antonio</pubPlace>
@@ -2346,8 +3606,7 @@
       <date when="1987">1987</date>
       <bibl type="a" xml:id="SAMA_Quarterly_Picon">
         <author>Picon, Carlos A.</author>
-        <title>"Ancient Art from the Denman Collection"</title>
-        <ref>16</ref>
+        <title>Ancient Art from the Denman Collection</title>        
       </bibl>
     </bibl>
   </bibl>
@@ -2358,20 +3617,58 @@
     <pubPlace>Ann Arbor</pubPlace>
     <date when="1947">1947</date>
   </bibl>
-  <bibl type="m" xml:id="Schefold">
-    <abbr>Schefold, Götter- und Heldensagen</abbr>
-    <author><persName>Schefold</persName><persName type="sort">Schefold, K.</persName></author>
-    <title>Götter- und Heldensagen der Griechen in der spätarchaischen Kunst</title>
-    <pubPlace>>Munich</pubPlace>
-    <date when="1978">1978</date>
-  </bibl>
+      <bibl type="m" xml:id="Schefold">
+        <abbr>Schefold, Götter- und Heldensagen</abbr>
+        <author><persName>Schefold</persName><persName type="sort">Schefold, K.</persName></author>
+        <title>Götter- und Heldensagen der Griechen in der spätarchaischen Kunst</title>
+        <pubPlace>>Munich</pubPlace>
+        <date when="1978">1978</date>
+      </bibl>      
   <bibl type="m" xml:id="Schmaltz">
     <abbr>Schmaltz, Marmorlekythen</abbr>
     <author><persName>Schmaltz</persName><persName type="sort">Schmaltz, B.</persName></author>
-    <title>Untersuchungen zu den attischen Marmorlekythen.</title>
+    <title>Untersuchungen zu den attischen Marmorlekythen</title>
     <pubPlace>>Berlin</pubPlace>
     <date when="1970">1970</date>
   </bibl>
+  <bibl type="m" xml:id="Scholl">
+          <abbr>Scholl, Die attischen Bildfeldstelen</abbr>
+          <author><persName>Scholl</persName><persName type="sort">Scholl, A.</persName></author>
+          <title>Die attischen Bildfeldstelen des 4. Jhs. V. Chr., Untersuchungen zu den Kleinformatigen Grabreliefs in spätklassichen Athen</title>
+          <pubPlace>>Berlin</pubPlace>
+          <date when="1996">1996</date>
+  </bibl>
+    <bibl type="j" xml:id="SE">
+      <abbr type="primary">SE</abbr>
+      <title>Studi etruschi</title>
+      <pubPlace>Rome</pubPlace>
+      <date when="1927">1927-</date>
+      <bibl type="v" xml:id="SE_3">
+        <biblScope from="3">3</biblScope>
+        <date when="1929">1929</date>
+        <bibl type="a" xml:id="SE_3_Benveniste">
+          <author><persName type="sort">Benveniste, E.</persName></author>
+          <title>Nom et origine de la déesse étrusque acaviser</title>
+        </bibl>
+      </bibl>
+      <bibl type="v" xml:id="SE_20">
+        <biblScope from="20">20</biblScope>
+        <date when="1948">1948-1949</date>
+        <bibl type="a" xml:id="SE_20_Mansuelli">
+          <author><persName type="sort">Mansuelli, G. A.</persName></author>
+          <title>Studi sugli specchie etruschi IV. La mitologia figurata negli specchi etruschi</title>          
+        </bibl>
+      </bibl>
+      <bibl type="v" xml:id="SE_50">
+        <biblScope from="50">50</biblScope>
+        <date when="2003">2003</date>
+        <bibl type="a" xml:id="SE_50_Schürr">
+          <author><persName type="sort">Schürr, D.</persName></author>
+          <title>Die rätische Inschrift der Situla in Providence</title>
+          <biblScope type="pp">243-255</biblScope>
+        </bibl>
+      </bibl>
+    </bibl>
   <bibl type="c" xml:id="SEG">
     <abbr type="primary">SEG</abbr>
     <title>Supplementum Epigraphicum Graecum</title>
@@ -2479,14 +3776,53 @@
       <biblScope from="43">43</biblScope>
       <date when="1993">1993</date>
     </bibl>
+    <bibl type="v" xml:id="SEG_47">
+      <biblScope from="47">47</biblScope>
+      <date when="1997">1997</date>
+    </bibl>
     <bibl type="v" xml:id="SEG_48">
       <biblScope from="48">48</biblScope>
       <date when="1998">1998</date>
     </bibl>
+    <bibl type="v" xml:id="SEG_49">
+      <biblScope from="49">49</biblScope>
+      <date when="1999">1999</date>
+    </bibl>
+    <bibl type="v" xml:id="SEG_50">
+      <biblScope from="50">50</biblScope>
+      <date when="2000">2000</date>
+    </bibl>
+    <bibl type="v" xml:id="SEG_51">
+      <biblScope from="51">51</biblScope>
+      <date when="2001">2001</date>
+    </bibl>
+    <bibl type="v" xml:id="SEG_52">
+      <biblScope from="52">52</biblScope>
+      <date when="2002">2002</date>
+    </bibl>
+    <bibl type="v" xml:id="SEG_53">
+      <biblScope from="53">53</biblScope>
+      <date when="2003">2003</date>
+    </bibl>  
+  </bibl>
+  <bibl type="m" xml:id="Setala1977">
+    <abbr type="primary">Setala, Private Domini in Roman Brick Σtamps</abbr>
+    <author><persName>Setälä, P.</persName><persName type="sort">Setälä, P.</persName></author>
+    <title>Private Domini in Roman Brick Stamps of the Empire. A historical Prosopographical Study of Landowners in the District of Rome</title>
+    <pubPlace>Helsinki</pubPlace>
+    <date when="1977">1977</date>
+  </bibl>
+  <bibl type="m" xml:id="Sichtermann">
+    <abbr type="primary">Sichtermann, Späte Endymion-Sarkophage</abbr>
+    <author><persName>Sichtermann</persName><persName type="sort">Sichtermann, H.</persName></author>
+    <title>Späte Endymion-Sarkophage</title>
+    <pubPlace>Baden</pubPlace>
+    <date when="1966">1966</date>
   </bibl>
   <bibl type="m" xml:id="Shapiro">
     <abbr type="primary">Art, Myth, and Culture, Greek Vases from Southern Collections</abbr>
     <author><persName>Shapiro</persName><persName type="sort">Shapiro, H.</persName></author>
+    <title>Art, Myth, and Culture, Greek Vases from Southern Collections</title>
     <pubPlace>New Orleans</pubPlace>
     <date when="1981">1981</date>
   </bibl>
@@ -2504,6 +3840,13 @@
     <pubPlace>Mainz</pubPlace>
     <date when="1987">1987</date>
   </bibl>
+  <bibl type="m" xml:id="Skupinska-Løvset">
+    <abbr type="primary">Skupinska-Løvset, Portraiture in Roman Syria</abbr>
+    <author><persName type="sort">Skupinska-Løvset, I.</persName></author>
+    <title>Portraiture in Roman Syria</title>
+    <pubPlace>Lodz</pubPlace>
+    <date when="1999">1999</date>
+  </bibl>
   <bibl type="m" xml:id="Smith">
     <abbr type="primary">Smith and Hutton, Antiquities Wyndham Francis Cook Collection</abbr>
     <author><persName>Smith and Hutton</persName><persName type="sort">Smith, C.H. and Hutton,
@@ -2519,12 +3862,47 @@
     <pubPlace>Berkeley</pubPlace>
     <date when="1966">1966</date>
   </bibl>
+  <bibl type="m" xml:id="Solin_Analecta">
+    <abbr type="primary">Solin, Analecta Epigraphica 1970-1977</abbr>
+    <author><persName>Solin, H.</persName><persName type="sort">Solin, H.</persName></author>
+    <title>Analecta epigraphica 1970-1997</title>
+    <pubPlace>Rome</pubPlace>
+    <date when="1998">1998</date>
+  </bibl>
+  <bibl type="m" xml:id="Solin_1982">
+    <abbr type="primary">Solin, Die griechischen Personennamen</abbr>
+    <author><persName>Solin, H.</persName><persName type="sort">Solin, H.</persName></author>
+    <title>Die griechischen Personennamen in Rom: ein Namenbuch</title>
+    <pubPlace>Berlin</pubPlace>
+    <date when="1982">1982</date>
+  </bibl>
+  <bibl type="m" xml:id="Solin_1996">
+    <abbr type="primary">Solin, Stadtrömischen Sklavennamen</abbr>
+    <author><persName>Solin, H.</persName><persName type="sort">Solin, H.</persName></author>
+    <title>Die stadtrömischen Sklavennamen. Ein Namenbuch.</title>
+    <pubPlace>Stuttgart</pubPlace>
+    <date when="1996">1996</date>
+  </bibl>
+  <bibl type="m" xml:id="Sopranos">
+    <abbr type="primary">Sopranos, Leon Halaieus: What His Tombstone Reveals about His Family</abbr>
+    <author><persName>Sopranos</persName><persName type="sort">Sopranos, O.J.</persName></author>
+    <title>Leon Halaieus: What His Tombstone Reveals about His Family</title>
+    <pubPlace>Chicago(?)</pubPlace>
+    <date when="2012">2012</date>
+  </bibl>
   <bibl type="m" xml:id="Speidel">
     <abbr type="primary">Speidel, Denkmäler der Kaiserreiter</abbr>
     <author><persName>Speidel</persName><persName type="sort">Speidel, M.</persName></author>
-    <title>Die Denkmäler der Kaiserreiter</title>
+    <title>Die Denkmäler der Kaiserreiter: Equites Singulares Augusti</title>
     <pubPlace>Köln</pubPlace>
     <date when="1994">1994</date>
+  </bibl>
+  <bibl type="m" xml:id="Speidel_2">
+    <abbr type="primary">Speidel, Riding for Caesar</abbr>
+    <author><persName type="sort">Speidel, M.</persName></author>
+    <title>Riding for Caesar: The Roman Emperors' Horse Guards</title>
+    <pubPlace>Cambridge, MA</pubPlace>
+    <date>1994</date>
   </bibl>
   <bibl type="m" xml:id="Spier">
     <abbr type="primary">Spier, Gems and Finger Rings J. Paul Getty Museum</abbr>
@@ -2541,12 +3919,33 @@
     <pubPlace>Durham</pubPlace>
     <date when="1994">1994</date>
   </bibl>
+  <bibl type="m" xml:id="Steinby1974">
+    <abbr type="primary">Steinby, Cronologia delle "figlinae" doliari urbane</abbr>
+    <author><persName>Steinby</persName><persName type="sort">Steinby, M.</persName></author>
+    <title>La Cronologia delle "figlinae" doliari urbane: dalla fine dell'età repubblicana fino all'inizio del III sec.</title>
+    <pubPlace>Spoleto</pubPlace>
+    <date when="1974">1974</date>
+  </bibl>
   <bibl type="c" xml:id="Steinby">
     <abbr type="primary">Steinby, Indici complementari CIL XV, 1</abbr>
     <author><persName>Steinby</persName><persName type="sort">Steinby, E.M.</persName></author>
     <title>Indici complementari ai bolli doliari urbani (CIL XV, 1)</title>
     <pubPlace>Rome</pubPlace>
     <date when="1987">1987</date>
+  </bibl>
+  <bibl type="m" xml:id="Stephanis">
+    <abbr type="primary">Stephanis, Διονυσιακοι Τεχνιται</abbr>
+    <author><persName type="sort">Stephanis, I. E.</persName></author>
+    <title>Διονυσιακοι Τεχνιται</title>
+    <pubPlace>Iraklion</pubPlace>
+    <date when="1988">1988</date>
+  </bibl>
+  <bibl type="m" xml:id="Stern1995">
+    <abbr type="primary">Stern, Roman Mold-blown Glass</abbr>
+    <author><persName>Stern</persName><persName type="sort">Stern, E. M.</persName></author>
+    <title>Roman Mold-blown Glass</title>
+    <pubPlace>Rome and Toledo</pubPlace>
+    <date when="1995">1995</date>
   </bibl>
   <bibl type="m" xml:id="Antioch_II">
     <abbr type="primary">Stillwell, Antioch II</abbr>
@@ -2570,6 +3969,16 @@
     <pubPlace>Rome</pubPlace>
     <date when="1888">1888</date>
   </bibl>
+    <bibl type="m" xml:id="StudVar2">
+      <abbr type="primary">StudVar vol. 2</abbr>
+      <title>Studia Varia from the J. Paul Getty Museum</title>
+      <pubPlace>Los Angeles</pubPlace>
+      <date when="2001">2001</date>
+      <bibl type="a" xml:id="ElstonMaish">
+        <author><persName>Elston, M.</persName> and <persName>J. Maish</persName></author>
+        <title>Technical Investigations of a Painted Romano-Egyptian Sarcophagus from the Fourth Century A.D.</title>
+      </bibl>
+    </bibl>
   <bibl type="j" xml:id="Supp_Papers">
     <title>Supplementary Papers of the American School of Classical Studies in Rome</title>
     <pubPlace>New York</pubPlace>
@@ -2590,11 +3999,45 @@
     <pubPlace>Ann Arbor</pubPlace>
     <date when="1994">1994</date>
   </bibl>
+  <bibl type="m" xml:id="Testaccio">
+    <abbr type="primary">Blázquez Martínez, Testaccio</abbr>
+    <editor><persName>Blázquez Martínez and Rodríguez</persName><persName type="sort">Blázquez Martínez, J. M. and Remesal Rodríguez, J.</persName></editor>
+    <title>Estudios sobre el Monte Testaccio (Roma)</title>
+    <pubPlace>Barcelona</pubPlace>
+    <date when="1999">1999</date>
+    <bibl type="a" xml:id="Millet_Testaccio">
+      <author><persName type="sort">Berni Millet, P.</persName></author>
+      <title>La piel del Monte Testaccio</title>
+      <biblScope type="pp">205-274</biblScope>
+    </bibl>
+  </bibl>
+  <bibl type="m" xml:id="Thomas_Friedman">
+    <abbr type="primary">Thomas and Friedman (eds.), Beyond the Pharaohs</abbr>
+    <author><persName>Thomas</persName><persName type="sort">Thomas, T. K. and F. D. Friedman, eds.</persName></author>
+    <title>Beyond the Pharaohs: Egypt and Copts in the 2nd-7th centuries A.D.</title>
+    <pubPlace>Rhode Island and Baltimore</pubPlace>
+    <date when="1989">1989</date>
+   </bibl>
   <bibl type="m" xml:id="Tuck">
-    <author><persName>Tuck</persName><persName type="sort">Tuck, S.</persName></author>
-    <title>Latin Inscriptions in the Kelsey Mueum: The Dennison and De Criscio Collections</title>
+    <author><persName>Tuck</persName><persName type="sort">Tuck, S. L.</persName></author>
+    <title>Latin Inscriptions in the Kelsey Museum: The Dennison and De Criscio Collections</title>
     <pubPlace>Ann Arbor</pubPlace>
     <date when="2005">2005</date>
+  </bibl>
+  <bibl type="j" xml:id="Tyche">
+    <abbr type="primary">Tyche</abbr>
+    <title>Tyche. Beiträge zur Alten Geschichte, Papyrologie und Epigraphik.</title>
+    <pubPlace>Vienna</pubPlace>
+    <date when="1986">1986-</date>
+    <bibl type="v" xml:id="Tyche_4">
+      <biblScope from="4">4</biblScope>
+      <date when="1989">1989</date>
+      <bibl type="a" xml:id="Tyche_4_Solin">
+        <author><persName type="sort">Solin, H.</persName></author>
+        <title>Urnen und Inschriften. Erwägungen zu einem neuen Corpus römischer Urnen.</title>
+        <biblScope type="pp">147-169</biblScope>
+      </bibl>
+    </bibl>
   </bibl>
   <bibl type="j" xml:id="Univ_Bulletin">
     <title>University Museum Bulletin, University Museum, University of Pennsylvania</title>
@@ -2612,20 +4055,20 @@
       <date when="1994">1994</date>
     </bibl>
   </bibl>
-  <bibl type="j" xml:id="VMMB">
-    <abbr type="primary">VMMB</abbr>
-    <title>Virginia Museum Members' Bulletin</title>
-    <pubPlace>Richmond</pubPlace>
-    <bibl type="v" xml:id="VMMB_18">
-      <biblScope from="5">5</biblScope>
-      <date when="1958">1958</date>
-      <bibl type="a" xml:id="VMMB_Glasser">
-        <author>Glasser</author>
+    <bibl type="j" xml:id="VMMB">
+      <abbr type="primary">VMMB</abbr>
+      <title>Virginia Museum Members' Bulletin</title>
+      <pubPlace>Richmond</pubPlace>
+      <bibl type="v" xml:id="VMMB_18">
+        <biblScope from="5">5</biblScope>
+        <date when="1958">1958</date>
+        <bibl type="a" xml:id="VMMB_Glasser">
+          <author>Glasser</author>
+        </bibl>
       </bibl>
     </bibl>
-  </bibl>
   <bibl type="m" xml:id="Gardner">
-    <abbr type="primary">Vermeule, Chan and Hadley, Sculpture Isabella Stewart Gardner Museum</abbr>
+    <abbr type="primary">Vermeule, Cahn and Hadley, Sculpture Isabella Stewart Gardner Museum</abbr>
     <author><persName>Vermeule, Cahn and Hadley</persName><persName type="sort">Vermeule, C.C.,
         Cahn, W. and Hadley, R.H.</persName></author>
     <title>Sculpture in the Isabella Stewart Gardner Museum</title>
@@ -2638,7 +4081,7 @@
     <title>Greek and Roman Sculpture in America</title>
     <pubPlace>Berkeley</pubPlace>
     <date when="1981">1981</date>
-  </bibl>
+  </bibl>  
   <bibl type="m" xml:id="Vermeule_Brauer">
     <abbr type="primary">Vermeule and Brauer, Stone Sculptures Harvard University Art Museums</abbr>
     <author><persName>Vermeule and Brauer</persName><persName type="sort">Vermeule, C.C. and Brauer,
@@ -2662,6 +4105,13 @@
     <pubPlace>Baltimore</pubPlace>
     <date when="1984">1984</date>
   </bibl>
+  <bibl type="m" xml:id="Winkes">
+    <abbr type="primary">Winkes, Roman Paintings</abbr>
+    <author><persName type="sort">Winkes, R.</persName></author>
+    <title>Roman Paintings and Mosaics</title>
+    <pubPlace>Providence</pubPlace>
+    <date when="1982">1982</date>
+  </bibl>
   <bibl type="m" xml:id="Wuilleumier_Audin">
     <abbr type="primary">Wuilleumier and Audin, Médaillons d'applique gallo-romains</abbr>
     <author><persName>Wuilleumier and Audin</persName><persName type="sort">Wuilleumier, P. and
@@ -2669,6 +4119,12 @@
     <title>Les médaillons d'applique gallo-romains de la vallée du Rhône</title>
     <pubPlace>Paris</pubPlace>
     <date when="1952">1952</date>
+  </bibl>
+  <bibl type="m" xml:id="YearsinGlass">
+    <abbr type="primary">3000 Years in Glass</abbr>
+    <title>3000 Years in Glass: Treasures from the Walters Art Gallery</title>
+    <pubPlace>Baltimore</pubPlace>
+    <date when="1982">1982</date>
   </bibl>
   <bibl type="j" xml:id="ZPE">
     <abbr type="primary">ZPE</abbr>
@@ -2688,12 +4144,17 @@
       <bibl type="a" xml:id="ZPE_Visona">
         <author>Visona</author>
       </bibl>
-      <bibl type="v" xml:id="ZPE_113">
-        <biblScope from="113">113</biblScope>
-        <date when="1996">1996</date>
+    </bibl>
+    <bibl type="v" xml:id="ZPE_65">
+      <biblScope from="65">65</biblScope>
+      <date when="1986">1986</date>
+      <bibl type="a" xml:id="ZPE_65_Eck">
+        <author><persName type="sort">Eck, Werner</persName></author>
+        <title>Inschriften aus der Vatikanischen Nekropole unter St. Peter</title>
+        <biblScope type="pp">245-293</biblScope>
       </bibl>
     </bibl>
-    <bibl type="v" xml:id="ZPE_69">
+      <bibl type="v" xml:id="ZPE_69">
       <biblScope from="69">69</biblScope>
       <date when="1987">1987</date>
     </bibl>
@@ -2711,6 +4172,11 @@
     <bibl type="v" xml:id="ZPE_75">
       <biblScope from="75">75</biblScope>
       <date when="1988">1988</date>
+      <bibl type="a" xml:id="ZPE_75_Faraone">
+        <author><persName type="sort">Faraone, C. A.</persName> and <persName>Kotansky, R.</persName></author>
+        <title>An Inscribed Gold Phylactery in Stamford, Connecticut</title>
+        <biblScope type="pp">257-266</biblScope>
+      </bibl>
     </bibl>
     <bibl type="v" xml:id="ZPE_78">
       <biblScope from="78">78</biblScope>
@@ -2719,6 +4185,42 @@
     <bibl type="v" xml:id="ZPE_88">
       <biblScope from="88">88</biblScope>
       <date when="1991">1991</date>
+      <bibl type="a" xml:id="ZPE_88_Kotansky">
+        <author><persName type="sort">Kotansky, R.</persName></author>
+        <title>Magic in the Court of the Governor of Arabia</title>
+        <biblScope type="pp">41-60</biblScope>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="ZPE_113">
+      <biblScope from="113">113</biblScope>
+      <date when="1996">1996</date>
+    </bibl>
+    <bibl type="v" xml:id="ZPE_119">
+      <biblScope from="119">119</biblScope>
+      <date when="1997">1997</date>
+      <bibl type="a" xml:id="ZPE_119_Rigsby">
+        <author><persName type="sort">Rigsby, Kent J.</persName></author>
+        <title>Graecolatina 5. A Roman Address</title>
+        <biblScope type="pp">249-250</biblScope>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="ZPE_124">
+      <biblScope from="124">124</biblScope>
+      <date when="1999">1999</date>
+      <bibl type="a" xml:id="ZPE_124_Cairns">
+        <author><persName type="sort">Cairns, Francis</persName></author>
+        <title>Epaphroditus, Φαινιανοκορίοις and 'Modestus' (Suda Ε 2004)</title>
+        <biblScope type="pp">218-222</biblScope>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="ZPE_131">
+      <biblScope from="131">131</biblScope>
+      <date when="2000">2000</date>
+      <bibl type="a" xml:id="ZPE_131_Hoover">
+        <author><persName type="sort">Hoover, O. D.</persName></author>
+        <title>A New Dedication to Aphrodite Epekoos for Demetrius I Soter and His Family</title>
+        <biblScope type="pp">106-110</biblScope>
+      </bibl>
     </bibl>
     <bibl type="v" xml:id="ZPE_134">
       <biblScope from="134">134</biblScope>
@@ -2728,8 +4230,38 @@
         <title>A New Praetorian Laterculus from Rome</title>
       </bibl>
     </bibl>
+    <bibl type="v" xml:id="ZPE_147">
+      <biblScope from="147">147</biblScope>
+      <date when="2004">2004</date>
+      <bibl type="a" xml:id="ZPE_147_Gatier">
+        <author><persName type="sort">Gatier, P.-L.</persName></author>
+        <title>Inscriptions grecques et latine du Proche-Orient: Questions de provenance</title>
+        <biblScope type="pp">139-144</biblScope>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="ZPE_148">
+      <biblScope from="148">148</biblScope>
+      <date when="2004">2004</date>
+      <bibl type="a" xml:id="ZPE_148_Lambert">
+        <author><persName type="sort">Lambert, S.</persName></author>
+        <title>Greek Inscriptions in the University Museum, Oxford, Mississippi</title>
+        <biblScope type="pp">181-186</biblScope>
+      </bibl>
+    </bibl>
+    <bibl type="v" xml:id="ZPE_192">
+      <biblScope from="192">192</biblScope>
+      <date when="2014">2014</date>
+      <bibl type="a" xml:id="ZPE_192_Lott">
+        <author><persName type="sort">Lott, J. Bert</persName></author>
+        <title>Two Funerary Inscriptions from Rome Now at Vassar College in New York</title>
+        <biblScope type="pp">287-290</biblScope>
+      </bibl>
+    </bibl>
   </bibl>
   <bibl type="u" xml:id="unpub">
     <title>Unpublished</title>
+  </bibl>
+<bibl type="u" xml:id="xx">
+    <title>Citation missing.</title>
   </bibl>
 </listBibl>

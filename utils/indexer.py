@@ -87,7 +87,8 @@ class Indexer( object ):
         s.commit()
         s.close()
         self.log.debug( u'in utils.indexer.Indexer._post_solr_update(); post complete; response is: %s' % response )
-        return
+        # return
+        return response
 
     ## remove index entry ##
 
