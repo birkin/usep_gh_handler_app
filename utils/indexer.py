@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import os, pprint
-import redis, rq, solr
-from usep_gh_handler_app.utils import log_helper
-from usep_gh_handler_app.utils.indexer_parser import Parser
+#import redis, rq, solr
+#from usep_gh_handler_app.utils import log_helper
+#from usep_gh_handler_app.utils.indexer_parser import Parser
+
+import requests
+import lxml
+from lxml import etree
 
 
 class Indexer( object ):
@@ -20,6 +24,9 @@ class Indexer( object ):
         self.SOLR_URL = unicode( os.environ.get(u'usep_gh__SOLR_URL') )
         self.BIB_XML_PATH = unicode( os.environ.get(u'usep_gh__BIB_XML_PATH') )
 
+        self.XSLT_text = open( "./USEp_to_solr.xsl" ).read().decode('utf-8')
+        self.transform = etree.XSLT(etree.fromstring( self.XSLT_text.encode('utf-8') ) )
+
     ## update index entry ##
 
     def update_index_entry( self, filename ):
@@ -28,9 +35,18 @@ class Indexer( object ):
             TODO: replace pq extracts with straight lxml or beautifulsoup extracts. """
         self.log.debug( u'in utils.indexer.update_index_entry(); filename, `%s`' % filename )
         full_file_path = u'%s/inscriptions/%s' % ( self.WEBSERVED_DATA_DIR_PATH, filename )
-        self._build_solr_dict( full_file_path, self.BIB_XML_PATH )
-        self._post_solr_update()
+        # self._build_solr_dict( full_file_path, self.BIB_XML_PATH )
+        # self._post_solr_update()
+        xml_text = open(full_file_path).read()
+        xml = etree.fromstring( xml_text.encode(u"utf-8") )
+        solr_doc = self.transform(xml)
+        requests.post(self.SOLR_URL + u"/update", data=etree.tostring(solr_doc), headers={"Content-type":"application/xml"}).raise_for_status()
         return
+
+    def transform_usep_doc(self, path):
+        xml = etree.fromstring( path.encode('utf-8') )
+        return etree.tostring(self.transform(xml))
+
 
     def _build_solr_dict( self, inscription_xml_path, bib_xml_path ):
         """ Calls parser to build the solr dict.
@@ -115,7 +131,7 @@ class Indexer( object ):
 
 ## runners ##
 
-q = rq.Queue( u'usep', connection=redis.Redis() )
+#q = rq.Queue( u'usep', connection=redis.Redis() )
 
 def run_update_index( files_updated, files_removed ):
     """ Creates index jobs (doesn't actually call Indexer() directly.
