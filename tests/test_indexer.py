@@ -28,15 +28,22 @@ class IndexerTest( unittest.TestCase ):
     def test__build_solr_doc(self):
         """ Tests bib-only inscription. """
         inscription_xml_path=u'./test_files/CA.Berk.UC.HMA.G.8-4213.xml'
-        doc = self.indexer._build_solr_doc( inscription_xml_path )
-        self.assertTrue( '<addd>' in doc, 'doc, ```%s```' % doc )
+        solr_xml = self.indexer._build_solr_doc( inscription_xml_path )
+        self.assertEqual( unicode, type(solr_xml) )
+        self.assertTrue( '<field name="title">CA.Berk.UC.HMA.G.8/4213</field>' in solr_xml, 'solr_xml, ```%s```' % solr_xml )
+        self.assertTrue( '<field name="msid_settlement">Berk</field>' in solr_xml, 'solr_xml, ```%s```' % solr_xml )
+        self.assertTrue( '<field name="msid_institution">UC</field>' in solr_xml, 'solr_xml, ```%s```' % solr_xml )
+        self.assertTrue( '<field name="msid_repository">HMA</field>' in solr_xml, 'solr_xml, ```%s```' % solr_xml )
+        self.assertTrue( '<field name="msid_idno">8/4213</field>' in solr_xml, 'solr_xml, ```%s```' % solr_xml )
+        self.assertTrue( '<field name="language">grc</field>' in solr_xml, 'solr_xml, ```%s```' % solr_xml )
 
     def test__post_solr_update(self):
-        """ Tests update of solr. """
+        """ Tests post to solr. """
         inscription_xml_path=u'./test_files/CA.Berk.UC.HMA.G.8-4213.xml'
-        doc = self.indexer._build_solr_doc( inscription_xml_path )
-        self.assertEqual( '<int name="status">why_hello</int>', self.indexer._post_solr_update(doc) )
+        solr_xml = self.indexer._build_solr_doc( inscription_xml_path )
+        self.assertEqual( '<int name="status">0</int>', self.indexer._post_solr_update(solr_xml) )
 
+    # end class IndexerTest
 
 
 if __name__ == "__main__":

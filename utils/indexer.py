@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 import os, pprint
-import redis, rq, solr
+import lxml, redis, requests, rq, solr
+from lxml import etree
 from usep_gh_handler_app.utils import log_helper
 # from usep_gh_handler_app.utils.indexer_parser import Parser
 
@@ -19,6 +22,7 @@ class Indexer( object ):
         self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
         self.SOLR_URL = unicode( os.environ.get(u'usep_gh__SOLR_URL') )
         # self.BIB_XML_PATH = unicode( os.environ.get(u'usep_gh__BIB_XML_PATH') )
+        self.SOLR_XSL_PATH = unicode( os.environ.get(u'usep_gh__SOLR_XSL_PATH') )
 
     ## update index entry ##
 
@@ -27,15 +31,40 @@ class Indexer( object ):
             Called by run_update_index() """
         self.log.debug( u'in utils.indexer.update_index_entry(); filename, `%s`' % filename )
         full_file_path = u'%s/inscriptions/%s' % ( self.WEBSERVED_DATA_DIR_PATH, filename )
-        doc = self._build_solr_doc( full_file_path )
-        self._post_solr_update( doc )
-        return
+        transformed_xml_txt = self._build_solr_doc( full_file_path )
+        resp = self._post_solr_update( transformed_xml_txt )
+        self.log.debug( 'post response, ```%s```' % resp )
+        return resp
 
     def _build_solr_doc( self, inscription_xml_path ):
-        return 'foo'
+        """ Builds solr doc.
+            Called by update_index_entry() """
+        with open( inscription_xml_path ) as f:
+            xml_txt = f.read().decode( 'utf-8' )
+        with open( self.SOLR_XSL_PATH ) as f:
+            xsl_txt = f.read().decode( 'utf-8' )
+        xml_dom_obj = etree.fromstring( xml_txt.encode('utf-8') )
+        transformer_obj = etree.XSLT( etree.fromstring(xsl_txt.encode('utf-8')) )
+        transformed_xml_dom_obj = transformer_obj( xml_dom_obj )
+        transformed_xml_utf8 = etree.tostring( transformed_xml_dom_obj, pretty_print=True )
+        transformed_xml_txt = transformed_xml_utf8.decode( 'utf-8' )
+        # self.log.debug( 'transformed_xml_txt, ```%s```' % transformed_xml_txt )
+        return transformed_xml_txt
 
-    def _post_solr_update( self, doc ):
-        return 'foo2'
+    def _post_solr_update( self, solr_xml ):
+        """ Posts solr doc.
+            Called by update_index_entry() """
+        try:
+            r = requests.post(
+                self.SOLR_URL + u"/update",
+                data=solr_xml,
+                headers={"Content-type":"application/xml"} )
+            resp = r.content.decode( 'utf-8' )
+            self.log.debug( 'post resp, ```%s```' % resp )
+        except Exception as e:
+            self.log.error( 'Exception, ```%s```' % unicode(repr(e)) )
+            raise Exception( unicode(repr(e)) )
+        return resp
 
     # def update_index_entry( self, filename ):
     #     """ Updates solr index for a new or changed file.
