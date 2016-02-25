@@ -26,6 +26,16 @@ class Indexer( object ):
 
     ## update index entry ##
 
+    # def update_index_entry( self, filename ):
+    #     """ Updates solr index for a new or changed file.
+    #         Called by run_update_index() """
+    #     self.log.debug( u'in utils.indexer.update_index_entry(); filename, `%s`' % filename )
+    #     full_file_path = u'%s/inscriptions/%s' % ( self.WEBSERVED_DATA_DIR_PATH, filename )
+    #     transformed_xml_txt = self._build_solr_doc( full_file_path )
+    #     resp = self._post_solr_update( transformed_xml_txt )
+    #     self.log.debug( 'post response, ```%s```' % resp )
+    #     return resp
+
     def update_index_entry( self, filename ):
         """ Updates solr index for a new or changed file.
             Called by run_update_index() """
@@ -34,7 +44,19 @@ class Indexer( object ):
         transformed_xml_txt = self._build_solr_doc( full_file_path )
         resp = self._post_solr_update( transformed_xml_txt )
         self.log.debug( 'post response, ```%s```' % resp )
-        return resp
+        self._update_bib( filename )
+        return
+
+    def _update_bib( self, filename ):
+        """ Updates bib data for inscription.
+            Called by update_index_entry() """
+        ## make id
+        pass
+        ## call bib-adder
+        pass
+        ## log response
+        pass
+        return
 
     def _build_solr_doc( self, inscription_xml_path ):
         """ Builds solr doc.
