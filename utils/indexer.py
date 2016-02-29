@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import os, pprint
 import lxml, redis, requests, rq, solr
 from lxml import etree
-from usep_gh_handler_app.utils import log_helper
+from usep_gh_handler_app.utils import bib_adder, log_helper
 # from usep_gh_handler_app.utils.indexer_parser import Parser
 
 
@@ -23,6 +23,7 @@ class Indexer( object ):
         self.SOLR_URL = unicode( os.environ.get(u'usep_gh__SOLR_URL') )
         # self.BIB_XML_PATH = unicode( os.environ.get(u'usep_gh__BIB_XML_PATH') )
         self.SOLR_XSL_PATH = unicode( os.environ.get(u'usep_gh__SOLR_XSL_PATH') )
+        self.TITLES_URL = unicode( os.environ.get(u'usep_gh__TITLES_URL') )
 
     ## update index entry ##
 
@@ -45,17 +46,6 @@ class Indexer( object ):
         resp = self._post_solr_update( transformed_xml_txt )
         self.log.debug( 'post response, ```%s```' % resp )
         self._update_bib( filename )
-        return
-
-    def _update_bib( self, filename ):
-        """ Updates bib data for inscription.
-            Called by update_index_entry() """
-        ## make id
-        pass
-        ## call bib-adder
-        pass
-        ## log response
-        pass
         return
 
     def _build_solr_doc( self, inscription_xml_path ):
@@ -87,6 +77,21 @@ class Indexer( object ):
             self.log.error( 'Exception, ```%s```' % unicode(repr(e)) )
             raise Exception( unicode(repr(e)) )
         return resp
+
+    def _update_bib( self, filename ):
+        """ Updates bib data for inscription.
+            Called by update_index_entry() """
+        try:
+            ## make id
+            inscription_id = filename.strip().split(u'.xml')[0]
+            ## call bib-adder
+            bibber = bib_adder.BibAdder( self.SOLR_URL, self.TITLES_URL, self.log )
+            result = bibber.addBibl( inscription_id )
+            ## log response
+            self.log.debug( 'addBibl response, `%s`' % result )
+        except Exception as e:
+            self.log.error( 'exception updating bib, ```%s```' unicode(repr(e)) )
+        return
 
     ## remove index entry ##
 
