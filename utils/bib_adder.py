@@ -26,7 +26,8 @@ class BibAdder():
         self.log.debug( 'addBibl inscription_id, `%s`' % inscription_id )
         self.log.debug( 'self.solr_url, ```%s```' % self.solr_url )
         try:
-            params = {'q':'id:"{}"'.format(inscription_id), 'fl':'bib_ids', 'wt':'json'}
+            # params = {'q':'id:"{}"'.format(inscription_id), 'fl':'bib_ids', 'wt':'json'}
+            params = {'q':'id:"%s"' % inscription_id, 'fl':'bib_ids', 'wt':'json'}
             self.log.debug( 'params, ```%s```' % pprint.pformat(params) )
             r = requests.get( self.solr_url + "/select", params=params )
         except Exception, e:
