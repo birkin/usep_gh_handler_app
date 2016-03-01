@@ -51,6 +51,8 @@ class Indexer( object ):
     def _build_solr_doc( self, inscription_xml_path ):
         """ Builds solr doc.
             Called by update_index_entry() """
+        self.log.debug( 'inscription_xml_path, ```%s```' % inscription_xml_path )
+        self.log.debug( 'self.SOLR_XSL_PATH, ```%s```' % self.SOLR_XSL_PATH )
         with open( inscription_xml_path ) as f:
             xml_txt = f.read().decode( 'utf-8' )
         with open( self.SOLR_XSL_PATH ) as f:
