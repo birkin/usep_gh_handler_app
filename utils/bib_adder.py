@@ -18,14 +18,14 @@ class BibAdder():
 			r = requests.get(titles_url)
 			self.titles_xml = etree.fromstring(r.content)
 		except Exception as e:
-			self.log.error( 'Exception, ```%s```' % unicode(repr(e)) )
+			self.log.error( 'Exception in __init__, ```%s```' % unicode(repr(e)) )
 			raise Exception( unicode(repr(e)) )
 
 	def addBibl(self, inscription_id):
 		try:
 			r = requests.get(self.solr_url + "/select", params={'q':'id:"{}"'.format(inscription_id), 'fl':'bib_ids', 'wt':'json'})
 		except Exception, e:
-			self.log.error( 'Exception, ```%s```' % unicode(repr(e)) )
+			self.log.error( 'Exception on requests select, ```%s```' % unicode(repr(e)) )
 			raise Exception( unicode(repr(e)) )
 
 		try:
@@ -47,7 +47,7 @@ class BibAdder():
 			r = requests.get(self.solr_url + "/update?softCommit=true")
 			return True
 		except Exception, e:
-			self.log.error( 'Exception, ```%s```' % unicode(repr(e)) )
+			self.log.error( 'Exception on requests post or followup get, ```%s```' % unicode(repr(e)) )
 			raise Exception( unicode(repr(e)) )
 
     # end class BibAdder
