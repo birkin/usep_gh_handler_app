@@ -22,6 +22,7 @@ class BibAdder():
 			raise Exception( unicode(repr(e)) )
 
 	def addBibl(self, inscription_id):
+        self.log.debug( 'addBibl inscription_id, `%s`' % inscription_id )
 		try:
 			r = requests.get(self.solr_url + "/select", params={'q':'id:"{}"'.format(inscription_id), 'fl':'bib_ids', 'wt':'json'})
 		except Exception, e:
