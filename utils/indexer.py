@@ -90,7 +90,7 @@ class Indexer( object ):
             ## log response
             self.log.debug( 'addBibl response, `%s`' % result )
         except Exception as e:
-            self.log.error( 'exception updating bib, ```%s```' unicode(repr(e)) )
+            self.log.error( 'exception updating bib, ```%s```' % unicode(repr(e)) )
         return
 
     ## remove index entry ##
