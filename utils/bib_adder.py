@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 
+import pprint
 import requests
 import json
 from lxml import etree
@@ -25,7 +26,9 @@ class BibAdder():
         self.log.debug( 'addBibl inscription_id, `%s`' % inscription_id )
         self.log.debug( 'self.solr_url, ```%s```' % self.solr_url )
         try:
-            r = requests.get(self.solr_url + "/select", params={'q':'id:"{}"'.format(inscription_id), 'fl':'bib_ids', 'wt':'json'})
+            params = {'q':'id:"{}"'.format(inscription_id), 'fl':'bib_ids', 'wt':'json'}
+            self.log.debug( 'params, ```%s```' % pprint.pformat(params) )
+            r = requests.get( self.solr_url + "/select", params=params )
         except Exception, e:
             self.log.error( 'Exception on requests select, ```%s```' % unicode(repr(e)) )
             raise Exception( unicode(repr(e)) )
