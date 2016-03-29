@@ -62,7 +62,7 @@ class Indexer( object ):
         transformed_xml_dom_obj = transformer_obj( xml_dom_obj )
         transformed_xml_utf8 = etree.tostring( transformed_xml_dom_obj, pretty_print=True )
         transformed_xml_txt = transformed_xml_utf8.decode( 'utf-8' )
-        # self.log.debug( 'transformed_xml_txt, ```%s```' % transformed_xml_txt )
+        self.log.debug( 'transformed_xml_txt, ```%s```' % transformed_xml_txt )
         return transformed_xml_txt
 
     def _post_solr_update( self, solr_xml ):
