@@ -5,8 +5,7 @@ from __future__ import unicode_literals
 import os, pprint
 import lxml, redis, requests, rq, solr
 from lxml import etree
-from usep_gh_handler_app.utils import bib_adder, log_helper
-# from usep_gh_handler_app.utils.indexer_parser import Parser
+from usep_gh_handler_app.utils import bib_adder, log_helper, transcription_adder
 
 
 class Indexer( object ):
@@ -17,25 +16,14 @@ class Indexer( object ):
     def __init__( self, log ):
         """ Settings. """
         self.log = log
-        # self.solr_dict = {}
         self.worthwhile_dirs = [ u'bib_only', u'metadata_only', u'transcribed' ]  # only need to update index for these dirs
         self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
         self.SOLR_URL = unicode( os.environ.get(u'usep_gh__SOLR_URL') )
-        # self.BIB_XML_PATH = unicode( os.environ.get(u'usep_gh__BIB_XML_PATH') )
         self.SOLR_XSL_PATH = unicode( os.environ.get(u'usep_gh__SOLR_XSL_PATH') )
         self.TITLES_URL = unicode( os.environ.get(u'usep_gh__TITLES_URL') )
+        # self.TRANSCRIPTION_PARSER_XSL_PATH = unicode( os.environ.get(u'TRANSCRIPTION_PARSER_XSL_PATH') )
 
     ## update index entry ##
-
-    # def update_index_entry( self, filename ):
-    #     """ Updates solr index for a new or changed file.
-    #         Called by run_update_index() """
-    #     self.log.debug( u'in utils.indexer.update_index_entry(); filename, `%s`' % filename )
-    #     full_file_path = u'%s/inscriptions/%s' % ( self.WEBSERVED_DATA_DIR_PATH, filename )
-    #     transformed_xml_txt = self._build_solr_doc( full_file_path )
-    #     resp = self._post_solr_update( transformed_xml_txt )
-    #     self.log.debug( 'post response, ```%s```' % resp )
-    #     return resp
 
     def update_index_entry( self, filename ):
         """ Updates solr index for a new or changed file.
@@ -46,6 +34,7 @@ class Indexer( object ):
         resp = self._post_solr_update( transformed_xml_txt )
         self.log.debug( 'post response, ```%s```' % resp )
         self._update_bib( filename )
+        # self._update_transcription( filename )
         return
 
     def _build_solr_doc( self, inscription_xml_path ):
@@ -95,6 +84,21 @@ class Indexer( object ):
             self.log.error( 'exception updating bib, ```%s```' % unicode(repr(e)) )
         return
 
+    # def _update_transcription( self, filename ):
+    #     """ Updates transcription info for inscription.
+    #         Called by update_index_entry() """
+    #     try:
+    #         ## make id
+    #         inscription_id = filename.strip().split(u'.xml')[0]
+    #         ## call bib-adder
+    #         transcriptor = transcription_adder.TranscriptionAdder( self.SOLR_URL, self.TRANSCRIPTION_PARSER_XSL_PATH, self.log )
+    #         result = transcriptor.add_transcription( inscription_id )
+    #         ## log response
+    #         self.log.debug( 'add_transcription response, `%s`' % result )
+    #     except Exception as e:
+    #         self.log.error( 'exception updating bib, ```%s```' % unicode(repr(e)) )
+    #     return
+
     ## remove index entry ##
 
     def remove_index_entry( self, filename=None, inscription_id=None ):
@@ -137,21 +141,6 @@ class Indexer( object ):
 ## runners ##
 
 q = rq.Queue( u'usep', connection=redis.Redis() )
-
-# def run_update_index( files_updated, files_removed ):
-#     """ Creates index jobs (doesn't actually call Indexer() directly.
-#         Triggered by utils.processor.run_xinclude_updater(). """
-#     log = log_helper.setup_logger()
-#     indexer = Indexer( log )
-#     for updated_file_path in files_updated:
-#         if indexer.check_updated_file_path( updated_file_path ):
-#             q.enqueue_call(
-#                 func=u'usep_gh_handler_app.utils.indexer.run_update_entry', kwargs={u'updated_file_path': updated_file_path} )
-#     for removed_file_path in files_removed:
-#         if indexer.check_removed_file_path( removed_file_path ):
-#             q.enqueue_call(
-#                 func=u'usep_gh_handler_app.utils.indexer.run_remove_entry', kwargs={u'removed_file_path': removed_file_path} )
-#     return
 
 def run_update_index( files_updated, files_removed ):
     """ Creates index jobs (doesn't actually call Indexer() directly.
