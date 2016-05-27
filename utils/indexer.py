@@ -21,7 +21,7 @@ class Indexer( object ):
         self.SOLR_URL = unicode( os.environ.get(u'usep_gh__SOLR_URL') )
         self.SOLR_XSL_PATH = unicode( os.environ.get(u'usep_gh__SOLR_XSL_PATH') )
         self.TITLES_URL = unicode( os.environ.get(u'usep_gh__TITLES_URL') )
-        # self.TRANSCRIPTION_PARSER_XSL_PATH = unicode( os.environ.get(u'TRANSCRIPTION_PARSER_XSL_PATH') )
+        self.TRANSCRIPTION_PARSER_XSL_PATH = unicode( os.environ.get('usep_gh__TRANSCRIPTION_PARSER_XSL_PATH') )
 
     ## update index entry ##
 
@@ -84,20 +84,20 @@ class Indexer( object ):
             self.log.error( 'exception updating bib, ```%s```' % unicode(repr(e)) )
         return
 
-    # def _update_transcription( self, filename ):
-    #     """ Updates transcription info for inscription.
-    #         Called by update_index_entry() """
-    #     try:
-    #         ## make id
-    #         inscription_id = filename.strip().split(u'.xml')[0]
-    #         ## call bib-adder
-    #         transcriptor = transcription_adder.TranscriptionAdder( self.SOLR_URL, self.TRANSCRIPTION_PARSER_XSL_PATH, self.log )
-    #         result = transcriptor.add_transcription( inscription_id )
-    #         ## log response
-    #         self.log.debug( 'add_transcription response, `%s`' % result )
-    #     except Exception as e:
-    #         self.log.error( 'exception updating bib, ```%s```' % unicode(repr(e)) )
-    #     return
+    def _update_transcription( self, filename ):
+        """ Updates transcription info for inscription.
+            Called by update_index_entry() """
+        try:
+            ## make id
+            inscription_id = filename.strip().split(u'.xml')[0]
+            ## call transcription_adder
+            transcriptor = transcription_adder.TranscriptionAdder( self.SOLR_URL, self.TRANSCRIPTION_PARSER_XSL_PATH, self.log )
+            result = transcriptor.add_transcription( inscription_id )
+            ## log response
+            self.log.debug( 'add_transcription response, `%s`' % result )
+        except Exception as e:
+            self.log.error( 'exception updating transcription info, ```%s```' % unicode(repr(e)) )
+        return
 
     ## remove index entry ##
 
