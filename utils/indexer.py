@@ -5,7 +5,8 @@ from __future__ import unicode_literals
 import os, pprint
 import lxml, redis, requests, rq, solr
 from lxml import etree
-from usep_gh_handler_app.utils import bib_adder, log_helper, transcription_adder
+from usep_gh_handler_app.utils import bib_adder, log_helper
+# from usep_gh_handler_app.utils import bib_adder, log_helper, transcription_adder
 
 
 class Indexer( object ):
@@ -34,7 +35,7 @@ class Indexer( object ):
         resp = self._post_solr_update( transformed_xml_txt )
         self.log.debug( 'post response, ```%s```' % resp )
         self._update_bib( filename )
-        self._update_transcription( filename )
+        # self._update_transcription( filename )
         return
 
     def _build_solr_doc( self, inscription_xml_path ):
