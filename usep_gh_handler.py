@@ -1,22 +1,39 @@
 # -*- coding: utf-8 -*-
 
-import datetime, json, os, pprint, urlparse
+import datetime, json, logging, os, pprint, urlparse
 import flask, redis, requests, rq
 from flask.ext.basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
-from usep_gh_handler_app.utils import log_helper, reindex_all_support
+# from usep_gh_handler_app.utils import log_helper, reindex_all_support
+from usep_gh_handler_app.utils import reindex_all_support
 from usep_gh_handler_app.utils.web_app_helper import WebAppHelper
 
 
 ## setup
 B_AUTH_PASSWORD = unicode( os.environ[u'usep_gh__BASIC_AUTH_PASSWORD'] )
 B_AUTH_USERNAME = unicode( os.environ[u'usep_gh__BASIC_AUTH_USERNAME'] )
+LOG_CONF_JSN = unicode( os.environ[u'usep_gh__LOG_CONF_JSN'] )
+
+logging_config_dct = json.loads( LOG_CONF_JSN )
+log = logging.getLogger( 'gh_post_sim_logger' )
+logging.config.dictConfig( logging_config_dct )
+log.debug( 'logging ready' )
+
 app = flask.Flask(__name__)
-log = log_helper.setup_logger()
 app.config[u'BASIC_AUTH_USERNAME'] = B_AUTH_USERNAME
 app.config[u'BASIC_AUTH_PASSWORD'] = B_AUTH_PASSWORD
 basic_auth = BasicAuth(app)
 app_helper = WebAppHelper( log )
 q = rq.Queue( u'usep', connection=redis.Redis() )
+
+# ## setup
+# B_AUTH_PASSWORD = unicode( os.environ[u'usep_gh__BASIC_AUTH_PASSWORD'] )
+# B_AUTH_USERNAME = unicode( os.environ[u'usep_gh__BASIC_AUTH_USERNAME'] )
+# app = flask.Flask(__name__)
+# app.config[u'BASIC_AUTH_USERNAME'] = B_AUTH_USERNAME
+# app.config[u'BASIC_AUTH_PASSWORD'] = B_AUTH_PASSWORD
+# basic_auth = BasicAuth(app)
+# app_helper = WebAppHelper( log )
+# q = rq.Queue( u'usep', connection=redis.Redis() )
 
 
 @app.route( u'/reindex_all/', methods=[u'GET'] )
@@ -42,7 +59,7 @@ def handle_github_push():
         Called from github push webhook.
         TODO: remove GET, now used for testing. """
     try:
-        log.debug( u'in usep_gh_handler.handle_github_push(); starting (basic-auth successful)' )
+        log.debug( u'starting (basic-auth successful)' )
         app_helper.log_github_post( flask.request )
         app_helper.trigger_dev_if_production( flask.request.host )  # github can only hit production; we want dev updated, too
         if flask.request.data or u'force' in flask.request.path:

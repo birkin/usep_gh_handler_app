@@ -27,7 +27,7 @@ class WebAppHelper( object ):
             u'remote_addr': flask_request.remote_addr,
             u'values': flask_request.values,
             }
-        self.log.debug( u'in utils.processor.log_github_post(); post_data_dict, `%s`' % pprint.pformat(post_data_dict) )
+        self.log.debug( u'post_data_dict, `%s`' % pprint.pformat(post_data_dict) )
         return
 
     def trigger_dev_if_production( self, flask_request_host ):
@@ -47,7 +47,7 @@ class WebAppHelper( object ):
     def prep_data_dict( self, flask_request_data ):
         """ Prepares the data-dict to be sent to run_call_git_pull().
             Called by usep_gh_handler.handle_github_push() """
-        self.log.debug( u'in processor.prep_data_dict(); flask_request_data, `%s`' % flask_request_data )
+        self.log.debug( u'flask_request_data, `%s`' % flask_request_data )
         files_to_process = { u'files_updated': [], u'files_removed': [], u'timestamp': unicode(datetime.datetime.now()) }
         if flask_request_data:
             commit_info = json.loads( flask_request_data )
@@ -55,7 +55,7 @@ class WebAppHelper( object ):
             files_to_process[u'files_updated'] = added
             files_to_process[u'files_updated'].extend( modified )  # solrization same for added or modified
             files_to_process[u'files_removed'] = removed
-        self.log.debug( u'in processor.prep_data_dict(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
+        self.log.debug( u'files_to_process, `%s`' % pprint.pformat(files_to_process) )
         return files_to_process
 
     def _examine_commits( self, commit_info ):
