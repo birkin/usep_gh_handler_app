@@ -10,7 +10,7 @@ Contains:
 
 import datetime, json, logging, logging.config, os, pprint, shutil, time
 import envoy, redis, rq
-# from usep_gh_handler_app.utils import log_helper
+from usep_gh_handler_app.utils import log_helper
 
 
 LOG_CONF_JSN = unicode( os.environ[u'usep_gh__WRKR_LOG_CONF_JSN'] )
@@ -25,7 +25,12 @@ log.debug( 'logging ready' )
 class Puller( object ):
     """ Contains funcions for executing git-pull. """
 
-    def __init__( self, log ):
+    # def __init__( self, log ):
+    #     """ Settings. """
+    #     self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
+    #     self.log = log
+
+    def __init__( self ):
         """ Settings. """
         self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
         self.log = log
@@ -34,12 +39,24 @@ class Puller( object ):
         """ Runs git_pull.
                 Returns list of filenames.
             Called by run_call_git_pull(). """
+        log.debug( 'starting git_pull()' )
         original_directory = os.getcwd()
         os.chdir( self.GIT_CLONED_DIR_PATH )
         command = u'git pull'
-        r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
-        log_helper.log_envoy_output( self.log, r )
+        log.debug( 'about to hit envoy' )
+        try:
+            r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
+            log.debug( 'got envoy output' )
+        except Exception as e:
+            log.error( 'envoy error, ```{}```'.format( unicode(repr(e)) ) )
+        # log_helper.log_envoy_output( self.log, r )
+        try:
+            log_helper.log_envoy_output( r )
+            log.debug( 'envoy output logged' )
+        except Exception as e:
+            log.error( 'error logging envoy output, ```{}```'.format( unicode(repr(e)) ) )
         os.chdir( original_directory )
+        log.debug( 'leaving git_pull()' )
         return
 
     ## end class Puller()
@@ -48,7 +65,14 @@ class Puller( object ):
 class Copier( object ):
     """ Contains functions for copying xml-data files. """
 
-    def __init__( self, log ):
+    # def __init__( self, log ):
+    #     """ Settings. """
+    #     self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
+    #     self.TEMP_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__TEMP_DATA_DIR_PATH') )
+    #     self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
+    #     self.log = log
+
+    def __init__( self ):
         """ Settings. """
         self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
         self.TEMP_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__TEMP_DATA_DIR_PATH') )
@@ -210,9 +234,10 @@ def run_call_git_pull( files_to_process ):
         Triggered by usep_gh_handler.handle_github_push(). """
     # log = log_helper.setup_logger()
     log.debug( u'starting pull call' )
-    assert sorted( files_to_process.keys() ) == [ u'files_removed', u'files_updated', u'timestamp']; log.debug( u'in utils.processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
+    assert sorted( files_to_process.keys() ) == [ u'files_removed', u'files_updated', u'timestamp']; log.debug( u'files_to_process, ```%s```' % pprint.pformat(files_to_process) )
     time.sleep( 2 )  # let any existing jobs in process finish
-    ( puller, copier ) = ( Puller(log), Copier(log) )
+    # ( puller, copier ) = ( Puller(log), Copier(log) )
+    ( puller, copier ) = ( Puller(), Copier() )
     puller.call_git_pull()
     ( files_to_update, files_to_remove ) = ( copier.get_files_to_update(files_to_process), copier.get_files_to_remove(files_to_process) )
     # log.debug( u'in utils.processor.run_call_git_pull(); enqueuing next job' )
