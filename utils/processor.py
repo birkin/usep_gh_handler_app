@@ -8,9 +8,18 @@ Contains:
 - Three job-queue caller functions (one for each class).
 """
 
-import datetime, json, logging, os, pprint, shutil, time
+import datetime, json, logging, logging.config, os, pprint, shutil, time
 import envoy, redis, rq
-from usep_gh_handler_app.utils import log_helper
+# from usep_gh_handler_app.utils import log_helper
+
+
+LOG_CONF_JSN = unicode( os.environ[u'usep_gh__WRKR_LOG_CONF_JSN'] )
+
+
+logging_config_dct = json.loads( LOG_CONF_JSN )
+log = logging.getLogger( 'usep_gh_worker_logger' )
+logging.config.dictConfig( logging_config_dct )
+log.debug( 'logging ready' )
 
 
 class Puller( object ):
@@ -179,17 +188,35 @@ class XIncludeUpdater( object ):
 
 q = rq.Queue( u'usep', connection=redis.Redis() )
 
+# def run_call_git_pull( files_to_process ):
+#     """ Initiates a git pull update.
+#             Spawns a call to Processor.process_file() for each result found.
+#         Triggered by usep_gh_handler.handle_github_push(). """
+#     log = log_helper.setup_logger()
+#     assert sorted( files_to_process.keys() ) == [ u'files_removed', u'files_updated', u'timestamp']; log.debug( u'in utils.processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
+#     time.sleep( 2 )  # let any existing jobs in process finish
+#     ( puller, copier ) = ( Puller(log), Copier(log) )
+#     puller.call_git_pull()
+#     ( files_to_update, files_to_remove ) = ( copier.get_files_to_update(files_to_process), copier.get_files_to_remove(files_to_process) )
+#     log.debug( u'in utils.processor.run_call_git_pull(); enqueuing next job' )
+#     q.enqueue_call(
+#         func=u'usep_gh_handler_app.utils.processor.run_copy_files',
+#         kwargs={u'files_to_update': files_to_update, u'files_to_remove': files_to_remove} )
+#     return
+
 def run_call_git_pull( files_to_process ):
     """ Initiates a git pull update.
             Spawns a call to Processor.process_file() for each result found.
         Triggered by usep_gh_handler.handle_github_push(). """
-    log = log_helper.setup_logger()
+    # log = log_helper.setup_logger()
+    log.debug( u'starting pull call' )
     assert sorted( files_to_process.keys() ) == [ u'files_removed', u'files_updated', u'timestamp']; log.debug( u'in utils.processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
     time.sleep( 2 )  # let any existing jobs in process finish
     ( puller, copier ) = ( Puller(log), Copier(log) )
     puller.call_git_pull()
     ( files_to_update, files_to_remove ) = ( copier.get_files_to_update(files_to_process), copier.get_files_to_remove(files_to_process) )
-    log.debug( u'in utils.processor.run_call_git_pull(); enqueuing next job' )
+    # log.debug( u'in utils.processor.run_call_git_pull(); enqueuing next job' )
+    log.debug( u'enqueuing next job' )
     q.enqueue_call(
         func=u'usep_gh_handler_app.utils.processor.run_copy_files',
         kwargs={u'files_to_update': files_to_update, u'files_to_remove': files_to_remove} )
