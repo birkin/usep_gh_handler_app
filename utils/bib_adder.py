@@ -19,7 +19,7 @@ if not logging._handlers:  # true when module accessed by queue-jobs
 class BibAdder():
     """Adds hierarchical bibliography to a given inscription."""
 
-    def __init__(self, solr_url, titles_url, log):
+    def __init__(self, solr_url, titles_url):
         self.solr_url = solr_url
         try:
             r = requests.get(titles_url)
