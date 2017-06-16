@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 
-import json, logging, pprint
+import json, logging, os, pprint
 import requests
 from lxml import etree
 
