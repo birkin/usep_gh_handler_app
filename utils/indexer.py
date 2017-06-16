@@ -2,11 +2,20 @@
 
 from __future__ import unicode_literals
 
-import os, pprint
+import logging, os, pprint
 import lxml, redis, requests, rq, solr
 from lxml import etree
 from usep_gh_handler_app.utils import bib_adder, log_helper
 # from usep_gh_handler_app.utils import bib_adder, log_helper, transcription_adder
+
+
+LOG_CONF_JSN = unicode( os.environ[u'usep_gh__WRKR_LOG_CONF_JSN'] )
+
+
+log = logging.getLogger( 'usep_gh_worker_logger' )
+if not logging._handlers:  # true when module accessed by queue-jobs
+    logging_config_dct = json.loads( LOG_CONF_JSN )
+    logging.config.dictConfig( logging_config_dct )
 
 
 class Indexer( object ):
@@ -14,9 +23,8 @@ class Indexer( object ):
         TODO: Refactor so the index-removal can take ids instead of filenames.
               That way, it can be called from the reindex-all code, too. """
 
-    def __init__( self, log ):
+    def __init__( self ):
         """ Settings. """
-        self.log = log
         self.worthwhile_dirs = [ u'bib_only', u'metadata_only', u'transcribed' ]  # only need to update index for these dirs
         self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
         self.SOLR_URL = unicode( os.environ.get(u'usep_gh__SOLR_URL') )
@@ -29,11 +37,11 @@ class Indexer( object ):
     def update_index_entry( self, filename ):
         """ Updates solr index for a new or changed file.
             Called by run_update_index() """
-        self.log.debug( u'in utils.indexer.update_index_entry(); filename, `%s`' % filename )
+        log.debug( u'in utils.indexer.update_index_entry(); filename, `%s`' % filename )
         full_file_path = u'%s/inscriptions/%s' % ( self.WEBSERVED_DATA_DIR_PATH, filename )
         transformed_xml_txt = self._build_solr_doc( full_file_path )
         resp = self._post_solr_update( transformed_xml_txt )
-        self.log.debug( 'post response, ```%s```' % resp )
+        log.debug( 'post response, ```%s```' % resp )
         self._update_bib( filename )
         # self._update_transcription( filename )
         return
@@ -41,8 +49,8 @@ class Indexer( object ):
     def _build_solr_doc( self, inscription_xml_path ):
         """ Builds solr doc.
             Called by update_index_entry() """
-        self.log.debug( 'inscription_xml_path, ```%s```' % inscription_xml_path )
-        self.log.debug( 'self.SOLR_XSL_PATH, ```%s```' % self.SOLR_XSL_PATH )
+        log.debug( 'inscription_xml_path, ```%s```' % inscription_xml_path )
+        log.debug( 'self.SOLR_XSL_PATH, ```%s```' % self.SOLR_XSL_PATH )
         with open( inscription_xml_path ) as f:
             xml_txt = f.read().decode( 'utf-8' )
         with open( self.SOLR_XSL_PATH ) as f:
@@ -52,7 +60,7 @@ class Indexer( object ):
         transformed_xml_dom_obj = transformer_obj( xml_dom_obj )
         transformed_xml_utf8 = etree.tostring( transformed_xml_dom_obj, pretty_print=True )
         transformed_xml_txt = transformed_xml_utf8.decode( 'utf-8' )
-        self.log.debug( 'transformed_xml_txt, ```%s```' % transformed_xml_txt )
+        log.debug( 'transformed_xml_txt, ```%s```' % transformed_xml_txt )
         return transformed_xml_txt
 
     def _post_solr_update( self, solr_xml ):
@@ -64,9 +72,9 @@ class Indexer( object ):
                 data=solr_xml,
                 headers={"Content-type":"application/xml"} )
             resp = r.content.decode( 'utf-8' )
-            self.log.debug( 'post resp, ```%s```' % resp )
+            log.debug( 'post resp, ```%s```' % resp )
         except Exception as e:
-            self.log.error( 'Exception, ```%s```' % unicode(repr(e)) )
+            log.error( 'Exception, ```%s```' % unicode(repr(e)) )
             raise Exception( unicode(repr(e)) )
         return resp
 
@@ -77,12 +85,12 @@ class Indexer( object ):
             ## make id
             inscription_id = filename.strip().split(u'.xml')[0]
             ## call bib-adder
-            bibber = bib_adder.BibAdder( self.SOLR_URL, self.TITLES_URL, self.log )
+            bibber = bib_adder.BibAdder( self.SOLR_URL, self.TITLES_URL )
             result = bibber.addBibl( inscription_id )
             ## log response
-            self.log.debug( 'addBibl response, `%s`' % result )
+            log.debug( 'addBibl response, `%s`' % result )
         except Exception as e:
-            self.log.error( 'exception updating bib, ```%s```' % unicode(repr(e)) )
+            log.error( 'exception updating bib, ```%s```' % unicode(repr(e)) )
         return
 
     def _update_transcription( self, filename ):
@@ -92,12 +100,12 @@ class Indexer( object ):
             ## make id
             inscription_id = filename.strip().split(u'.xml')[0]
             ## call transcription_adder
-            transcriptor = transcription_adder.TranscriptionAdder( self.SOLR_URL, self.TRANSCRIPTION_PARSER_XSL_PATH, self.log )
+            transcriptor = transcription_adder.TranscriptionAdder( self.SOLR_URL, self.TRANSCRIPTION_PARSER_XSL_PATH )
             result = transcriptor.add_transcription( inscription_id )
             ## log response
-            self.log.debug( 'add_transcription response, `%s`' % result )
+            log.debug( 'add_transcription response, `%s`' % result )
         except Exception as e:
-            self.log.error( 'exception updating transcription info, ```%s```' % unicode(repr(e)) )
+            log.error( 'exception updating transcription info, ```%s```' % unicode(repr(e)) )
         return
 
     ## remove index entry ##
@@ -106,12 +114,12 @@ class Indexer( object ):
         """ Updates solr index for a removed file. """
         if filename:
             inscription_id = filename.strip().split(u'.xml')[0]
-        self.log.debug( u'in utils.indexer.Indexer.remove_index_entry(); filename, `%s`; inscription_id, `%s`' % (filename, inscription_id) )
+        log.debug( u'in utils.indexer.Indexer.remove_index_entry(); filename, `%s`; inscription_id, `%s`' % (filename, inscription_id) )
         s = solr.Solr( self.SOLR_URL )
         response = s.delete( id=inscription_id )
         s.commit()
         s.close()
-        self.log.debug( u'in utils.indexer.Indexer.remove_index_entry(); post complete; response is: %s' % response )
+        log.debug( u'in utils.indexer.Indexer.remove_index_entry(); post complete; response is: %s' % response )
         return
 
     ## enqueue checking functions
@@ -147,7 +155,7 @@ def run_update_index( files_updated, files_removed ):
     """ Creates index jobs (doesn't actually call Indexer() directly.
         Triggered by utils.processor.run_xinclude_updater(). """
     log = log_helper.setup_logger()
-    indexer = Indexer( log )
+    indexer = Indexer()
     for removed_file_path in files_removed:
         if indexer.check_removed_file_path( removed_file_path ):
             q.enqueue_call(
@@ -162,7 +170,7 @@ def run_update_entry( updated_file_path ):
     """ Updates solr index for a new or changed file.
         Triggered by run_update_index(), and utils.reindex_all_support.run_enqueue_all_index_updates(). """
     log = log_helper.setup_logger()
-    indexer = Indexer( log )
+    indexer = Indexer()
     filename = updated_file_path.split( u'/' )[-1]
     indexer.update_index_entry( filename )
     return
@@ -171,7 +179,7 @@ def run_remove_entry( removed_file_path ):
     """ Updates solr index for removed file.
         Triggered by run_update_index(). """
     log = log_helper.setup_logger()
-    indexer = Indexer( log )
+    indexer = Indexer()
     filename = removed_file_path.split( u'/' )[-1]
     indexer.remove_index_entry( filename=filename )
     return
@@ -180,6 +188,6 @@ def run_remove_entry_via_id( id_to_remove ):
     """ Removes id from solr.
         Triggered by utils.reindex_all_support.run_enqueue_all_index_updates(). """
     log = log_helper.setup_logger()
-    indexer = Indexer( log )
+    indexer = Indexer()
     indexer.remove_index_entry( inscription_id=id_to_remove )
     return

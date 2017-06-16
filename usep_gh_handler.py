@@ -4,7 +4,7 @@ import datetime, json, logging, os, pprint, urlparse
 import flask, redis, requests, rq
 from flask.ext.basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
 # from usep_gh_handler_app.utils import log_helper, reindex_all_support
-from usep_gh_handler_app.utils import reindex_all_support
+# from usep_gh_handler_app.utils import reindex_all_support
 from usep_gh_handler_app.utils.web_app_helper import WebAppHelper
 
 
@@ -22,7 +22,7 @@ app = flask.Flask(__name__)
 app.config[u'BASIC_AUTH_USERNAME'] = B_AUTH_USERNAME
 app.config[u'BASIC_AUTH_PASSWORD'] = B_AUTH_PASSWORD
 basic_auth = BasicAuth(app)
-app_helper = WebAppHelper( log )
+app_helper = WebAppHelper()
 q = rq.Queue( u'usep', connection=redis.Redis() )
 
 # ## setup
@@ -32,7 +32,7 @@ q = rq.Queue( u'usep', connection=redis.Redis() )
 # app.config[u'BASIC_AUTH_USERNAME'] = B_AUTH_USERNAME
 # app.config[u'BASIC_AUTH_PASSWORD'] = B_AUTH_PASSWORD
 # basic_auth = BasicAuth(app)
-# app_helper = WebAppHelper( log )
+# app_helper = WebAppHelper()
 # q = rq.Queue( u'usep', connection=redis.Redis() )
 
 
@@ -66,7 +66,7 @@ def handle_github_push():
         if flask.request.data or u'force' in flask.request.path:
             log.debug( 'going to check for files_to_process' )
             files_to_process = app_helper.prep_data_dict( flask.request.data )  # returns dict of lists; files_updated, files_removed
-            log.debug( 'files_to_process, ```{}```'.format( pprint.pformat(files_to_process) ) )
+            log.debug( 'about to enqueue job; files_to_process, ```{}```'.format( pprint.pformat(files_to_process) ) )
             q.enqueue_call (
                 func=u'usep_gh_handler_app.utils.processor.run_call_git_pull',
                 kwargs = {u'files_to_process': files_to_process} )

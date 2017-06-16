@@ -28,12 +28,10 @@ class Puller( object ):
     # def __init__( self, log ):
     #     """ Settings. """
     #     self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
-    #     self.log = log
 
     def __init__( self ):
         """ Settings. """
         self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
-        self.log = log
 
     def call_git_pull( self ):
         """ Runs git_pull.
@@ -49,7 +47,6 @@ class Puller( object ):
             log.debug( 'got envoy output' )
         except Exception as e:
             log.error( 'envoy error, ```{}```'.format( unicode(repr(e)) ) )
-        # log_helper.log_envoy_output( self.log, r )
         try:
             log_helper.log_envoy_output( r )
             log.debug( 'envoy output logged' )
@@ -70,14 +67,12 @@ class Copier( object ):
     #     self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
     #     self.TEMP_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__TEMP_DATA_DIR_PATH') )
     #     self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
-    #     self.log = log
 
     def __init__( self ):
         """ Settings. """
         self.GIT_CLONED_DIR_PATH = unicode( os.environ.get(u'usep_gh__GIT_CLONED_DIR_PATH') )
         self.TEMP_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__TEMP_DATA_DIR_PATH') )
         self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
-        self.log = log
 
     def get_files_to_update( self, files_to_process ):
         """ Creates and returns list of filepaths to copy.
@@ -87,7 +82,7 @@ class Copier( object ):
             filepaths_to_update = self.make_complete_files_to_update_list()  # TODO
         else:
             filepaths_to_update = files_to_process[u'files_updated']
-        self.log.debug( u'in utils.processor.Copier.get_files_to_update(); filepaths_to_update, `%s`' % filepaths_to_update )
+        log.debug( u'filepaths_to_update, `%s`' % filepaths_to_update )
         return filepaths_to_update
 
     def get_files_to_remove( self, files_to_process ):
@@ -98,7 +93,7 @@ class Copier( object ):
             filepaths_to_remove = self.make_complete_files_to_remove_list()  # TODO
         else:
             filepaths_to_remove = files_to_process[u'files_removed']
-        self.log.debug( u'in utils.processor.Copier.get_files_to_remove(); filepaths_to_remove, `%s`' % filepaths_to_remove )
+        log.debug( u'filepaths_to_remove, `%s`' % filepaths_to_remove )
         return filepaths_to_remove
 
     ## copy files
@@ -117,7 +112,7 @@ class Copier( object ):
         resources_destination_path = u'%s/resources/' % self.WEBSERVED_DATA_DIR_PATH
         command = u'rsync -avz --delete %s %s' % ( resources_source_path, resources_destination_path )
         r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
-        log_helper.log_envoy_output( self.log, r )
+        log_helper.log_envoy_output( r )
         return
 
     def _build_unified_inscriptions( self ):
@@ -130,7 +125,7 @@ class Copier( object ):
             u'%s/xml_inscriptions/transcribed/' % self.GIT_CLONED_DIR_PATH, self.TEMP_DATA_DIR_PATH )
         for command in [ bib_command, metadata_command, transcription_command ]:
             r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
-            log_helper.log_envoy_output( self.log, r )
+            log_helper.log_envoy_output( r )
             time.sleep( 1 )
         return
 
@@ -140,7 +135,7 @@ class Copier( object ):
         inscriptions_destination_path = u'%s/inscriptions' % self.WEBSERVED_DATA_DIR_PATH
         command = u'rsync -avz --delete %s %s' % ( inscriptions_source_path, inscriptions_destination_path )
         r = envoy.run( command.encode(u'utf-8') )  # envoy requires strings
-        log_helper.log_envoy_output( self.log, r )
+        log_helper.log_envoy_output( r )
         return
 
     ## end class Copier()
@@ -152,15 +147,14 @@ class XIncludeUpdater( object ):
             the folder structure as exists for editors and on github is slightly different than in web-app.
         Occurs after copy to unified inscription directory. """
 
-    def __init__( self, log ):
+    def __init__( self ):
         """ Settings. """
         self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
-        self.log = log
 
     def update_xinclude_references( self ):
         """ Updates xi:include href entries.
             Called by run_xinclude_updater() """
-        self.log.debug( u'in utils.processor.XIncludeUpdater.update_xinclude_references(); starting.' )
+        log.debug( u'starting.' )
         inscriptions_filepath_list = self._make_inscriptions_filepath_list()
         for path in inscriptions_filepath_list:
             xml = self._open_file( path )
@@ -219,7 +213,7 @@ q = rq.Queue( u'usep', connection=redis.Redis() )
 #     log = log_helper.setup_logger()
 #     assert sorted( files_to_process.keys() ) == [ u'files_removed', u'files_updated', u'timestamp']; log.debug( u'in utils.processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
 #     time.sleep( 2 )  # let any existing jobs in process finish
-#     ( puller, copier ) = ( Puller(log), Copier(log) )
+#     ( puller, copier ) = ( Puller(), Copier() )
 #     puller.call_git_pull()
 #     ( files_to_update, files_to_remove ) = ( copier.get_files_to_update(files_to_process), copier.get_files_to_remove(files_to_process) )
 #     log.debug( u'in utils.processor.run_call_git_pull(); enqueuing next job' )
@@ -236,7 +230,6 @@ def run_call_git_pull( files_to_process ):
     log.debug( u'starting pull call' )
     assert sorted( files_to_process.keys() ) == [ u'files_removed', u'files_updated', u'timestamp']; log.debug( u'files_to_process, ```%s```' % pprint.pformat(files_to_process) )
     time.sleep( 2 )  # let any existing jobs in process finish
-    # ( puller, copier ) = ( Puller(log), Copier(log) )
     ( puller, copier ) = ( Puller(), Copier() )
     puller.call_git_pull()
     ( files_to_update, files_to_remove ) = ( copier.get_files_to_update(files_to_process), copier.get_files_to_remove(files_to_process) )
@@ -256,7 +249,7 @@ def run_copy_files( files_to_update, files_to_remove ):
     assert type( files_to_update ) == list; assert type( files_to_remove ) == list
     log.debug( u'in utils.processor.run_copy_files(); files_to_update, `%s`' % pprint.pformat(files_to_update) )
     log.debug( u'in utils.processor.run_copy_files(); files_to_remove, `%s`' % pprint.pformat(files_to_remove) )
-    copier = Copier( log )
+    copier = Copier()
     copier.copy_files()
     q.enqueue_call(
         func=u'usep_gh_handler_app.utils.processor.run_xinclude_updater',
@@ -270,7 +263,7 @@ def run_xinclude_updater( files_to_update, files_to_remove ):
     log = log_helper.setup_logger()
     log.debug( u'in utils.processor.run_call_xinclude_replacer(); starting' )
     assert type( files_to_update ) == list; assert type( files_to_remove ) == list
-    xinclude_updater = XIncludeUpdater( log )
+    xinclude_updater = XIncludeUpdater()
     xinclude_updater.update_xinclude_references()
     log.debug( u'in processor.run_call_xinclude_updater(); enqueuing next job' )
     q.enqueue_call(

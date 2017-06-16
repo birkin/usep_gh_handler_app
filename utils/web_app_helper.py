@@ -1,15 +1,24 @@
 # -*- coding: utf-8 -*-
 
-import datetime, json, os, pprint
+import datetime, json, logging, os, pprint
 import flask, requests
+
+
+LOG_CONF_JSN = unicode( os.environ[u'usep_gh__LOG_CONF_JSN'] )
+
+
+log = logging.getLogger( 'gh_post_sim_logger' )
+if not logging._handlers:  # true when module accessed by queue-jobs
+    logging_config_dct = json.loads( LOG_CONF_JSN )
+    logging.config.dictConfig( logging_config_dct )
 
 
 class WebAppHelper( object ):
     """ Contains support functions for usep_gh_handler.py """
 
-    def __init__( self, log ):
+    def __init__( self ):
         """ Settings. """
-        self.log = log
+        pass
 
     def log_github_post( self, flask_request ):
         """ Logs data posted from github.
@@ -27,7 +36,7 @@ class WebAppHelper( object ):
             u'remote_addr': flask_request.remote_addr,
             u'values': flask_request.values,
             }
-        self.log.debug( u'post_data_dict, `%s`' % pprint.pformat(post_data_dict) )
+        log.debug( u'post_data_dict, `%s`' % pprint.pformat(post_data_dict) )
         return
 
     def trigger_dev_if_production( self, flask_request_host ):
@@ -38,19 +47,19 @@ class WebAppHelper( object ):
         DEV_URL = unicode( os.environ[u'usep_gh__DEV_URL'] )
         PRODUCTION_HOSTNAME = unicode( os.environ[u'usep_gh__PRODUCTION_HOSTNAME'] )
         if flask_request_host == PRODUCTION_HOSTNAME:
-            self.log.debug( u'gonna hit dev, too' )
-            self.log.debug( u'type(flask.request.data), `%s`' % type(flask.request.data) )
+            log.debug( u'gonna hit dev, too' )
+            log.debug( u'type(flask.request.data), `%s`' % type(flask.request.data) )
             payload = flask.request.data
             try:
                 r = requests.post( DEV_URL, data=payload, auth=(B_AUTH_USERNAME, B_AUTH_PASSWORD) )
             except Exception as e:
-                self.log.error( 'problem hitting dev, ```{}```'.format( unicode(repr(e)) ) )
+                log.error( 'problem hitting dev, ```{}```'.format( unicode(repr(e)) ) )
         return
 
     def prep_data_dict( self, flask_request_data ):
         """ Prepares the data-dict to be sent to run_call_git_pull().
             Called by usep_gh_handler.handle_github_push() """
-        self.log.debug( u'flask_request_data, `%s`' % flask_request_data )
+        log.debug( u'flask_request_data, `%s`' % flask_request_data )
         files_to_process = { u'files_updated': [], u'files_removed': [], u'timestamp': unicode(datetime.datetime.now()) }
         if flask_request_data:
             commit_info = json.loads( flask_request_data )
@@ -58,7 +67,7 @@ class WebAppHelper( object ):
             files_to_process[u'files_updated'] = added
             files_to_process[u'files_updated'].extend( modified )  # solrization same for added or modified
             files_to_process[u'files_removed'] = removed
-        self.log.debug( u'files_to_process, `%s`' % pprint.pformat(files_to_process) )
+        log.debug( u'files_to_process, `%s`' % pprint.pformat(files_to_process) )
         return files_to_process
 
     def _examine_commits( self, commit_info ):

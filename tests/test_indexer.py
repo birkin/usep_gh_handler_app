@@ -23,7 +23,7 @@ class IndexerTest( unittest.TestCase ):
         - run python ./test_indexer.py """
 
     def setUp( self ):
-        self.indexer = Indexer( log )
+        self.indexer = Indexer()
 
     def test__build_solr_doc(self):
         """ Tests bib-only inscription. """

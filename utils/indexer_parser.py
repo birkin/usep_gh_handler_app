@@ -16,7 +16,7 @@
 #       - makes lxml-docs of matching bib_xml elements for future author/title/etc parsing
 #     - sets some attributes
 #     '''
-#     self.log = log
+#     log = log
 #     ## attributes
 #     self.bib_authors = None  # from parseBibAuthors()
 #     self.bib_doc = None  # from init(); lxml-object from bib-xml
@@ -35,7 +35,7 @@
 #     self.i_id = None  # from parseId()
 #     self.graphic_name = None
 #     self.language = None
-#     # self.log = []
+#     # log = []
 #     self.material = None
 #     self.msid_region = None  # msid attributes listed in logical order
 #     self.msid_settlement = None
@@ -54,7 +54,7 @@
 #     self.parseId()
 #     self.loadAndDocifyBiblXml()  # requires self.bib_xml_path
 #     self.makeBibDocs()  # requires self.bib_doc, set by self.loadAndDocifyBiblXml()
-#     # self.log.debug( u'end of Parser.__init__()' )
+#     # log.debug( u'end of Parser.__init__()' )
 
 #   def loadAndDocifyInscriptionXml(self):
 #     """Makes an lxml object from the inscription file."""
@@ -64,7 +64,7 @@
 #     try:
 #       self.xml_doc = etree.fromstring( self.xml.encode(u'utf-8') )  # str required because xml contains an encoding declaration
 #     except lxml.etree.XMLSyntaxError, e:
-#       self.log.error( u'in Parser.loadAndDocifyInscriptionXml(); error instantiating xml_doc; xml_path is: %s; e is: %s' % (self.xml_path, repr(e).decode(u'utf-8', u'replace')) )
+#       log.error( u'in Parser.loadAndDocifyInscriptionXml(); error instantiating xml_doc; xml_path is: %s; e is: %s' % (self.xml_path, repr(e).decode(u'utf-8', u'replace')) )
 #       self.parse_errors = u'in Parser.loadAndDocifyInscriptionXml(); unable to load xml string into an xml doc'
 
 #   def loadAndDocifyBiblXml(self):
@@ -78,7 +78,7 @@
 #         assert unicode(type(self.bib_doc)) == u"<type 'lxml.etree._Element'>", Exception( u'type(self.bib_doc) should be lxml.etree._Element; it is: %s' % unicode(type(self.bib_doc)) )
 #         return self.bib_doc
 #     except Exception as e:
-#       self.log.error( u'in Parser.loadAndDocifyBiblXml(); exception e is: %s' % repr(e).decode(u'utf-8', u'replace') )
+#       log.error( u'in Parser.loadAndDocifyBiblXml(); exception e is: %s' % repr(e).decode(u'utf-8', u'replace') )
 #       self.parse_errors = u'in Parser.loadAndDocifyBiblXml(); unable to load expected bib doc'
 
 #   def makeBibDocs(self):
@@ -87,7 +87,7 @@
 #     try:
 #       if not self.bib_doc == None:
 #         if self.bib_ids == None:
-#           # self.log.debug( u'in utils.indexer_parser.Parser.makeBibDocs(); about to call parseBibIds()' )
+#           # log.debug( u'in utils.indexer_parser.Parser.makeBibDocs(); about to call parseBibIds()' )
 #           self.parseBibIds()
 #         if len( self.bib_ids ) == 0:
 #           self.bib_docs = []
@@ -97,26 +97,26 @@
 #         else:
 #           self.bib_docs = []
 #           for bib_id in self.bib_ids:
-#             self.log.debug( u'in utils.indexer_parser.Parser.makeBibDocs(); about to make bib-doc for bib_id: %s' % bib_id )
+#             log.debug( u'in utils.indexer_parser.Parser.makeBibDocs(); about to make bib-doc for bib_id: %s' % bib_id )
 #             ## find bib-match (in bib xml)
 #             found_el = None
 #             for el in self.bib_doc.iter( u'{http://www.tei-c.org/ns/1.0}bibl' ):
 #               if el.attrib[ u'{http://www.w3.org/XML/1998/namespace}id' ] == bib_id:
 #                 found_el = el
-#                 self.log.debug( u'in utils.indexer_parser.Parser.makeBibDocs(); bib-doc found: %s' % etree.tostring(found_el) )
+#                 log.debug( u'in utils.indexer_parser.Parser.makeBibDocs(); bib-doc found: %s' % etree.tostring(found_el) )
 #                 self.bib_docs.append( found_el )
 #                 break
 #             if found_el == None:
-#               self.log.debug( u'in utils.indexer_parser.Parser.makeBibDocs(); NO bib-doc found' )
+#               log.debug( u'in utils.indexer_parser.Parser.makeBibDocs(); NO bib-doc found' )
 #               self.bib_docs.append( None )
-#         self.log.debug( u'in utils.indexer_parser.Parser.makeBibDocs(); self.bib_docs: %s' % self.bib_docs )
+#         log.debug( u'in utils.indexer_parser.Parser.makeBibDocs(); self.bib_docs: %s' % self.bib_docs )
 #         return self.bib_docs
 #       else:
 #         return
 #     except Exception as e:
 #       # self.parse_errors = u'exception in utils.indexer_parser.Parser.makeBibDocs() is: %s' % repr(e).decode(u'utf-8', u'replace')
 #       message = u'makeBibDocs() exception is: %s' % repr(e).decode(u'utf-8', u'replace')
-#       self.log.error( message )
+#       log.error( message )
 #       self.parse_errors = u'in Parser.makeBibDocs(); problem making bib-docs; error logged'
 
 #   def parseBibAuthors(self):
@@ -137,7 +137,7 @@
 #       return self.bib_authors
 #     except Exception as e:
 #       message = u'parseBibAuthors() exception is: %s' % repr(e).decode(u'utf-8', u'replace')
-#       self.log.error( message )
+#       log.error( message )
 #       self.parse_errors = u'in Parser.parseBibAuthors(); problem parsing bib-authors'
 
 #   def _parse_bib_authors_from_monograph( self, bib_match_element, bib_authors ):
@@ -184,17 +184,17 @@
 #         try:
 #           bib_text = bib.attrib[u'target'].split(u'#')[1]
 #         except IndexError, e:
-#           self.log.debug( u'in Parser.parseBibIds(); error on file: %s; error (possibly missing hash): %s' % (self.xml_path, repr(e).decode(u'utf-8', u'replace')) )
+#           log.debug( u'in Parser.parseBibIds(); error on file: %s; error (possibly missing hash): %s' % (self.xml_path, repr(e).decode(u'utf-8', u'replace')) )
 #           pass
 #         if bib_text:
 #           assert type(bib_text) == unicode, Exception( u'in parseBibIds(); type(bib_text) should be unicode; it is: %s' % type(bib_text) )
 #           self.bib_ids.append( bib_text )
 #     self.bib_ids = sorted( self.bib_ids )
-#     # self.log.debug( u'in parseBibIds(); self.bib_ids is: %s' % self.bib_ids )
+#     # log.debug( u'in parseBibIds(); self.bib_ids is: %s' % self.bib_ids )
 #     if self.bib_ids == []:
 #       self.parse_errors = u'in Parser.parseBibIds(); expected bib_ids; none found'
-#       self.log.debug( u'in parseBibIds(); setting self.parse_errors because self.bib_ids is empty.' )
-#     self.log.debug( u'in parseBibIds(); self.bib_ids is: %s' % self.bib_ids )
+#       log.debug( u'in parseBibIds(); setting self.parse_errors because self.bib_ids is empty.' )
+#     log.debug( u'in parseBibIds(); self.bib_ids is: %s' % self.bib_ids )
 #     return self.bib_ids
 
 #   def parseBibIdsFiltered(self):
@@ -293,7 +293,7 @@
 #       self._clean_bib_titles()
 #       return { u'bib_titles': self.bib_titles, u'bib_titles_all':self.bib_titles_all }
 #     except Exception as e:
-#       self.log.debug( u'in Parser.parseBibTitles(); exception is: %s' % repr(e).decode(u'utf-8', u'replace') )
+#       log.debug( u'in Parser.parseBibTitles(); exception is: %s' % repr(e).decode(u'utf-8', u'replace') )
 #       self.parse_errors = u'in Parser.parseBibTitles(); unable to parse expected bib-titles'
 
 #   def _setup_bib_titles_work( self ):
@@ -409,10 +409,10 @@
 #       i_id = element.attrib[u'{http://www.w3.org/XML/1998/namespace}id']
 #       self.i_id = i_id.decode( u'utf-8' )
 #       assert type(self.i_id) == unicode
-#       # self.log.debug( u'in Parser.parseId(); created i_id is: %s' % self.i_id )
+#       # log.debug( u'in Parser.parseId(); created i_id is: %s' % self.i_id )
 #       return self.i_id
 #     except Exception as e:
-#       self.log.error( u'in Parser.parseId(); exception is: %s' % repr(e).decode(u'utf-8', u'replace') )
+#       log.error( u'in Parser.parseId(); exception is: %s' % repr(e).decode(u'utf-8', u'replace') )
 #       self.parse_errors = u'parseId() exception is: %s' % repr(e).decode(u'utf-8', u'replace')
 
 #   def parse_graphic_name( self ):

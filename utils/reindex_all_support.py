@@ -1,26 +1,34 @@
 # -*- coding: utf-8 -*-
 
-import glob, os, pprint
+import glob, logging, os, pprint
 import redis, requests, rq
 from usep_gh_handler_app.utils import log_helper
 from usep_gh_handler_app.utils.processor import Copier, Puller
+
+
+LOG_CONF_JSN = unicode( os.environ[u'usep_gh__WRKR_LOG_CONF_JSN'] )
+
+
+log = logging.getLogger( 'usep_gh_worker_logger' )
+if not logging._handlers:  # true when module accessed by queue-jobs
+    logging_config_dct = json.loads( LOG_CONF_JSN )
+    logging.config.dictConfig( logging_config_dct )
 
 
 class InscriptionFilenamesBuilder( object ):
     """ Contains functions for building list of inscriptions to be indexed.
         List also used, later, to determine which index entries to remove. """
 
-    def __init__( self, log ):
+    def __init__( self ):
         """ Settings. """
-        self.log = log
         self.inscriptions_dir_path = u'%s/inscriptions/' % unicode( os.environ[u'usep_gh__WEBSERVED_DATA_DIR_PATH'] )
 
     def build_inscription_filepaths( self ):
         """ Builds list of inscriptions to be indexed.
             Called by run_start_reindex_all(). """
-        self.log.debug( u'in utils.indexer.InscriptionFilenamesBuilder.build_filenames(); self.inscriptions_dir_path, `%s`' % self.inscriptions_dir_path )
+        log.debug( u'in utils.indexer.InscriptionFilenamesBuilder.build_filenames(); self.inscriptions_dir_path, `%s`' % self.inscriptions_dir_path )
         inscriptions = glob.glob( u'%s/*.xml' % self.inscriptions_dir_path )
-        self.log.debug( u'in utils.indexer.InscriptionFilenamesBuilder.build_filenames(); inscriptions[0:3], `%s`' % pprint.pformat(inscriptions[0:3]) )
+        log.debug( u'in utils.indexer.InscriptionFilenamesBuilder.build_filenames(); inscriptions[0:3], `%s`' % pprint.pformat(inscriptions[0:3]) )
         return { u'inscriptions': inscriptions }
 
     ## end class InscriptionFilenamesBuilder()
@@ -29,9 +37,8 @@ class InscriptionFilenamesBuilder( object ):
 class SolrIdChecker( object ):
     """ Contains functions for getting solr_ids, and checking them against file-system inscriptions. """
 
-    def __init__( self, log ):
+    def __init__( self ):
         """ Settings. """
-        self.log = log
         self.SOLR_URL = unicode( os.environ[u'usep_gh__SOLR_URL'] )
 
     def build_orphaned_ids( self, inscriptions ):
@@ -62,8 +69,8 @@ class SolrIdChecker( object ):
             filename = file_path.split( u'/' )[-1]
             inscription_id = filename.strip().split(u'.xml')[0]
             file_system_ids.append( inscription_id )
-        self.log.debug( u'in utils.reindex_all_support._make_file_system_ids(); len(file_system_ids), `%s`' % len(file_system_ids) )
-        self.log.debug( u'in utils.reindex_all_support._make_file_system_ids(); file_system_ids[0:2], `%s`' % pprint.pformat(file_system_ids[0:2]) )
+        log.debug( u'in utils.reindex_all_support._make_file_system_ids(); len(file_system_ids), `%s`' % len(file_system_ids) )
+        log.debug( u'in utils.reindex_all_support._make_file_system_ids(); file_system_ids[0:2], `%s`' % pprint.pformat(file_system_ids[0:2]) )
         return file_system_ids
 
     def _make_ids_to_remove( self, all_solr_ids, file_system_ids ):
@@ -71,8 +78,8 @@ class SolrIdChecker( object ):
             Called by build_orphaned_ids(). """
         ids_to_remove_set = set(all_solr_ids) - set(file_system_ids)
         ids_to_remove_list = list( ids_to_remove_set )
-        self.log.debug( u'in utils.reindex_all_support._make_ids_to_remove(); len(ids_to_remove_list), `%s`' % len(ids_to_remove_list) )
-        self.log.debug( u'in utils.reindex_all_support._make_ids_to_remove(); ids_to_remove_list[0:2], `%s`' % pprint.pformat(ids_to_remove_list[0:2]) )
+        log.debug( u'in utils.reindex_all_support._make_ids_to_remove(); len(ids_to_remove_list), `%s`' % len(ids_to_remove_list) )
+        log.debug( u'in utils.reindex_all_support._make_ids_to_remove(); ids_to_remove_list[0:2], `%s`' % pprint.pformat(ids_to_remove_list[0:2]) )
         return ids_to_remove_list
 
     ## end class SolrIdChecker()
@@ -86,7 +93,7 @@ def run_call_simple_git_pull():
     """ Initiates a simple git pull update.
         Triggered by usep_gh_handler.reindex_all() """
     log = log_helper.setup_logger()
-    puller = Puller( log )
+    puller = Puller()
     puller.call_git_pull()
     q.enqueue_call(
         func=u'usep_gh_handler_app.utils.reindex_all_support.run_simple_copy_files',
@@ -98,7 +105,7 @@ def run_simple_copy_files():
         Triggered by utils.processor.run_call_simple_git_pull(). """
     log = log_helper.setup_logger()
     log.debug( u'in utils.reindex_all_support.run_simple_copy_files(); starting' )
-    copier = Copier( log )
+    copier = Copier()
     copier.copy_files()
     q.enqueue_call(
         func=u'usep_gh_handler_app.utils.reindex_all_support.run_start_reindex_all',
@@ -116,7 +123,7 @@ def run_start_reindex_all():
         Triggered by utils.processor.run_simple_copy_files().
         """
     log = log_helper.setup_logger()
-    filenames_builder = InscriptionFilenamesBuilder( log )
+    filenames_builder = InscriptionFilenamesBuilder()
     inscriptions = filenames_builder.build_inscription_filepaths()
     q.enqueue_call(
         func=u'usep_gh_handler_app.utils.reindex_all_support.run_build_solr_remove_list',
@@ -128,7 +135,7 @@ def run_build_solr_remove_list( inscriptions ):
         Triggered by run_start_reindex_all(). """
     assert inscriptions.keys() == [ u'inscriptions' ]
     log = log_helper.setup_logger()
-    solr_id_checker = SolrIdChecker( log )
+    solr_id_checker = SolrIdChecker()
     ( inscriptions_to_index, ids_to_remove ) = solr_id_checker.build_orphaned_ids( inscriptions[u'inscriptions'] )
     q.enqueue_call(
         func=u'usep_gh_handler_app.utils.reindex_all_support.run_enqueue_all_index_updates',

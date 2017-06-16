@@ -32,7 +32,7 @@ if not logging._handlers:  # true when module accessed by queue-jobs
 #     return logger
 
 
-# def log_envoy_output( log, envoy_response ):
+# def log_envoy_output( envoy_response ):
 #     """ Creates and returns dict of envoy_response attributes.
 #         Called by utils.processor.Puller.call_git_pull(). """
 #     return_dict = {

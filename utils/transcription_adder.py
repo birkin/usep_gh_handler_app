@@ -2,17 +2,26 @@
 
 from __future__ import unicode_literals
 
-import json, re
+import json, logging, re
 import requests
 from lxml import etree
+
+
+LOG_CONF_JSN = unicode( os.environ[u'usep_gh__WRKR_LOG_CONF_JSN'] )
+
+
+log = logging.getLogger( 'usep_gh_worker_logger' )
+if not logging._handlers:  # true when module accessed by queue-jobs
+    logging_config_dct = json.loads( LOG_CONF_JSN )
+    logging.config.dictConfig( logging_config_dct )
+
 
 
 class TranscriptionAdder( object ):
     """ Adds a 'transcription' field in Solr to inscriptions which have one"""
 
-    def __init__(self, solr_url, xsl_path, log):
+    def __init__( self, solr_url, xsl_path ):
         self.solr_url = solr_url
-        self.log = log
         self.lb_whitespace = re.compile(r"(<lb.*/>)\s+(.*)")
         self.transform = None
         try:
@@ -20,7 +29,7 @@ class TranscriptionAdder( object ):
                 utf8_xsl_text = f.read()
                 self.transform = etree.XSLT( etree.fromstring(utf8_xsl_text) )
         except Exception as e:
-            self.log.error( 'Exception in __init__, ```%s```' % unicode(repr(e)) )
+            log.error( 'Exception in __init__, ```%s```' % unicode(repr(e)) )
             raise Exception( unicode(repr(e)) )
 
     def add_transcription(self, inscription_id, xml_path):
@@ -39,7 +48,7 @@ class TranscriptionAdder( object ):
             p = requests.post(self.solr_url+"/update", data=solr_req_text, headers={"Content-type":"application/json"})
             g = requests.get(self.solr_url+"/update?softCommit=true")
         except Exception as e:
-            self.log.error( 'Exception in add_transcription(), ```%s```' % unicode(repr(e)) )
+            log.error( 'Exception in add_transcription(), ```%s```' % unicode(repr(e)) )
             raise e
 
     def index_value(self, xml_path):
