@@ -206,27 +206,10 @@ class XIncludeUpdater( object ):
 
 q = rq.Queue( u'usep', connection=redis.Redis() )
 
-# def run_call_git_pull( files_to_process ):
-#     """ Initiates a git pull update.
-#             Spawns a call to Processor.process_file() for each result found.
-#         Triggered by usep_gh_handler.handle_github_push(). """
-#     log = log_helper.setup_logger()
-#     assert sorted( files_to_process.keys() ) == [ u'files_removed', u'files_updated', u'timestamp']; log.debug( u'in utils.processor.run_call_git_pull(); files_to_process, `%s`' % pprint.pformat(files_to_process) )
-#     time.sleep( 2 )  # let any existing jobs in process finish
-#     ( puller, copier ) = ( Puller(), Copier() )
-#     puller.call_git_pull()
-#     ( files_to_update, files_to_remove ) = ( copier.get_files_to_update(files_to_process), copier.get_files_to_remove(files_to_process) )
-#     log.debug( u'in utils.processor.run_call_git_pull(); enqueuing next job' )
-#     q.enqueue_call(
-#         func=u'usep_gh_handler_app.utils.processor.run_copy_files',
-#         kwargs={u'files_to_update': files_to_update, u'files_to_remove': files_to_remove} )
-#     return
-
 def run_call_git_pull( files_to_process ):
     """ Initiates a git pull update.
             Spawns a call to Processor.process_file() for each result found.
         Triggered by usep_gh_handler.handle_github_push(). """
-    # log = log_helper.setup_logger()
     log.debug( u'starting pull call' )
     assert sorted( files_to_process.keys() ) == [ u'files_removed', u'files_updated', u'timestamp']; log.debug( u'files_to_process, ```%s```' % pprint.pformat(files_to_process) )
     time.sleep( 2 )  # let any existing jobs in process finish
@@ -244,7 +227,6 @@ def run_copy_files( files_to_update, files_to_remove ):
     """ Runs a copy and then triggers an index job.
         Incoming data not for copying, but to pass to indexer.
         Triggered by utils.processor.run_call_git_pull(). """
-    log = log_helper.setup_logger()
     log.debug( u'in utils.processor.run_copy_files(); starting' )
     assert type( files_to_update ) == list; assert type( files_to_remove ) == list
     log.debug( u'in utils.processor.run_copy_files(); files_to_update, `%s`' % pprint.pformat(files_to_update) )
@@ -260,7 +242,6 @@ def run_xinclude_updater( files_to_update, files_to_remove ):
     """ Updates the three <xi:include href="../path/inscription.xml"> hrefs in each inscription file.
         Reason is that the folder structure as exists for editors and on github is slightly different than in web-app.
         Triggered bu utils.processor.run_copy_files(). """
-    log = log_helper.setup_logger()
     log.debug( u'in utils.processor.run_call_xinclude_replacer(); starting' )
     assert type( files_to_update ) == list; assert type( files_to_remove ) == list
     xinclude_updater = XIncludeUpdater()

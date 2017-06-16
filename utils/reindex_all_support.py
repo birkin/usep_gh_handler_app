@@ -92,7 +92,6 @@ q = rq.Queue( u'usep', connection=redis.Redis() )
 def run_call_simple_git_pull():
     """ Initiates a simple git pull update.
         Triggered by usep_gh_handler.reindex_all() """
-    log = log_helper.setup_logger()
     puller = Puller()
     puller.call_git_pull()
     q.enqueue_call(
@@ -103,7 +102,6 @@ def run_call_simple_git_pull():
 def run_simple_copy_files():
     """ Runs a copy and then triggers an full_re-index job.
         Triggered by utils.processor.run_call_simple_git_pull(). """
-    log = log_helper.setup_logger()
     log.debug( u'in utils.reindex_all_support.run_simple_copy_files(); starting' )
     copier = Copier()
     copier.copy_files()
@@ -122,7 +120,6 @@ def run_start_reindex_all():
         - enqueue all remove jobs
         Triggered by utils.processor.run_simple_copy_files().
         """
-    log = log_helper.setup_logger()
     filenames_builder = InscriptionFilenamesBuilder()
     inscriptions = filenames_builder.build_inscription_filepaths()
     q.enqueue_call(
@@ -134,7 +131,6 @@ def run_build_solr_remove_list( inscriptions ):
     """ Builds a list of inscription_ids to remove from solr.
         Triggered by run_start_reindex_all(). """
     assert inscriptions.keys() == [ u'inscriptions' ]
-    log = log_helper.setup_logger()
     solr_id_checker = SolrIdChecker()
     ( inscriptions_to_index, ids_to_remove ) = solr_id_checker.build_orphaned_ids( inscriptions[u'inscriptions'] )
     q.enqueue_call(

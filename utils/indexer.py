@@ -154,7 +154,6 @@ q = rq.Queue( u'usep', connection=redis.Redis() )
 def run_update_index( files_updated, files_removed ):
     """ Creates index jobs (doesn't actually call Indexer() directly.
         Triggered by utils.processor.run_xinclude_updater(). """
-    log = log_helper.setup_logger()
     indexer = Indexer()
     for removed_file_path in files_removed:
         if indexer.check_removed_file_path( removed_file_path ):
@@ -169,7 +168,6 @@ def run_update_index( files_updated, files_removed ):
 def run_update_entry( updated_file_path ):
     """ Updates solr index for a new or changed file.
         Triggered by run_update_index(), and utils.reindex_all_support.run_enqueue_all_index_updates(). """
-    log = log_helper.setup_logger()
     indexer = Indexer()
     filename = updated_file_path.split( u'/' )[-1]
     indexer.update_index_entry( filename )
@@ -178,7 +176,6 @@ def run_update_entry( updated_file_path ):
 def run_remove_entry( removed_file_path ):
     """ Updates solr index for removed file.
         Triggered by run_update_index(). """
-    log = log_helper.setup_logger()
     indexer = Indexer()
     filename = removed_file_path.split( u'/' )[-1]
     indexer.remove_index_entry( filename=filename )
@@ -187,7 +184,6 @@ def run_remove_entry( removed_file_path ):
 def run_remove_entry_via_id( id_to_remove ):
     """ Removes id from solr.
         Triggered by utils.reindex_all_support.run_enqueue_all_index_updates(). """
-    log = log_helper.setup_logger()
     indexer = Indexer()
     indexer.remove_index_entry( inscription_id=id_to_remove )
     return
