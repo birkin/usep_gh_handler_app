@@ -23,8 +23,11 @@ class IndexerTest( unittest.TestCase ):
     """ Tests Indexer functions.
         To use:
         - activate the virtual environment
-        - cd to tests directory
-        - run python ./test_indexer.py """
+        - cd to usep_gh_handler_app directory
+        - for all tests:
+            python ./tests/test_indexer.py
+        - for single test (eg):
+            python ./tests/test_indexer.py IndexerTest.test__post_solr_update """
 
     def setUp( self ):
         self.indexer = Indexer()
@@ -45,7 +48,7 @@ class IndexerTest( unittest.TestCase ):
         """ Tests post to solr. """
         inscription_xml_path=u'./tests/test_files/CA.Berk.UC.HMA.G.8-4213.xml'
         solr_xml = self.indexer._build_solr_doc( inscription_xml_path )
-        self.assertEqual( '<int name="status">0</int>', self.indexer._post_solr_update(solr_xml) )
+        self.assertTrue( '<int name="status">0</int>' in self.indexer._post_solr_update(solr_xml)  )
 
     # end class IndexerTest
 
