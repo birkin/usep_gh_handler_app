@@ -2,12 +2,16 @@
 
 from __future__ import unicode_literals
 
-import logging, pprint, unittest
+import logging, os, pprint, sys, unittest
 import requests
+
+PROJECT_DIR_PATH = os.path.dirname( os.path.dirname( os.path.dirname(os.path.abspath(__file__)) ) )  # update path for following imports
+sys.path.append( PROJECT_DIR_PATH )
+
 from usep_gh_handler_app.utils.indexer import Indexer
 
 
-logging.basicConfig(
+logging.basicConfig(  # logs to console
     level=logging.DEBUG,
     format='[%(asctime)s] %(levelname)s [%(module)s-%(funcName)s()::%(lineno)d] %(message)s',
     datefmt='%d/%b/%Y %H:%M:%S' )
@@ -27,7 +31,7 @@ class IndexerTest( unittest.TestCase ):
 
     def test__build_solr_doc(self):
         """ Tests bib-only inscription. """
-        inscription_xml_path=u'./test_files/CA.Berk.UC.HMA.G.8-4213.xml'
+        inscription_xml_path = os.path.abspath( './tests/test_files/CA.Berk.UC.HMA.G.8-4213.xml' )
         solr_xml = self.indexer._build_solr_doc( inscription_xml_path )
         self.assertEqual( unicode, type(solr_xml) )
         self.assertTrue( '<field name="title">CA.Berk.UC.HMA.G.8/4213</field>' in solr_xml, 'solr_xml, ```%s```' % solr_xml )
@@ -39,7 +43,7 @@ class IndexerTest( unittest.TestCase ):
 
     def test__post_solr_update(self):
         """ Tests post to solr. """
-        inscription_xml_path=u'./test_files/CA.Berk.UC.HMA.G.8-4213.xml'
+        inscription_xml_path=u'./tests/test_files/CA.Berk.UC.HMA.G.8-4213.xml'
         solr_xml = self.indexer._build_solr_doc( inscription_xml_path )
         self.assertEqual( '<int name="status">0</int>', self.indexer._post_solr_update(solr_xml) )
 
