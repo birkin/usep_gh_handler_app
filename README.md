@@ -33,4 +33,6 @@ Listener for a github usep-data push. Flow...
         </Directory>
         WSGIScriptAlias /path/to/usep_gh_handler_app/config/wsgi.py
 
+- Code contact: birkin_diana@brown.edu
+
 ---
