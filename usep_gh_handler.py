@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import datetime, json, logging, os, pprint, urlparse
+import datetime, json, logging, os, pprint, sys, urlparse
 import flask, redis, requests, rq
-# from flask.ext.basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
 from flask_basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
-from usep_gh_handler_app.utils.web_app_helper import WebAppHelper
 
+## update sys.path
+cwd_parent = os.path.dirname( os.getcwd() )
+if cwd_parent not in sys.path:
+    sys.path.append( cwd_parent )
+
+## rest of imports
+from usep_gh_handler_app.utils.web_app_helper import WebAppHelper
 
 ## setup
 B_AUTH_PASSWORD = unicode( os.environ[u'usep_gh__BASIC_AUTH_PASSWORD'] )
@@ -13,7 +18,7 @@ B_AUTH_USERNAME = unicode( os.environ[u'usep_gh__BASIC_AUTH_USERNAME'] )
 LOG_CONF_JSN = unicode( os.environ[u'usep_gh__LOG_CONF_JSN'] )
 
 logging_config_dct = json.loads( LOG_CONF_JSN )
-log = logging.getLogger( 'gh_post_sim_logger' )
+log = logging.getLogger( 'usep_gh_web_logger' )
 logging.config.dictConfig( logging_config_dct )
 log.debug( 'logging ready' )
 
@@ -24,16 +29,10 @@ basic_auth = BasicAuth(app)
 app_helper = WebAppHelper()
 q = rq.Queue( u'usep', connection=redis.Redis() )
 
-# ## setup
-# B_AUTH_PASSWORD = unicode( os.environ[u'usep_gh__BASIC_AUTH_PASSWORD'] )
-# B_AUTH_USERNAME = unicode( os.environ[u'usep_gh__BASIC_AUTH_USERNAME'] )
-# app = flask.Flask(__name__)
-# app.config[u'BASIC_AUTH_USERNAME'] = B_AUTH_USERNAME
-# app.config[u'BASIC_AUTH_PASSWORD'] = B_AUTH_PASSWORD
-# basic_auth = BasicAuth(app)
-# app_helper = WebAppHelper()
-# q = rq.Queue( u'usep', connection=redis.Redis() )
-
+@app.route( u'/info/', methods=[u'GET'] )
+def info():
+    log.debug( 'in info()' )
+    return 'info coming'
 
 @app.route( u'/reindex_all/', methods=[u'GET'] )
 @basic_auth.required
@@ -48,7 +47,6 @@ def reindex_all():
         return u'pull and reindex initiated.', 200
     except Exception as e:
         log.error( u'in usep_gh_handler.reindex_all(); error, `%s`' % unicode(repr(e)) )
-
 
 @app.route( u'/', methods=[u'GET', u'POST'] )
 @app.route( u'/force/', methods=[u'GET', u'POST'] )  # for testing
