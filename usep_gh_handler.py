@@ -2,9 +2,8 @@
 
 import datetime, json, logging, os, pprint, urlparse
 import flask, redis, requests, rq
-from flask.ext.basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
-# from usep_gh_handler_app.utils import log_helper, reindex_all_support
-# from usep_gh_handler_app.utils import reindex_all_support
+# from flask.ext.basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
+from flask_basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
 from usep_gh_handler_app.utils.web_app_helper import WebAppHelper
 
 
