@@ -69,4 +69,4 @@ def handle_github_push():
                 kwargs = {u'files_to_process': files_to_process} )
         return u'received', 200
     except Exception as e:
-        log.error( u'in usep_gh_handler.handle_github_push(); error, `%s`' % unicode(repr(e)) )
+        log.error( u'error, `%s`' % unicode(repr(e)) )

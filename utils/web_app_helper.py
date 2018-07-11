@@ -7,7 +7,7 @@ import flask, requests
 LOG_CONF_JSN = unicode( os.environ[u'usep_gh__LOG_CONF_JSN'] )
 
 
-log = logging.getLogger( 'gh_post_sim_logger' )
+log = logging.getLogger( 'usep_gh_web_logger' )
 if not logging._handlers:  # true when module accessed by queue-jobs
     logging_config_dct = json.loads( LOG_CONF_JSN )
     logging.config.dictConfig( logging_config_dct )
@@ -54,6 +54,8 @@ class WebAppHelper( object ):
                 r = requests.post( DEV_URL, data=payload, auth=(B_AUTH_USERNAME, B_AUTH_PASSWORD) )
             except Exception as e:
                 log.error( 'problem hitting dev, ```{}```'.format( unicode(repr(e)) ) )
+        else:
+            log.debug( u'not production, so not going to hit dev' )
         return
 
     def prep_data_dict( self, flask_request_data ):
@@ -62,11 +64,14 @@ class WebAppHelper( object ):
         log.debug( u'flask_request_data, `%s`' % flask_request_data )
         files_to_process = { u'files_updated': [], u'files_removed': [], u'timestamp': unicode(datetime.datetime.now()) }
         if flask_request_data:
-            commit_info = json.loads( flask_request_data )
-            ( added, modified, removed ) = self._examine_commits( commit_info )
-            files_to_process[u'files_updated'] = added
-            files_to_process[u'files_updated'].extend( modified )  # solrization same for added or modified
-            files_to_process[u'files_removed'] = removed
+            try:
+                commit_info = json.loads( flask_request_data )
+                ( added, modified, removed ) = self._examine_commits( commit_info )
+                files_to_process[u'files_updated'] = added
+                files_to_process[u'files_updated'].extend( modified )  # solrization same for added or modified
+                files_to_process[u'files_removed'] = removed
+            except Exception as e:
+                log.error( u'error, ```%s```', unicode(repr(e)) )
         log.debug( u'files_to_process, `%s`' % pprint.pformat(files_to_process) )
         return files_to_process
 
