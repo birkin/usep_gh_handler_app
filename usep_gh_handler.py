@@ -29,10 +29,16 @@ basic_auth = BasicAuth(app)
 app_helper = WebAppHelper()
 q = rq.Queue( u'usep', connection=redis.Redis() )
 
+
 @app.route( u'/info/', methods=[u'GET'] )
 def info():
     log.debug( 'in info()' )
-    return 'info coming'
+    dct = {
+        u'datetime': unicode( datetime.datetime.now() ),
+        u'info': u'https://github.com/Brown-University-Library/usep_gh_handler_app'
+    }
+    return flask.jsonify( dct )
+
 
 @app.route( u'/reindex_all/', methods=[u'GET'] )
 @basic_auth.required
@@ -47,6 +53,7 @@ def reindex_all():
         return u'pull and reindex initiated.', 200
     except Exception as e:
         log.error( u'in usep_gh_handler.reindex_all(); error, `%s`' % unicode(repr(e)) )
+
 
 @app.route( u'/', methods=[u'GET', u'POST'] )
 @app.route( u'/force/', methods=[u'GET', u'POST'] )  # for testing
