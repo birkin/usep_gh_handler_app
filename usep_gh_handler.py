@@ -25,6 +25,7 @@ log.debug( 'logging ready' )
 app = flask.Flask(__name__)
 app.config[u'BASIC_AUTH_USERNAME'] = B_AUTH_USERNAME
 app.config[u'BASIC_AUTH_PASSWORD'] = B_AUTH_PASSWORD
+app.config[u'JSONIFY_PRETTYPRINT_REGULAR'] = True
 basic_auth = BasicAuth(app)
 app_helper = WebAppHelper()
 q = rq.Queue( u'usep', connection=redis.Redis() )
