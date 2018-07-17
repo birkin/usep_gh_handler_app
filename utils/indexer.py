@@ -16,6 +16,7 @@ log = logging.getLogger( 'usep_gh_worker_logger' )
 if not logging._handlers:  # true when module accessed by queue-jobs
     logging_config_dct = json.loads( LOG_CONF_JSN )
     logging.config.dictConfig( logging_config_dct )
+log.debug( 'indexer logging ready' )
 
 
 class Indexer( object ):

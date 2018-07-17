@@ -19,7 +19,7 @@ LOG_CONF_JSN = unicode( os.environ[u'usep_gh__WRKR_LOG_CONF_JSN'] )
 logging_config_dct = json.loads( LOG_CONF_JSN )
 log = logging.getLogger( 'usep_gh_worker_logger' )
 logging.config.dictConfig( logging_config_dct )
-log.debug( 'logging ready' )
+log.debug( 'processing logging ready' )
 
 
 class Puller( object ):
