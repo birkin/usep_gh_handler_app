@@ -68,6 +68,7 @@ def handle_github_push():
         app_helper.log_github_post( flask.request )
         app_helper.trigger_dev_if_production( flask.request.host )  # github can only hit production; we want dev updated, too
         log.debug( u'checked trigger-dev step' )
+        log.debug( u'flask.request.data, ```%s```' % flask.request.data )
         if flask.request.data or u'force' in flask.request.path:
             log.debug( 'going to check for files_to_process' )
             files_to_process = app_helper.prep_data_dict( flask.request.data )  # returns dict of lists; files_updated, files_removed
