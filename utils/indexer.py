@@ -2,20 +2,24 @@
 
 from __future__ import unicode_literals
 
-import logging, os, pprint
+import json, logging, os, pprint
 import lxml, redis, requests, rq, solr
 from lxml import etree
 from usep_gh_handler_app.utils import bib_adder, log_helper
-# from usep_gh_handler_app.utils import bib_adder, log_helper, transcription_adder
+
+
+# LOG_CONF_JSN = unicode( os.environ[u'usep_gh__WRKR_LOG_CONF_JSN'] )
+# log = logging.getLogger( 'usep_gh_worker_logger' )
+# if not logging._handlers:  # true when module accessed by queue-jobs
+#     logging_config_dct = json.loads( LOG_CONF_JSN )
+#     logging.config.dictConfig( logging_config_dct )
+# log.debug( 'indexer logging ready' )
 
 
 LOG_CONF_JSN = unicode( os.environ[u'usep_gh__WRKR_LOG_CONF_JSN'] )
-
-
+logging_config_dct = json.loads( LOG_CONF_JSN )
 log = logging.getLogger( 'usep_gh_worker_logger' )
-if not logging._handlers:  # true when module accessed by queue-jobs
-    logging_config_dct = json.loads( LOG_CONF_JSN )
-    logging.config.dictConfig( logging_config_dct )
+logging.config.dictConfig( logging_config_dct )
 log.debug( 'indexer logging ready' )
 
 
