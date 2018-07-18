@@ -71,6 +71,7 @@ class Indexer( object ):
     def _post_solr_update( self, solr_xml ):
         """ Posts solr doc.
             Called by update_index_entry() """
+        log.debug( 'self.SOLR_URL, ```%s```' % self.SOLR_URL )
         try:
             r = requests.post(
                 self.SOLR_URL + u"/update",
