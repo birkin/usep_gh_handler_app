@@ -5,7 +5,7 @@
 import datetime, json, logging, os
 
 
-LOG_CONF_JSN = unicode( os.environ[u'usep_gh__WRKR_LOG_CONF_JSN'] )
+LOG_CONF_JSN = os.environ[u'usep_gh__WRKR_LOG_CONF_JSN']
 
 
 log = logging.getLogger( 'usep_gh_worker_logger' )

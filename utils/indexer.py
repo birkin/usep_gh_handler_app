@@ -16,7 +16,7 @@ from usep_gh_handler_app.utils import bib_adder, log_helper
 # log.debug( 'indexer logging ready' )
 
 
-LOG_CONF_JSN = unicode( os.environ[u'usep_gh__WRKR_LOG_CONF_JSN'] )
+LOG_CONF_JSN = os.environ[u'usep_gh__WRKR_LOG_CONF_JSN']
 logging_config_dct = json.loads( LOG_CONF_JSN )
 log = logging.getLogger( 'usep_gh_worker_logger' )
 logging.config.dictConfig( logging_config_dct )
@@ -31,11 +31,11 @@ class Indexer( object ):
     def __init__( self ):
         """ Settings. """
         self.worthwhile_dirs = [ u'bib_only', u'metadata_only', u'transcribed' ]  # only need to update index for these dirs
-        self.WEBSERVED_DATA_DIR_PATH = unicode( os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH') )
-        self.SOLR_URL = unicode( os.environ.get(u'usep_gh__SOLR_URL') )
-        self.SOLR_XSL_PATH = unicode( os.environ.get(u'usep_gh__SOLR_XSL_PATH') )
-        self.TITLES_URL = unicode( os.environ.get(u'usep_gh__TITLES_URL') )
-        self.TRANSCRIPTION_PARSER_XSL_PATH = unicode( os.environ.get('usep_gh__TRANSCRIPTION_PARSER_XSL_PATH') )
+        self.WEBSERVED_DATA_DIR_PATH = os.environ.get(u'usep_gh__WEBSERVED_DATA_DIR_PATH')
+        self.SOLR_URL = os.environ.get(u'usep_gh__SOLR_URL')
+        self.SOLR_XSL_PATH = os.environ.get(u'usep_gh__SOLR_XSL_PATH')
+        self.TITLES_URL = os.environ.get(u'usep_gh__TITLES_URL')
+        self.TRANSCRIPTION_PARSER_XSL_PATH = os.environ.get('usep_gh__TRANSCRIPTION_PARSER_XSL_PATH')
 
     ## update index entry ##
 
@@ -57,9 +57,9 @@ class Indexer( object ):
         log.debug( 'inscription_xml_path, ```%s```' % inscription_xml_path )
         log.debug( 'self.SOLR_XSL_PATH, ```%s```' % self.SOLR_XSL_PATH )
         with open( inscription_xml_path ) as f:
-            xml_txt = f.read().decode( 'utf-8' )
+            xml_txt = f.read()
         with open( self.SOLR_XSL_PATH ) as f:
-            xsl_txt = f.read().decode( 'utf-8' )
+            xsl_txt = f.read()
         xml_dom_obj = etree.fromstring( xml_txt.encode('utf-8') )
         transformer_obj = etree.XSLT( etree.fromstring(xsl_txt.encode('utf-8')) )
         transformed_xml_dom_obj = transformer_obj( xml_dom_obj )

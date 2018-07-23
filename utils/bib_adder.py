@@ -3,11 +3,12 @@
 from __future__ import unicode_literals
 
 import json, logging, os, pprint
+import logging.config
 import requests
 from lxml import etree
 
 
-LOG_CONF_JSN = unicode( os.environ[u'usep_gh__WRKR_LOG_CONF_JSN'] )
+LOG_CONF_JSN = os.environ[u'usep_gh__WRKR_LOG_CONF_JSN']
 
 
 log = logging.getLogger( 'usep_gh_worker_logger' )
@@ -36,7 +37,7 @@ class BibAdder():
             params = {'q':'id:"%s"' % inscription_id, 'fl':'bib_ids', 'wt':'json'}
             log.debug( 'params, ```%s```' % pprint.pformat(params) )
             r = requests.get( self.solr_url + "/select", params=params, timeout=30 )
-        except Exception, e:
+        except Exception as e:
             log.error( 'Exception on requests select, ```%s```' % unicode(repr(e)) )
             raise Exception( unicode(repr(e)) )
 
@@ -58,7 +59,7 @@ class BibAdder():
             p = requests.post( self.solr_url + "/update", data=update_json, headers={'Content-type':'application/json'}, timeout=30 )
             r = requests.get( self.solr_url + "/update?softCommit=true", timeout=30 )
             return True
-        except Exception, e:
+        except Exception as e:
             log.error( 'Exception on requests post or followup get, ```%s```' % unicode(repr(e)) )
             raise Exception( unicode(repr(e)) )
 

@@ -36,7 +36,7 @@ class IndexerTest( unittest.TestCase ):
         """ Tests bib-only inscription. """
         inscription_xml_path = os.path.abspath( './tests/test_files/CA.Berk.UC.HMA.G.8-4213.xml' )
         solr_xml = self.indexer._build_solr_doc( inscription_xml_path )
-        self.assertEqual( unicode, type(solr_xml) )
+        self.assertEqual( str, type(solr_xml) )
         self.assertTrue( '<field name="title">CA.Berk.UC.HMA.G.8/4213</field>' in solr_xml, 'solr_xml, ```%s```' % solr_xml )
         self.assertTrue( '<field name="msid_settlement">Berk</field>' in solr_xml, 'solr_xml, ```%s```' % solr_xml )
         self.assertTrue( '<field name="msid_institution">UC</field>' in solr_xml, 'solr_xml, ```%s```' % solr_xml )
