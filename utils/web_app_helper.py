@@ -53,7 +53,7 @@ class WebAppHelper( object ):
             log.debug( u'type(flask.request.data), `%s`' % type(flask.request.data) )
             payload = flask.request.data
             try:
-                r = requests.post( DEV_URL, data=payload, auth=(B_AUTH_USERNAME, B_AUTH_PASSWORD) )
+                r = requests.post( DEV_URL, data=payload, auth=(B_AUTH_USERNAME, B_AUTH_PASSWORD), timeout=30 )
             except Exception as e:
                 log.error( 'problem hitting dev, ```{}```'.format( unicode(repr(e)) ) )
         else:
