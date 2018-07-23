@@ -76,6 +76,8 @@ def handle_github_push():
             q.enqueue_call (
                 func=u'usep_gh_handler_app.utils.processor.run_call_git_pull',
                 kwargs = {u'files_to_process': files_to_process} )
+            log.debug( u'job enqueued' )
+        log.debug( u'returning 200' )
         return u'received', 200
     except Exception as e:
         log.error( u'error, `%s`' % unicode(repr(e)) )
