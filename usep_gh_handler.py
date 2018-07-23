@@ -53,7 +53,7 @@ def reindex_all():
             kwargs = {} )
         return u'pull and reindex initiated.', 200
     except Exception as e:
-        log.error( u'in usep_gh_handler.reindex_all(); error, `%s`' % unicode(repr(e)) )
+        log.error( u'in usep_gh_handler.reindex_all(); error, `%s`' % e )
 
 
 @app.route( u'/', methods=[u'GET', u'POST'] )
@@ -80,4 +80,4 @@ def handle_github_push():
         log.debug( u'returning 200' )
         return u'received', 200
     except Exception as e:
-        log.error( u'error, `%s`' % unicode(repr(e)) )
+        log.error( u'error, `%s`' % e )

@@ -56,7 +56,7 @@ class WebAppHelper( object ):
             try:
                 r = requests.post( DEV_URL, data=payload, auth=(B_AUTH_USERNAME, B_AUTH_PASSWORD), timeout=30 )
             except Exception as e:
-                log.error( 'problem hitting dev, ```{}```'.format( unicode(repr(e)) ) )
+                log.error( 'problem hitting dev, ```{}```'.format( e ) )
         else:
             log.debug( u'not production, so not going to hit dev' )
         return
@@ -65,7 +65,7 @@ class WebAppHelper( object ):
         """ Prepares the data-dict to be sent to run_call_git_pull().
             Called by usep_gh_handler.handle_github_push() """
         log.debug( u'flask_request_data, `%s`' % flask_request_data )
-        files_to_process = { u'files_updated': [], u'files_removed': [], u'timestamp': unicode(datetime.datetime.now()) }
+        files_to_process = { u'files_updated': [], u'files_removed': [], u'timestamp': str(datetime.datetime.now()) }
         if flask_request_data:
             try:
                 commit_info = json.loads( flask_request_data )
@@ -74,7 +74,7 @@ class WebAppHelper( object ):
                 files_to_process[u'files_updated'].extend( modified )  # solrization same for added or modified
                 files_to_process[u'files_removed'] = removed
             except Exception as e:
-                log.error( u'error, ```%s```', unicode(repr(e)) )
+                log.error( u'error, ```%s```', e )
         log.debug( u'files_to_process, `%s`' % pprint.pformat(files_to_process) )
         return files_to_process
 
