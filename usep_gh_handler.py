@@ -66,7 +66,7 @@ def handle_github_push():
     try:
         log.debug( u'starting (basic-auth successful)' )
         app_helper.log_github_post( flask.request )
-        app_helper.trigger_dev_if_production( flask.request.host )  # github can only hit production; we want dev updated, too
+        # app_helper.trigger_dev_if_production( flask.request.host )  # github can only hit production; we want dev updated, too -- temporarily disabled
         log.debug( u'checked trigger-dev step' )
         log.debug( u'flask.request.data, ```%s```' % flask.request.data )
         if flask.request.data or u'force' in flask.request.path:
