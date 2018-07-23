@@ -22,7 +22,7 @@ class BibAdder():
     def __init__(self, solr_url, titles_url):
         self.solr_url = solr_url
         try:
-            r = requests.get(titles_url)
+            r = requests.get( titles_url, timeout=30 )
             self.titles_xml = etree.fromstring(r.content)
         except Exception as e:
             log.error( 'Exception in __init__, ```%s```' % unicode(repr(e)) )
@@ -35,7 +35,7 @@ class BibAdder():
             # params = {'q':'id:"{}"'.format(inscription_id), 'fl':'bib_ids', 'wt':'json'}
             params = {'q':'id:"%s"' % inscription_id, 'fl':'bib_ids', 'wt':'json'}
             log.debug( 'params, ```%s```' % pprint.pformat(params) )
-            r = requests.get( self.solr_url + "/select", params=params )
+            r = requests.get( self.solr_url + "/select", params=params, timeout=30 )
         except Exception, e:
             log.error( 'Exception on requests select, ```%s```' % unicode(repr(e)) )
             raise Exception( unicode(repr(e)) )
@@ -55,8 +55,8 @@ class BibAdder():
         log.debug("Updating {0} with JSON {1}".format(inscription_id, update_json))
 
         try:
-            p = requests.post(self.solr_url + "/update", data=update_json, headers={'Content-type':'application/json'})
-            r = requests.get(self.solr_url + "/update?softCommit=true")
+            p = requests.post( self.solr_url + "/update", data=update_json, headers={'Content-type':'application/json'}, timeout=30 )
+            r = requests.get( self.solr_url + "/update?softCommit=true", timeout=30 )
             return True
         except Exception, e:
             log.error( 'Exception on requests post or followup get, ```%s```' % unicode(repr(e)) )

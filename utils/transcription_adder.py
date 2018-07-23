@@ -45,8 +45,8 @@ class TranscriptionAdder( object ):
                 }
             })
         try:
-            p = requests.post(self.solr_url+"/update", data=solr_req_text, headers={"Content-type":"application/json"})
-            g = requests.get(self.solr_url+"/update?softCommit=true")
+            p = requests.post( self.solr_url+"/update", data=solr_req_text, headers={"Content-type":"application/json"}, timeout=30 )
+            g = requests.get( self.solr_url+"/update?softCommit=true", timeout=30 )
         except Exception as e:
             log.error( 'Exception in add_transcription(), ```%s```' % unicode(repr(e)) )
             raise e

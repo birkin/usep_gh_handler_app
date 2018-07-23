@@ -53,7 +53,7 @@ class SolrIdChecker( object ):
         """ Returns list of solr ids.
             Called by build_orphaned_ids(). """
         url = u'%s/select?q=*:*&fl=id&rows=100000&wt=json' % self.SOLR_URL
-        r = requests.get( url )
+        r = requests.get( url, timeout=30 )
         json_dict = r.json()
         docs = json_dict[u'response'][u'docs']  # list of dicts
         doc_list = []

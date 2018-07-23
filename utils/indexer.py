@@ -76,7 +76,9 @@ class Indexer( object ):
             r = requests.post(
                 self.SOLR_URL + u"/update",
                 data=solr_xml,
-                headers={"Content-type":"application/xml"} )
+                headers={"Content-type":"application/xml"},
+                timeout=30
+                )
             resp = r.content.decode( 'utf-8' )
             log.debug( 'post resp, ```%s```' % resp )
         except Exception as e:
