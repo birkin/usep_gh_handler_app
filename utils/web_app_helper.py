@@ -46,6 +46,8 @@ class WebAppHelper( object ):
         B_AUTH_USERNAME = unicode( os.environ[u'usep_gh__BASIC_AUTH_USERNAME'] )
         DEV_URL = unicode( os.environ[u'usep_gh__DEV_URL'] )
         PRODUCTION_HOSTNAME = unicode( os.environ[u'usep_gh__PRODUCTION_HOSTNAME'] )
+        log.debug( u'flask_request_host, `%s`' % flask_request_host )
+        log.debug( u'PRODUCTION_HOSTNAME, `%s`' % PRODUCTION_HOSTNAME )
         if flask_request_host == PRODUCTION_HOSTNAME:
             log.debug( u'gonna hit dev, too' )
             log.debug( u'type(flask.request.data), `%s`' % type(flask.request.data) )
