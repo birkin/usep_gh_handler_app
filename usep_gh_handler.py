@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import datetime, json, logging, os, pprint, sys, urlparse
+import datetime, json, logging, os, pprint, sys
 import flask, redis, requests, rq
 from flask_basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
 
@@ -13,9 +13,9 @@ if cwd_parent not in sys.path:
 from usep_gh_handler_app.utils.web_app_helper import WebAppHelper
 
 ## setup
-B_AUTH_PASSWORD = unicode( os.environ[u'usep_gh__BASIC_AUTH_PASSWORD'] )
-B_AUTH_USERNAME = unicode( os.environ[u'usep_gh__BASIC_AUTH_USERNAME'] )
-LOG_CONF_JSN = unicode( os.environ[u'usep_gh__LOG_CONF_JSN'] )
+B_AUTH_PASSWORD = os.environ[u'usep_gh__BASIC_AUTH_PASSWORD']
+B_AUTH_USERNAME = os.environ[u'usep_gh__BASIC_AUTH_USERNAME']
+LOG_CONF_JSN = os.environ[u'usep_gh__LOG_CONF_JSN']
 
 logging_config_dct = json.loads( LOG_CONF_JSN )
 log = logging.getLogger( 'usep_gh_web_logger' )
@@ -35,7 +35,7 @@ q = rq.Queue( u'usep', connection=redis.Redis() )
 def info():
     log.debug( 'in info()' )
     dct = {
-        u'datetime': unicode( datetime.datetime.now() ),
+        u'datetime': str( datetime.datetime.now() ),
         u'info': u'https://github.com/Brown-University-Library/usep_gh_handler_app'
     }
     return flask.jsonify( dct )

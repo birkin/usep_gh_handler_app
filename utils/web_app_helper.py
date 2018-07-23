@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import datetime, json, logging, os, pprint
+import logging.config
 import flask, requests
 
 
-LOG_CONF_JSN = unicode( os.environ[u'usep_gh__LOG_CONF_JSN'] )
+LOG_CONF_JSN = os.environ['usep_gh__LOG_CONF_JSN']
 
 
 log = logging.getLogger( 'usep_gh_web_logger' )
