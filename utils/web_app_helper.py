@@ -30,7 +30,7 @@ class WebAppHelper( object ):
             u'cookies': flask_request.cookies,
             u'data': flask_request.data,
             u'form': flask_request.form,
-            u'headers': unicode(repr(flask_request.headers)),
+            u'headers': repr(flask_request.headers),
             u'host': flask_request.host,
             u'method': flask_request.method,
             u'path': flask_request.path,
@@ -43,10 +43,10 @@ class WebAppHelper( object ):
     def trigger_dev_if_production( self, flask_request_host ):
         """ Sends github `data` to dev-server if this is the production-server.
             Called by usep_gh_handler.handle_github_push() """
-        B_AUTH_PASSWORD = unicode( os.environ[u'usep_gh__BASIC_AUTH_PASSWORD'] )
-        B_AUTH_USERNAME = unicode( os.environ[u'usep_gh__BASIC_AUTH_USERNAME'] )
-        DEV_URL = unicode( os.environ[u'usep_gh__DEV_URL'] )
-        PRODUCTION_HOSTNAME = unicode( os.environ[u'usep_gh__PRODUCTION_HOSTNAME'] )
+        B_AUTH_PASSWORD = os.environ[u'usep_gh__BASIC_AUTH_PASSWORD']
+        B_AUTH_USERNAME = os.environ[u'usep_gh__BASIC_AUTH_USERNAME']
+        DEV_URL = os.environ[u'usep_gh__DEV_URL']
+        PRODUCTION_HOSTNAME = os.environ[u'usep_gh__PRODUCTION_HOSTNAME']
         log.debug( u'flask_request_host, `%s`' % flask_request_host )
         log.debug( u'PRODUCTION_HOSTNAME, `%s`' % PRODUCTION_HOSTNAME )
         if flask_request_host == PRODUCTION_HOSTNAME:
