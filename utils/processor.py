@@ -149,7 +149,7 @@ class XIncludeUpdater( object ):
         for path in inscriptions_filepath_list:
             xml = self._open_file( path )
             updated_xml = self._update_xml( xml )
-            with open( path, 'w' ) as f:
+            with open( path, 'wb' ) as f:
                 f.write( updated_xml.encode('utf-8') )
         return
 
@@ -161,17 +161,18 @@ class XIncludeUpdater( object ):
         contents_try = os.listdir( inscriptions_web_dir_path )
         for entry in contents_try:
             if entry[-4:] == '.xml':
-                contents.append( '%s/%s' % (inscriptions_web_dir_path, entry) )
+                contents.append( '%s%s' % (inscriptions_web_dir_path, entry) )
+        log.debug( 'contents/0:500, ```%s```' % pprint.pformat(contents)[0:500] )
         return contents
 
     def _open_file( self, path ):
         """ Returns unicode xml string.
             Called by update_xinclude_references() """
-        with open( path ) as f:
-            xml = f.read()
-        if type( xml ) == str:
-            xml = xml.decode( 'utf-8' )
+        with open( path, 'rb' ) as f:
+            xml8 = f.read()
+        xml = xml8.decode( 'utf-8' )
         assert type( xml ) == str, type( xml )
+        # log.debug( 'xml[0:100], ```%s```' % xml[0:100] )
         return xml
 
     def _update_xml( self, xml ):
@@ -184,8 +185,6 @@ class XIncludeUpdater( object ):
         }
         for (key, value) in mapper.items():
             xml = xml.replace( key, value )
-            if type( xml ) == str:
-                xml = xml.decode( 'utf-8' )
             assert type( xml ) == str, type( xml )
         return xml
 
@@ -232,12 +231,15 @@ def run_xinclude_updater( files_to_update, files_to_remove ):
     """ Updates the three <xi:include href="../path/inscription.xml"> hrefs in each inscription file.
         Reason is that the folder structure as exists for editors and on github is slightly different than in web-app.
         Triggered bu utils.processor.run_copy_files(). """
-    log.debug( 'in utils.processor.run_call_xinclude_replacer(); starting' )
-    assert type( files_to_update ) == list; assert type( files_to_remove ) == list
-    xinclude_updater = XIncludeUpdater()
-    xinclude_updater.update_xinclude_references()
-    log.debug( 'in processor.run_call_xinclude_updater(); enqueuing next job' )
-    q.enqueue_call(
-        func='usep_gh_handler_app.utils.indexer.run_update_index',
-        kwargs={'files_updated': files_to_update, 'files_removed': files_to_remove} )
+    log.debug( 'starting run_xinclude_updater()' )
+    try:
+        assert type( files_to_update ) == list; assert type( files_to_remove ) == list
+        xinclude_updater = XIncludeUpdater()
+        xinclude_updater.update_xinclude_references()
+        log.debug( 'in processor.run_call_xinclude_updater(); enqueuing next job' )
+        q.enqueue_call(
+            func='usep_gh_handler_app.utils.indexer.run_update_index',
+            kwargs={'files_updated': files_to_update, 'files_removed': files_to_remove} )
+    except Exception as e:
+        log.error( 'exception, ```%s```' % e )
     return
