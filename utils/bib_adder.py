@@ -30,11 +30,13 @@ class BibAdder():
     def addBibl(self, inscription_id):
         log.debug( 'addBibl inscription_id, `%s`' % inscription_id )
         log.debug( 'self.solr_url, ```%s```' % self.solr_url )
+
         try:
             # params = {'q':'id:"{}"'.format(inscription_id), 'fl':'bib_ids', 'wt':'json'}
             params = {'q':'id:"%s"' % inscription_id, 'fl':'bib_ids', 'wt':'json'}
             log.debug( 'params, ```%s```' % pprint.pformat(params) )
             r = requests.get( self.solr_url + "/select", params=params, timeout=30 )
+            log.debug( 'select request complete' )
         except Exception as e:
             log.error( 'Exception on requests select, ```%s```' % unicode(repr(e)) )
             raise Exception( unicode(repr(e)) )
