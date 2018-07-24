@@ -42,6 +42,7 @@ class BibAdder():
         try:
             doc = r.json()['response']['docs'][0]
             bib_ids = doc["bib_ids"] if "bib_ids" in doc else []
+            log.debug( 'have bib_ids' )
         except KeyError:
             log.error("KeyError: Solr returned no results for id: {}".format(inscription_id))
             return False
@@ -49,13 +50,14 @@ class BibAdder():
         ids = set()
         for i in bib_ids:
             ids.update(etree.XPath("//tei:bibl[@xml:id='"+i+"']/ancestor::tei:bibl/@xml:id", namespaces={"tei":"http://www.tei-c.org/ns/1.0"})(self.titles_xml))
-
+        log.debug( 'set() updates complete' )
         update_json = json.dumps([{"id":inscription_id, "bib_ids":{"add":list(ids)}}])
-        log.debug("Updating {0} with JSON {1}".format(inscription_id, update_json))
+        log.debug( "Updating {0} with JSON {1}".format(inscription_id, update_json) )
 
         try:
             p = requests.post( self.solr_url + "/update", data=update_json, headers={'Content-type':'application/json'}, timeout=30 )
             r = requests.get( self.solr_url + "/update?softCommit=true", timeout=30 )
+            log.debug( 'get and post updates complete' )
             return True
         except Exception as e:
             log.error( 'Exception on requests post or followup get, ```%s```' % unicode(repr(e)) )
