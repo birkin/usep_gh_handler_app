@@ -16,14 +16,14 @@ import shellvars
 current_directory = os.path.dirname( os.path.abspath(__file__) )
 
 ## vars
-ACTIVATE_FILE = os.path.abspath( u'%s/../../env_usep_gh/bin/activate_this.py' % current_directory )
+# ACTIVATE_FILE = os.path.abspath( u'%s/../../env_usep_gh/bin/activate_this.py' % current_directory )
 PROJECT_DIR = os.path.abspath( u'%s/../../usep_gh_handler_app' % current_directory )
 PROJECT_ENCLOSING_DIR = os.path.abspath( u'%s/../..' % current_directory )
 SITE_PACKAGES_DIR = os.path.abspath( u'%s/../../env_usep_gh/lib/python2.7/site-packages' % current_directory )
 ENV_SETTINGS_FILE = os.environ['usep_gh__SETTINGS_PATH']  # set in `httpd/passenger.conf`, and `env/bin/activate`
 
 ## virtualenv
-execfile( ACTIVATE_FILE, dict(__file__=ACTIVATE_FILE) )  # file loads environmental variables
+# execfile( ACTIVATE_FILE, dict(__file__=ACTIVATE_FILE) )  # file loads environmental variables
 
 ## sys.path additions
 for entry in [PROJECT_DIR, PROJECT_ENCLOSING_DIR, SITE_PACKAGES_DIR]:
