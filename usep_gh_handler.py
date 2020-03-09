@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
+
 import datetime, json, logging, os, pprint, sys
 import flask, redis, requests, rq
 from flask_basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
@@ -39,6 +42,15 @@ def info():
         u'info': u'https://github.com/Brown-University-Library/usep_gh_handler_app'
     }
     return flask.jsonify( dct )
+
+
+@app.route( '/check_orphans/', methods=[u'GET'] )
+@basic_auth.required
+def check_orphans():
+    """ Builds list of active inscription_ids, builds list of solr inscription_ids, presents results.
+        Called via admin. """
+    log.debug( '\n\nstarting check_orphans()' )
+    pass
 
 
 @app.route( u'/reindex_all/', methods=[u'GET'] )
