@@ -121,9 +121,9 @@ class OrphanDeleter( object ):
         <p>Time-taken: {context['time_taken']}</p>
         <hr/>
         <p>Would you like to delete these orphans?</p>
-        <form action="/orphan_handler">
-            <input type="submit" value="Yes">
-            <input type="submit" value="No">
+        <form action="/orphan_handler/">
+            <input type="submit" value="Yes" name="action_button">
+            <input type="submit" value="No" name="action_button">
         </form>
     </body>
 </html>

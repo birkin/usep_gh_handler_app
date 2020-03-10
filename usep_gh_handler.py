@@ -65,6 +65,25 @@ def list_orphans():
     html = orphan_manager.build_html( context )
     return html, 200
 
+@app.route( '/orphan_handler/', methods=['GET'] )
+@basic_auth.required
+def delete_orphans():
+    """ Runs orphan-delete if necessary.
+        Called via admin. """
+    log.debug( '\n\nstarting delete_orphans()' )
+    log.debug( f'request, ```{pprint.pformat(flask.request.__dict__)}```' )
+
+    # start_time = datetime.datetime.now()
+    # ids_to_delete = flask.session['ids_to_delete']
+    # log.debug( f'ids_to_delete, ```{ids_to_delete}```' )
+
+    # flask.session['ids_to_delete'] = json.dumps( [] )
+    # data = orphan_manager.prep_orphan_list()
+    # flask.session['ids_to_delete'] = json.dumps( data )
+    # context = orphan_manager.prep_context( data, start_time )
+    # log.debug( f'context, ```{pprint.pformat(context)}```' )
+    # html = orphan_manager.build_html( context )
+    return 'not yet implemented', 200
 
 @app.route( '/reindex_all/', methods=['GET'] )
 @basic_auth.required
