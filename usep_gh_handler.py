@@ -3,7 +3,8 @@
 from __future__ import unicode_literals
 
 
-import datetime, json, logging, os, pprint, sys
+import datetime, json, logging, os, pprint, secrets, sys
+
 import flask, redis, requests, rq
 from flask_basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
 
@@ -14,6 +15,7 @@ if cwd_parent not in sys.path:
 
 ## rest of imports
 from usep_gh_handler_app.utils.web_app_helper import WebAppHelper
+from usep_gh_handler_app.utils.orphan_manager import OrphanDeleter
 
 ## setup
 B_AUTH_PASSWORD = os.environ['usep_gh__BASIC_AUTH_PASSWORD']
@@ -29,8 +31,12 @@ app = flask.Flask(__name__)
 app.config['BASIC_AUTH_USERNAME'] = B_AUTH_USERNAME
 app.config['BASIC_AUTH_PASSWORD'] = B_AUTH_PASSWORD
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+tkn = secrets.token_urlsafe( 16 )
+app.config["SECRET_KEY"] = tkn
+
 basic_auth = BasicAuth(app)
 app_helper = WebAppHelper()
+orphan_manager = OrphanDeleter()
 q = rq.Queue( 'usep', connection=redis.Redis() )
 
 
@@ -49,8 +55,15 @@ def info():
 def list_orphans():
     """ Builds list of active inscription_ids, builds list of solr inscription_ids, presents results.
         Called via admin. """
-    log.debug( '\n\nstarting check_orphans()' )
-    return 'list_orphans perceived', 200
+    log.debug( '\n\nstarting list_orphans()' )
+    start_time = datetime.datetime.now()
+    flask.session['ids_to_delete'] = json.dumps( [] )
+    data = orphan_manager.prep_orphan_list()
+    flask.session['ids_to_delete'] = json.dumps( data )
+    context = orphan_manager.prep_context( data, start_time )
+    log.debug( f'context, ```{pprint.pformat(context)}```' )
+    html = orphan_manager.build_html( context )
+    return html, 200
 
 
 @app.route( '/reindex_all/', methods=['GET'] )
