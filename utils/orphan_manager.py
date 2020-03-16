@@ -145,7 +145,7 @@ class OrphanDeleter( object ):
                 s.commit()
                 s.close()
                 log.debug( f'id, ```{delete_id}```; response, ```{response}```' )
-                break
+                # break
             except:
                 errors.append( delete_id )
                 log.exception( f'error trying to delete id, ```{delete_id}```; processing will continue after traceback...' )
