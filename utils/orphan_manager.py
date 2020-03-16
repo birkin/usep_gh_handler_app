@@ -80,12 +80,13 @@ class OrphanDeleter( object ):
 
     # --------------------------------------------------
 
-    def prep_context( self, data: list, start_time: datetime.datetime ):
+    def prep_context( self, data: list, orphan_handler_url: str, start_time: datetime.datetime ):
         """ Prepares response info.
             Called by route list_orphans() """
         context = {
             'data': data,
             'inscriptions_dir_path': self.inscriptions_dir_path,
+            'orphan_handler_url': orphan_handler_url,
             'time_taken': str( datetime.datetime.now() - start_time )
         }
         log.debug( f'context, ```{pprint.pformat(context)}```' )
@@ -121,7 +122,7 @@ class OrphanDeleter( object ):
         <p>Time-taken: {context['time_taken']}</p>
         <hr/>
         <p>Would you like to delete these orphans?</p>
-        <form action="/orphan_handler/">
+        <form action="{context['orphan_handler_url']}">
             <input type="submit" value="Yes" name="action_button">
             <input type="submit" value="No" name="action_button">
         </form>
