@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import datetime, json, logging, os, pprint, secrets, sys, time
 
-import flask, redis, requests, rq, solr
+import flask, redis, requests, rq
 from flask_basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
 
 ## update sys.path
@@ -21,7 +21,6 @@ from usep_gh_handler_app.utils.orphan_manager import OrphanDeleter
 B_AUTH_PASSWORD = os.environ['usep_gh__BASIC_AUTH_PASSWORD']
 B_AUTH_USERNAME = os.environ['usep_gh__BASIC_AUTH_USERNAME']
 LOG_CONF_JSN = os.environ['usep_gh__LOG_CONF_JSN']
-SOLR_URL = os.environ['usep_gh__SOLR_URL']
 
 logging_config_dct = json.loads( LOG_CONF_JSN )
 log = logging.getLogger( 'usep_gh_web_logger' )
@@ -79,35 +78,18 @@ def delete_orphans():
         Called via admin. """
     log.debug( '\n\nstarting delete_orphans()' )
     log.debug( f'request, ```{flask.request.__dict__}```' )
-
     if flask.request.args.get('action_button') == 'No':
         return 'no orphans deleted', 200
-
     elif flask.request.args.get('action_button') == 'Yes':
-
         start_time = datetime.datetime.now()
         ids_to_delete: list = json.loads( flask.session['ids_to_delete'] )
         log.debug( f'ids_to_delete, ```{pprint.pformat(ids_to_delete)}```' )
-
-        errors = []
-        for delete_id in ids_to_delete:
-            try:
-                s = solr.Solr( SOLR_URL )
-                time.sleep( .5 )
-                response = s.delete( id=delete_id )
-                s.commit()
-                s.close()
-                log.debug( f'id, ```{delete_id}```; response, ```{response}```' )
-                break
-            except:
-                errors.append( delete_id )
-                log.exception( f'error trying to delete id, ```{delete_id}```; processing will continue after traceback...' )
-
+        errors = orphan_manager.run_deletes( ids_to_delete )
+        log.debug( f'time_taken, ```{str( datetime.datetime.now() - start_time )}```' )
         if errors == []:
             return 'all orphans deleted', 200
         else:
-            return 'problems deleting some orphans; see logs for details'
-
+            return 'problems deleting some orphans; see logs for details', 200
     else:
         return 'bad-request', 400
 

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 
-import datetime, glob, json, logging, os, pprint
-import requests
+import datetime, glob, json, logging, os, pprint, time
+import requests, solr
 # from iip_processing_app.lib.processor import Indexer
 
 
@@ -133,15 +133,22 @@ class OrphanDeleter( object ):
         return html
 
 
-    # def run_deletes( self, id_lst ):
-    #     """ Runs deletions.
-    #         Called by views.delete_solr_orphans() """
-    #     log.debug( 'id_lst, ```{}```'.format(pprint.pformat(id_lst)) )
-    #     for inscription_id in id_lst:
-    #         s = solr.Solr( self.SOLR_URL )
-    #         response = s.delete( id=inscription_id )
-    #         s.commit()
-    #         s.close()
-    #     return
+    def run_deletes( self, ids_to_delete ):
+        """ Runs deletions.
+            Called by route '/orphan_handler/' """
+        errors = []
+        for delete_id in ids_to_delete:
+            try:
+                s = solr.Solr( self.SOLR_URL )
+                time.sleep( .3 )
+                response = s.delete( id=delete_id )
+                s.commit()
+                s.close()
+                log.debug( f'id, ```{delete_id}```; response, ```{response}```' )
+                break
+            except:
+                errors.append( delete_id )
+                log.exception( f'error trying to delete id, ```{delete_id}```; processing will continue after traceback...' )
+        return errors
 
     ## end class OrphanDeleter()
