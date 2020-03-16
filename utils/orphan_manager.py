@@ -87,6 +87,7 @@ class OrphanDeleter( object ):
             'data': data,
             'inscriptions_dir_path': self.inscriptions_dir_path,
             'orphan_handler_url': orphan_handler_url,
+            'solr_url': self.SOLR_URL,
             'time_taken': str( datetime.datetime.now() - start_time )
         }
         log.debug( f'context, ```{pprint.pformat(context)}```' )
@@ -103,13 +104,13 @@ class OrphanDeleter( object ):
         log.debug( f'initial html, ```{html}```' )
         if len( context['data'] ) == 0:
             html = f'''{html}
-        <p>No orphans to delete from comparing the inscription_ids in "{self.inscriptions_dir_path}", with the inscription_ids in solr.</p>
+        <p>No orphans to delete from comparing the inscription_ids in "{context['inscriptions_dir_path']}", with the inscription_ids in solr at "{context['solr_url']}".</p>
     </body>
 </html>
 '''
         else:
             html = f'''{html}
-        <p>Comparing the inscription_ids in "{self.inscriptions_dir_path}", with the inscription_ids in solr yields the following orphans:</p>
+        <p>Comparing the inscription_ids in "{context['inscriptions_dir_path']}", with the inscription_ids in solr at "{context['solr_url']}", yields the following orphans:</p>
         <ul>
 '''
             insc_html = ''

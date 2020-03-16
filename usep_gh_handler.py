@@ -21,6 +21,7 @@ from usep_gh_handler_app.utils.orphan_manager import OrphanDeleter
 B_AUTH_PASSWORD = os.environ['usep_gh__BASIC_AUTH_PASSWORD']
 B_AUTH_USERNAME = os.environ['usep_gh__BASIC_AUTH_USERNAME']
 LOG_CONF_JSN = os.environ['usep_gh__LOG_CONF_JSN']
+SOLR_URL = os.environ['usep_gh__SOLR_URL']
 
 logging_config_dct = json.loads( LOG_CONF_JSN )
 log = logging.getLogger( 'usep_gh_web_logger' )
