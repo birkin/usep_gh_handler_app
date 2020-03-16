@@ -57,18 +57,20 @@ def list_orphans():
     """ Builds list of active inscription_ids, builds list of solr inscription_ids, presents results.
         Called via admin. """
     log.debug( '\n\nstarting list_orphans()' )
-
     orphan_handler_url = flask.url_for('delete_orphans')
     log.debug( f'orphan_handler url, ```{orphan_handler_url}```' )
-
     start_time = datetime.datetime.now()
     flask.session['ids_to_delete'] = json.dumps( [] )
     data = orphan_manager.prep_orphan_list()
     flask.session['ids_to_delete'] = json.dumps( data )
     context = orphan_manager.prep_context( data, orphan_handler_url, start_time )
     log.debug( f'context, ```{pprint.pformat(context)}```' )
-    html = orphan_manager.build_html( context )
-    return html, 200
+    if flask.request.args.get('format') == 'json':
+        return flask.jsonify( context )
+    else:
+        html = orphan_manager.build_html( context )
+        return html, 200
+
 
 @app.route( '/orphan_handler/', methods=['GET'] )
 @basic_auth.required
