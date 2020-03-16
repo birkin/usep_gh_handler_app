@@ -3,9 +3,9 @@
 from __future__ import unicode_literals
 
 
-import datetime, json, logging, os, pprint, secrets, sys
+import datetime, json, logging, os, pprint, secrets, sys, time
 
-import flask, redis, requests, rq
+import flask, redis, requests, rq, solr
 from flask_basicauth import BasicAuth  # http://flask-basicauth.readthedocs.org/en/latest/
 
 ## update sys.path
@@ -78,30 +78,39 @@ def delete_orphans():
     """ Runs orphan-delete if necessary.
         Called via admin. """
     log.debug( '\n\nstarting delete_orphans()' )
-    # log.debug( f'request, ```{pprint.pformat(flask.request.__dict__)}```' )
+    log.debug( f'request, ```{flask.request.__dict__}```' )
 
-    start_time = datetime.datetime.now()
-    ids_to_delete = flask.session['ids_to_delete']
-    log.debug( f'ids_to_delete, ```{pprint.pformat(ids_to_delete)}```' )
+    if flask.request.args.get('action_button') == 'No':
+        return 'no orphans deleted', 200
 
-    errors = []
-    for delete_id in ids_to_delete:
-        try:
-            s = solr.Solr( self.SOLR_URL )
-            time.sleep( .5 )
-            response = s.delete( id=delete_id )
-            s.commit()
-            s.close()
-            log.debug( f'id, ```{delete_id}```; response, ```{response}```' )
-            break
-        except:
-            errors.append( delete_id )
-            log.traceback( f'error trying to delete id, ```{delete_id}```; processing will continue after traceback...' )
+    elif flask.request.args.get('action_button') == 'Yes':
 
-    if errors == []:
-        return 'all orphans deleted', 200
+        start_time = datetime.datetime.now()
+        ids_to_delete: list = json.loads( flask.session['ids_to_delete'] )
+        log.debug( f'ids_to_delete, ```{pprint.pformat(ids_to_delete)}```' )
+
+        errors = []
+        for delete_id in ids_to_delete:
+            try:
+                s = solr.Solr( SOLR_URL )
+                time.sleep( .5 )
+                response = s.delete( id=delete_id )
+                s.commit()
+                s.close()
+                log.debug( f'id, ```{delete_id}```; response, ```{response}```' )
+                break
+            except:
+                errors.append( delete_id )
+                log.exception( f'error trying to delete id, ```{delete_id}```; processing will continue after traceback...' )
+
+        if errors == []:
+            return 'all orphans deleted', 200
+        else:
+            return 'problems deleting some orphans; see logs for details'
+
     else:
-        return 'problems deleting some orphans; see logs for details'
+        return 'bad-request', 400
+
 
 @app.route( '/reindex_all/', methods=['GET'] )
 @basic_auth.required
