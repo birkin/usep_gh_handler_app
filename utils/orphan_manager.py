@@ -133,12 +133,15 @@ class OrphanDeleter( object ):
         return html
 
 
-    def run_deletes( self, id_lst ):
-        """ Runs deletions.
-            Called by views.delete_solr_orphans() """
-        log.debug( 'id_lst, ```{}```'.format(pprint.pformat(id_lst)) )
-        for inscription_id in id_lst:
-            indexer.delete_entry( inscription_id )
-        return
+    # def run_deletes( self, id_lst ):
+    #     """ Runs deletions.
+    #         Called by views.delete_solr_orphans() """
+    #     log.debug( 'id_lst, ```{}```'.format(pprint.pformat(id_lst)) )
+    #     for inscription_id in id_lst:
+    #         s = solr.Solr( self.SOLR_URL )
+    #         response = s.delete( id=inscription_id )
+    #         s.commit()
+    #         s.close()
+    #     return
 
     ## end class OrphanDeleter()

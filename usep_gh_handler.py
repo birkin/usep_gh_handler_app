@@ -78,19 +78,30 @@ def delete_orphans():
     """ Runs orphan-delete if necessary.
         Called via admin. """
     log.debug( '\n\nstarting delete_orphans()' )
-    log.debug( f'request, ```{pprint.pformat(flask.request.__dict__)}```' )
+    # log.debug( f'request, ```{pprint.pformat(flask.request.__dict__)}```' )
 
-    # start_time = datetime.datetime.now()
-    # ids_to_delete = flask.session['ids_to_delete']
-    # log.debug( f'ids_to_delete, ```{ids_to_delete}```' )
+    start_time = datetime.datetime.now()
+    ids_to_delete = flask.session['ids_to_delete']
+    log.debug( f'ids_to_delete, ```{pprint.pformat(ids_to_delete)}```' )
 
-    # flask.session['ids_to_delete'] = json.dumps( [] )
-    # data = orphan_manager.prep_orphan_list()
-    # flask.session['ids_to_delete'] = json.dumps( data )
-    # context = orphan_manager.prep_context( data, start_time )
-    # log.debug( f'context, ```{pprint.pformat(context)}```' )
-    # html = orphan_manager.build_html( context )
-    return 'not yet implemented', 200
+    errors = []
+    for delete_id in ids_to_delete:
+        try:
+            s = solr.Solr( self.SOLR_URL )
+            time.sleep( .5 )
+            response = s.delete( id=delete_id )
+            s.commit()
+            s.close()
+            log.debug( f'id, ```{delete_id}```; response, ```{response}```' )
+            break
+        except:
+            errors.append( delete_id )
+            log.traceback( f'error trying to delete id, ```{delete_id}```; processing will continue after traceback...' )
+
+    if errors == []:
+        return 'all orphans deleted', 200
+    else:
+        return 'problems deleting some orphans; see logs for details'
 
 @app.route( '/reindex_all/', methods=['GET'] )
 @basic_auth.required
