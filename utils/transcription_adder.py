@@ -19,6 +19,7 @@ class TranscriptionAdder( object ):
     """ Adds a 'transcription' field in Solr to inscriptions which have one"""
 
     def __init__( self, solr_url, xsl_path ):
+        log.debug( 'initializing TranscriptionAdder' )
         self.solr_url = solr_url
         self.lb_whitespace = re.compile(r"(<lb.*/>)\s+(.*)")
         self.transform = None

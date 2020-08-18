@@ -4,6 +4,7 @@ import json, logging, os, pprint
 import lxml, redis, requests, rq, solr
 from lxml import etree
 from usep_gh_handler_app.utils import bib_adder, log_helper
+from usep_gh_handler_app.utils import transcription_adder
 
 
 # LOG_CONF_JSN = unicode( os.environ[u'usep_gh__WRKR_LOG_CONF_JSN'] )
