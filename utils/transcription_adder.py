@@ -5,7 +5,7 @@ import requests
 from lxml import etree
 
 
-LOG_CONF_JSN = unicode( os.environ[u'usep_gh__WRKR_LOG_CONF_JSN'] )
+LOG_CONF_JSN = os.environ['usep_gh__WRKR_LOG_CONF_JSN']
 
 
 log = logging.getLogger( 'usep_gh_worker_logger' )
@@ -28,8 +28,8 @@ class TranscriptionAdder( object ):
                 utf8_xsl_text = f.read()
                 self.transform = etree.XSLT( etree.fromstring(utf8_xsl_text) )
         except Exception as e:
-            log.error( 'Exception in __init__, ```%s```' % unicode(repr(e)) )
-            raise Exception( unicode(repr(e)) )
+            log.error( 'Exception in __init__, ```%s```' % repr(e) )
+            raise Exception( repr(e) )
 
     def add_transcription(self, inscription_id, xml_path):
         """ Manages preparation, and posts a solr update of transcription info.
@@ -47,7 +47,7 @@ class TranscriptionAdder( object ):
             p = requests.post( self.solr_url+"/update", data=solr_req_text, headers={"Content-type":"application/json"}, timeout=30 )
             g = requests.get( self.solr_url+"/update?softCommit=true", timeout=30 )
         except Exception as e:
-            log.error( 'Exception in add_transcription(), ```%s```' % unicode(repr(e)) )
+            log.error( 'Exception in add_transcription(), ```%s```' % repr(e) )
             raise e
 
     def index_value(self, xml_path):
