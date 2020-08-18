@@ -25,7 +25,7 @@ class TranscriptionAdder( object ):
         self.transform = None
         try:
             with open( xsl_path, 'r' ) as f:
-                utf8_xsl_text = f.read()
+                utf8_xsl_text = f.read().encode( 'utf-8' )
                 self.transform = etree.XSLT( etree.fromstring(utf8_xsl_text) )
         except Exception as e:
             log.error( 'Exception in __init__, ```%s```' % repr(e) )
