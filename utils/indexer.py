@@ -107,8 +107,10 @@ class Indexer( object ):
         try:
             ## make id
             inscription_id = filename.strip().split(u'.xml')[0]
+            log.debug( 'inscription_id, ``%s``' % inscription_id )
             ## call transcription_adder
             transcriptor = transcription_adder.TranscriptionAdder( self.SOLR_URL, self.TRANSCRIPTION_PARSER_XSL_PATH )
+            log.debug( 'transcriptor, ``%s``' % transcriptor )
             result = transcriptor.add_transcription( inscription_id )
             ## log response
             log.debug( 'add_transcription response, `%s`' % result )
