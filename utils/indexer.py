@@ -102,6 +102,7 @@ class Indexer( object ):
     def _update_transcription( self, filename ):
         """ Updates transcription info for inscription.
             Called by update_index_entry() """
+        log.debug( 'starting transcription-update' )
         try:
             ## make id
             inscription_id = filename.strip().split(u'.xml')[0]
