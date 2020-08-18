@@ -46,7 +46,7 @@ class Indexer( object ):
         resp = self._post_solr_update( transformed_xml_txt )
         log.debug( 'post response, ```%s```' % resp )
         self._update_bib( filename )
-        # self._update_transcription( filename )
+        self._update_transcription( filename )
         return
 
     def _build_solr_doc( self, inscription_xml_path ):
