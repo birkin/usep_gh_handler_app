@@ -25,7 +25,7 @@ class IndexerTest( unittest.TestCase ):
         - for all tests:
             python ./tests/test_indexer.py
         - for single test (eg):
-            python ./tests/test_indexer.py IndexerTest.test__build_solr_doc """
+            python3 ./tests/test_indexer.py IndexerTest.test__build_solr_doc """
 
     def setUp( self ):
         self.indexer = Indexer()

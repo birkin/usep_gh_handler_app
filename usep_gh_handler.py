@@ -16,6 +16,7 @@ if cwd_parent not in sys.path:
 ## rest of imports
 from usep_gh_handler_app.utils.web_app_helper import WebAppHelper
 from usep_gh_handler_app.utils.orphan_manager import OrphanDeleter
+from usep_gh_handler_app.utils import daemon_checker
 
 ## setup
 B_AUTH_PASSWORD = os.environ['usep_gh__BASIC_AUTH_PASSWORD']
@@ -38,6 +39,18 @@ basic_auth = BasicAuth(app)
 app_helper = WebAppHelper()
 orphan_manager = OrphanDeleter()
 q = rq.Queue( 'usep', connection=redis.Redis() )
+
+
+@app.route( '/daemon_check/', methods=['GET'] )
+def daemon_check():
+    log.debug( 'in daemon_check()' )
+    result = daemon_checker.check_daemon()
+    dct = {
+        'datetime': str( datetime.datetime.now() ),
+        'request': 'daemon_check',
+        'result': result
+    }
+    return flask.jsonify( dct )
 
 
 @app.route( '/info/', methods=['GET'] )
