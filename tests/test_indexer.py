@@ -25,7 +25,7 @@ class IndexerTest( unittest.TestCase ):
         - for all tests:
             python ./tests/test_indexer.py
         - for single test (eg):
-            python ./tests/test_indexer.py IndexerTest.test__post_solr_update """
+            python ./tests/test_indexer.py IndexerTest.test__build_solr_doc """
 
     def setUp( self ):
         self.indexer = Indexer()
@@ -41,12 +41,6 @@ class IndexerTest( unittest.TestCase ):
         self.assertTrue( '<field name="msid_repository">HMA</field>' in solr_xml, 'solr_xml, ```%s```' % solr_xml )
         self.assertTrue( '<field name="msid_idno">8/4213</field>' in solr_xml, 'solr_xml, ```%s```' % solr_xml )
         self.assertTrue( '<field name="language">grc</field>' in solr_xml, 'solr_xml, ```%s```' % solr_xml )
-
-    def test__post_solr_update(self):
-        """ Tests post to solr. """
-        inscription_xml_path=u'./tests/test_files/CA.Berk.UC.HMA.G.8-4213.xml'
-        solr_xml = self.indexer._build_solr_doc( inscription_xml_path )
-        self.assertTrue( '<int name="status">0</int>' in self.indexer._post_solr_update(solr_xml)  )
 
     # end class IndexerTest
 
