@@ -45,6 +45,10 @@ q = rq.Queue( 'usep', connection=redis.Redis() )
 def daemon_check():
     log.debug( '\n\nstarting daemon_check()' )
     log.debug( f'flask.request.__dict__, ``{pprint.pformat(flask.request.__dict__)}``' )
+    log.debug( f'flask.request.environ, ``{pprint.pformat(flask.request.environ)}``' )
+    log.debug( f'flask.request.environ-host, ``{pprint.pformat(flask.request.environ["HTTP_HOST"])}``' )
+    log.debug( f'flask.request.environ-host-get, ``{pprint.pformat(flask.request.environ.get("HTTP_HOST", "host_not_available"))}``' )
+    log.debug( f'flask.request.environ-host-ip, ``{pprint.pformat(flask.request.environ.get("REMOTE_ADDR", "REMOTE_ADDR"))}``' )
     ( result, err ) = daemon_checker.check_daemon()
     dct = {
         'datetime': str( datetime.datetime.now() ),
