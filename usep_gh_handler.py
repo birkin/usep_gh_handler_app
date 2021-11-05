@@ -43,7 +43,8 @@ q = rq.Queue( 'usep', connection=redis.Redis() )
 
 @app.route( '/daemon_check/', methods=['GET'] )
 def daemon_check():
-    log.debug( 'in daemon_check()' )
+    log.debug( '\n\nstarting daemon_check()' )
+    log.debug( f'flask.request.__dict__, ``{pprint.pformat(flask.request.__dict__)}``' )
     ( result, err ) = daemon_checker.check_daemon()
     dct = {
         'datetime': str( datetime.datetime.now() ),
