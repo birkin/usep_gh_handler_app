@@ -7,15 +7,11 @@ if not logging._handlers:  # true when module accessed by queue-jobs
     logging.config.dictConfig( logging_config_dct )
 
 
-def bar():
-    return 'foo'
-
-
 def check_daemon():
     """ Returns commit-string.
         Called by usep_gh_handler.daemon_check() """
     log.debug( 'starting check_daemon()' )
-    ( check_result, err ) = ( 'not_found', '' )
+    ( check_result, err ) = ( 'daemon_not_active', '' )
     try:
         output_utf8 = subprocess.check_output( ['ps', 'ax'], stderr=subprocess.STDOUT )
         assert type(output_utf8) == bytes
@@ -27,7 +23,7 @@ def check_daemon():
         log.exception( f'problem running ps, ``{err}``' )
     if err == '':
         if 'rqworker usep' in output.lower():
-            check_result = 'found'
+            check_result = 'daemon_active'
 
     return ( check_result, err )
 
