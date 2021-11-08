@@ -46,8 +46,8 @@ def daemon_check():
     log.debug( '\n\nstarting daemon_check()' )
     log.debug( f'flask.request.environ-host-get, ``{pprint.pformat(flask.request.environ.get("HTTP_HOST", "host_not_available"))}``' )
     log.debug( f'flask.request.environ-host-ip, ``{pprint.pformat(flask.request.environ.get("REMOTE_ADDR", "ip_not_available"))}``' )
-    hostname = flask.request.environ.get( "HTTP_HOST", "host_not_available" )
-    ( result, err ) = daemon_checker.validate_request_source( hostname )
+    ip = flask.request.environ.get( "REMOTE_ADDR", "ip_not_available" )
+    ( result, err ) = daemon_checker.validate_request_source( ip )
     if err != '' or result != 'valid':
         flask.abort( 404, '404 / Not Found' )
     ( result, err ) = daemon_checker.check_daemon()

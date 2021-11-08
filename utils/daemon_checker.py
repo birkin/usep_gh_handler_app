@@ -27,20 +27,20 @@ def check_daemon():
     return ( check_result, err )
 
 
-def validate_request_source( hostname ):
-    """ Checks perceived hostname against legit-list.
+def validate_request_source( ip ):
+    """ Checks perceived ip against legit-list.
         Called by usep_gh_handler.daemon_check() """
-    log.debug( f'hostname, ``{hostname}``' )
+    log.debug( f'ip, ``{ip}``' )
     ( result, err ) = ( 'invalid', '' )
     try:
-        legit_hostnames = json.loads( os.environ['usep_gh__LEGIT_HOSTNAMES_JSON'] )
-        if hostname in legit_hostnames:
+        legit_ips = json.loads( os.environ['usep_gh__LEGIT_IPS_JSON'] )
+        if ip in legit_ips:
             result = 'valid'
         else:
-            log.warning( f'perceived invalid hostname, ``{hostname}``; returning result, ``{result}``' )
+            log.warning( f'perceived invalid ip, ``{ip}``; returning result, ``{result}``' )
     except Exception as e:
         err = repr( e )
-        log.exception( f'Problem loading legit hostnames' )
+        log.exception( f'Problem loading legit ips' )
     log.debug( f'result, ``{result}``' )
     log.debug( f'err, ``{err}``' )
     return ( result, err )
