@@ -1,4 +1,4 @@
-import logging, os, subprocess
+import json, logging, os, subprocess
 
 
 log = logging.getLogger( 'usep_gh_web_logger' )
@@ -24,6 +24,24 @@ def check_daemon():
     if err == '':
         if 'rqworker usep' in output.lower():
             check_result = 'daemon_active'
-
     return ( check_result, err )
+
+
+def validate_request_source( hostname ):
+    """ Checks perceived hostname against legit-list.
+        Called by usep_gh_handler.daemon_check() """
+    log.debug( f'hosname, ``{hostname}``' )
+    ( result, err ) = ( 'invalid', '' )
+    try:
+        legit_hostnames = json.loads( os.environ['usep_gh__LEGIT_HOSTNAMES_JSON'] )
+        if hostname in legit_hostnames:
+            result = 'valid'
+        else:
+            log.warning( f'perceived invalid hostname, ``{hostname}``; returning result, ``{result}``' )
+    except Exception as e:
+        err = repr( e )
+        log.exception( f'Problem loading legit hostnames' )
+    log.debug( f'result, ``{result}``' )
+    log.debug( f'err, ``{err}``' )
+    return ( result, err )
 
