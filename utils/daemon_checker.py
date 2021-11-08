@@ -30,7 +30,7 @@ def check_daemon():
 def validate_request_source( hostname ):
     """ Checks perceived hostname against legit-list.
         Called by usep_gh_handler.daemon_check() """
-    log.debug( f'hosname, ``{hostname}``' )
+    log.debug( f'hostname, ``{hostname}``' )
     ( result, err ) = ( 'invalid', '' )
     try:
         legit_hostnames = json.loads( os.environ['usep_gh__LEGIT_HOSTNAMES_JSON'] )
