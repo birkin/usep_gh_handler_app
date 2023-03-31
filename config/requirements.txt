@@ -5,6 +5,6 @@ git+https://github.com/birkin/shellvars-py.git
 git+https://github.com/lexpar/solrpy.git
 lxml==4.2.3
 pyquery==1.4.0
-redis==2.10.6
+redis==4.4.4
 requests==2.23.0
 rq==0.12.0
