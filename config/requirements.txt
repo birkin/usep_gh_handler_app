@@ -1,10 +1,10 @@
 envoy==0.0.3
 Flask-BasicAuth==0.2.0
-Flask==1.0.2
+Flask==2.2.5
 git+https://github.com/birkin/shellvars-py.git
 git+https://github.com/lexpar/solrpy.git
-lxml==4.2.3
+lxml==4.9.1
 pyquery==1.4.0
 redis==2.10.6
-requests==2.23.0
+requests==2.32.0
 rq==0.12.0
